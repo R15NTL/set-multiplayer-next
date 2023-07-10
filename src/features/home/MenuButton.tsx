@@ -13,11 +13,8 @@ export default function MenuButton({
   ...other
 }: MenuButtonProps) {
   return (
-    <Button
-      {...other}
-      className=" text-2xl text-left rounded-tl-3xl rounded-br-3xl"
-    >
-      <div className="flex justify-between px-2">
+    <Button {...other} className="  rounded-tl-3xl rounded-br-3xl">
+      <div className="flex justify-between px-2 text-2xl text-left items-center py-3">
         <p>{title}</p>
         {children}
       </div>
