@@ -43,7 +43,7 @@ export default function ButtonRipple({
         opacity: [0.7, 0],
       }}
       transition={{
-        duration: 0.25,
+        duration: 0.3,
         ease: "easeInOut",
       }}
     />
