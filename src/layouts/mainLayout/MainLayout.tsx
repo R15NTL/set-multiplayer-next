@@ -11,7 +11,7 @@ export default function MainLayout({ children, className }: MainLayoutProps) {
   return (
     <div className={`min-h-screen flex flex-col pt-header-height ${className}`}>
       <Header />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow flex">{children}</main>
     </div>
   );
 }
