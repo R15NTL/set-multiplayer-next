@@ -3,10 +3,9 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 // Providers
-
+import { SessionProvider } from "next-auth/react";
 // Fonts
 import { Poppins } from "next/font/google";
-// Dynamic title
 
 // Analytics
 import { Analytics } from "@vercel/analytics/react";
@@ -28,24 +27,14 @@ interface MyAppProps extends AppProps {
 
 // -----------------App-----------------
 export default function App({ Component, pageProps }: MyAppProps) {
-  const [darkMode, setDarkMode] = useState(false);
   const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
 
   return (
-    <div
-      className={`${
-        darkMode
-          ? "dark bg-background-dark  text-text-light"
-          : " bg-background-light text-text-dark"
-      } h-full w-full 
-     
-      
-      ${poppins.className} font-light
-      `}
-    >
-      {getLayout(<Component {...pageProps} />)}
-
-      <Analytics />
+    <div className={`${poppins.className}`}>
+      <SessionProvider session={pageProps.session}>
+        {getLayout(<Component {...pageProps} />)}
+        <Analytics />
+      </SessionProvider>
     </div>
   );
 }
