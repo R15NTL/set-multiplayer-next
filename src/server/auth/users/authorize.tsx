@@ -1,14 +1,9 @@
 import { getSession } from "next-auth/react";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest } from "next";
 
-export const authorizeUser = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+export const authorizeUser = async (req: NextApiRequest) => {
   const session = await getSession({ req });
-  if (!session) {
-    res.status(401).json({ error: "Unauthorized" });
-    return false;
-  }
-  return true;
+  if (!session) return false;
+
+  return session;
 };

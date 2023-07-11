@@ -11,7 +11,10 @@ interface UserProperties {
 }
 
 const manageUsers = {
-  async createUser(email: string, password: string): Promise<UserRecord> {
+  async createUser(
+    email: string,
+    password: string
+  ): Promise<UserRecord | false> {
     try {
       const userRecord = await adminAuth.createUser({
         email,
@@ -20,6 +23,19 @@ const manageUsers = {
       return userRecord;
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
+      throw new Error("An unknown error occurred.");
+    }
+  },
+
+  async isUserExists(email: string): Promise<boolean> {
+    try {
+      const userRecord = await adminAuth.getUserByEmail(email);
+      if (userRecord) return true;
+      return false;
+    } catch (error: any) {
+      if (error?.code === "auth/user-not-found") {
+        return false;
+      }
       throw new Error("An unknown error occurred.");
     }
   },
@@ -64,6 +80,24 @@ const manageUsers = {
     try {
       await adminAuth.deleteUser(uid);
       return { message: "User deleted successfully" };
+    } catch (error) {
+      if (error instanceof Error) throw new Error(error.message);
+      throw new Error("An unknown error occurred.");
+    }
+  },
+
+  async generateEmailVerificationLink(email: string): Promise<string> {
+    const actionCodeSettings = {
+      url: "https://www.example.com/finishSignUp",
+      handleCodeInApp: true,
+    };
+
+    try {
+      const link = await adminAuth.generateEmailVerificationLink(
+        email,
+        actionCodeSettings
+      );
+      return link;
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("An unknown error occurred.");
