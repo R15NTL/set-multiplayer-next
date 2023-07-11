@@ -1,4 +1,8 @@
 import React from "react";
+// Next
+import Link from "next/link";
+// Routes
+import { paths } from "@/routes/paths";
 // Components
 import { Button } from "@/components/button";
 import MainLayout from "@/layouts/mainLayout/MainLayout";
@@ -18,6 +22,7 @@ export default function SignIn() {
         <p>Or</p>
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
+        <Link href={paths.auth.createAccount.root}>Create account</Link>
       </div>
     </>
   );
