@@ -10,15 +10,39 @@ interface UserProperties {
   photoURL?: string;
 }
 
+interface CreateUserProperties {
+  email?: string;
+  password?: string;
+  id?: string;
+  emailVerified?: boolean;
+  displayName?: string;
+  photoURL?: string;
+}
+
+interface GoogleUserProfile {
+  name: string;
+  email: string;
+  picture: string;
+  sub: string;
+}
+
 const manageUsers = {
-  async createUser(
-    email: string,
-    password: string
-  ): Promise<UserRecord | false> {
+  async createUser({
+    email,
+    password,
+    id,
+    displayName,
+    emailVerified,
+    photoURL,
+  }: CreateUserProperties): Promise<UserRecord | false> {
     try {
       const userRecord = await adminAuth.createUser({
         email,
         password,
+        uid: id,
+        displayName,
+        emailVerified,
+        photoURL,
       });
       return userRecord;
     } catch (error) {
@@ -27,17 +51,29 @@ const manageUsers = {
     }
   },
 
-  async isUserExists(email: string): Promise<boolean> {
+  async isUserExistsEmail(email: string): Promise<false | UserRecord> {
     try {
       const userRecord = await adminAuth.getUserByEmail(email);
-      if (userRecord) return true;
+      if (!!userRecord) return userRecord;
       return false;
     } catch (error: any) {
       if (error?.code === "auth/user-not-found") {
         return false;
       }
-      throw new Error("An unknown error occurred.");
     }
+    throw new Error("An unknown error occurred.");
+  },
+
+  async isUserExistsId(uid: string) {
+    try {
+      const userRecord = await adminAuth.getUser(uid);
+      if (!!userRecord) return userRecord;
+    } catch (error: any) {
+      if (error?.code === "auth/user-not-found") {
+        return false;
+      }
+    }
+    throw new Error("An unknown error occurred.");
   },
 
   async getUserById(uid: string): Promise<UserRecord> {
@@ -102,6 +138,23 @@ const manageUsers = {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("An unknown error occurred.");
     }
+  },
+
+  async getOrCreateGoogleUser(profile: GoogleUserProfile) {
+    const { picture, sub, name } = profile;
+    const userExists = await manageUsers.isUserExistsId(sub);
+    console.log("userExists", userExists);
+    if (!!userExists) return userExists;
+
+    const userRecord = await manageUsers.createUser({
+      id: sub,
+      displayName: name,
+      emailVerified: true,
+      photoURL: picture,
+    });
+
+    if (!userRecord) throw new Error("Unable to create user.");
+    return userRecord;
   },
 };
 

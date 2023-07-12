@@ -8,6 +8,7 @@ import {
 } from "@/server/utils/utils";
 
 const postSchema = yup.object().shape({
+  name: yup.string().required(),
   email: yup.string().required().email(),
   password: yup.string().required().min(8),
   confirm_password: yup
@@ -18,25 +19,25 @@ const postSchema = yup.object().shape({
 
 const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   const parsedBody = parseBody(req);
-  const { email, password, confirm_password } = parsedBody;
 
   try {
-    await postSchema.validate({
-      email,
-      password,
-      confirm_password,
-    });
+    await postSchema.validate(parsedBody);
   } catch (error: any) {
     res.status(400).json(errorResponse(error.message));
     return;
   }
+  const { email, password, name } = parsedBody;
 
-  if (await manageUsers.isUserExists(email)) {
+  if (await manageUsers.isUserExistsEmail(email)) {
     res.status(400).json(errorResponse("User already exists"));
     return;
   }
 
-  const user = await manageUsers.createUser(email, password);
+  const user = await manageUsers.createUser({
+    displayName: name,
+    email,
+    password,
+  });
 
   if (!user) {
     res.status(400).json(errorResponse("User already exists"));

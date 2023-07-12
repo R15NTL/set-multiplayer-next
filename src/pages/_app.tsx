@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
@@ -6,7 +6,6 @@ import type { NextPage } from "next";
 import { SessionProvider } from "next-auth/react";
 // Fonts
 import { Poppins } from "next/font/google";
-
 // Analytics
 import { Analytics } from "@vercel/analytics/react";
 

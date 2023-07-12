@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { getEnv } from "@/utils";
 import { adminAuth } from "@/server/auth/firebase/firebaseInstance";
+import manageUsers from "@/server/auth/users/manageUsers";
 
 export const authOptions = {
   pages: {
@@ -39,5 +40,54 @@ export const authOptions = {
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }: any) {
+      console.log("signIn", { user, account, profile, email, credentials });
+
+      if (account?.provider === "credentials") {
+        Object.assign(account, user);
+        return true;
+      }
+
+      if (account?.provider === "google-sign-in") {
+        const { uid, photoURL, emailVerified, displayName } =
+          await manageUsers.getOrCreateGoogleUser(profile);
+
+        const googleUser = {
+          id: uid,
+          name: displayName,
+          email: email,
+          email_verified: emailVerified,
+          photo_url: photoURL,
+        };
+
+        Object.assign(account, googleUser);
+        return true;
+      }
+      return false;
+    },
+
+    async jwt({ token, account, profile }: any) {
+      if (account?.name) token.name = account.name;
+      if (account?.id) token.user_id = account.id;
+      if (account?.email_verified !== undefined)
+        token.email_verified = account.email_verified;
+      if (account?.email) token.email = account.email;
+      if (account?.photo_url) token.photo_url = account.photo_url;
+
+      return token;
+    },
+
+    async session({ session, token, user }: any) {
+      if (token?.name) session.name = token.name;
+      if (token?.user_id) session.user_id = token.user_id;
+      if (token?.email_verified !== undefined)
+        session.email_verified = token.email_verified;
+      if (token?.email) session.email = token.email;
+      if (token?.photo_url) session.photo_url = token.photo_url;
+
+      return session;
+    },
+  },
 };
 export default NextAuth(authOptions);
