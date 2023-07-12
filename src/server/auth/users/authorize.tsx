@@ -1,9 +1,9 @@
 import { getSession } from "next-auth/react";
 import { NextApiRequest } from "next";
-import { adminAuth } from "../firebase/firebaseInstance";
+import { CustomSession } from "@/server/types/session";
 
 export const authorizeUser = async (req: NextApiRequest) => {
-  const session = await getSession({ req });
+  const session = (await getSession({ req })) as CustomSession | null;
   if (!session) return false;
 
   return session;

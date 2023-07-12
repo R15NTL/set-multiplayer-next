@@ -156,6 +156,21 @@ const manageUsers = {
     if (!userRecord) throw new Error("Unable to create user.");
     return userRecord;
   },
+
+  async getOrCreateAdminUser() {
+    const userExists = await manageUsers.isUserExistsId("administator");
+
+    if (!!userExists) return userExists;
+
+    const userRecord = await manageUsers.createUser({
+      id: "administator",
+      displayName: "Administrator",
+      emailVerified: true,
+    });
+
+    if (!userRecord) throw new Error("Unable to create user.");
+    return userRecord;
+  },
 };
 
 export default manageUsers;

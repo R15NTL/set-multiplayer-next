@@ -39,7 +39,29 @@ export const authOptions = {
         }
       },
     }),
+    Credentials({
+      id: "administrator",
+      name: "Administator",
+      credentials: {
+        password: {},
+      },
+      async authorize(credentials) {
+        const password = credentials?.password;
+        if (!password) return null;
+        if (password !== getEnv("ADMIN_PASSWORD")) return null;
+
+        const userRecord = await manageUsers.getOrCreateAdminUser();
+        console.log(password);
+        return {
+          id: userRecord.uid,
+          name: "Admin",
+          email: getEnv("ADMIN_EMAIL"),
+          email_verified: true,
+        };
+      },
+    }),
   ],
+
   callbacks: {
     async signIn({ user, account, profile, email, credentials }: any) {
       console.log("signIn", { user, account, profile, email, credentials });
@@ -64,6 +86,12 @@ export const authOptions = {
         Object.assign(account, googleUser);
         return true;
       }
+
+      if (account?.provider === "administrator") {
+        Object.assign(account, user);
+        return true;
+      }
+
       return false;
     },
 

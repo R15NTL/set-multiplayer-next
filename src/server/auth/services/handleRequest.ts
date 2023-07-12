@@ -1,16 +1,17 @@
 import { authorizeUser } from "../users/authorize";
 import { NextApiRequest, NextApiResponse } from "next";
 import { errorResponse } from "@/server/utils/utils";
-import { Session } from "next-auth";
+import { CustomSession } from "@/server/types/session";
 
 interface RequestHandlerSettings {
   authorize: boolean;
+  allowUnverifiedEmail?: boolean;
 }
 
 type Handler = (
   req: NextApiRequest,
   res: NextApiResponse,
-  user?: Session | false
+  user?: CustomSession
 ) => void | Promise<void>;
 
 export const requestHandler = async (
@@ -22,7 +23,7 @@ export const requestHandler = async (
     PUT?: Handler;
     DELETE?: Handler;
   },
-  { authorize }: RequestHandlerSettings
+  { authorize, allowUnverifiedEmail = false }: RequestHandlerSettings
 ) => {
   try {
     const methods = Object.keys(handlers);
@@ -37,13 +38,21 @@ export const requestHandler = async (
       return;
     }
 
+    // Authorization check.
     const user = authorize && (await authorizeUser(req));
     if (authorize && !user) {
       res.status(401).json(errorResponse("Unauthorized"));
       return;
     }
 
-    await handler(req, res, user);
+    // If user has not verified their email.
+    const userHasVerifiedEmail = user && user.email_verified;
+    if (authorize && !allowUnverifiedEmail && !userHasVerifiedEmail) {
+      res.status(401).json(errorResponse("Email not verified"));
+      return;
+    }
+
+    await handler(req, res, user || undefined);
   } catch (error) {
     res
       .status(500)
