@@ -1,31 +1,48 @@
 import jwt from "jsonwebtoken";
+import * as yup from "yup";
 // Services
 import { transporter } from "@/server/auth/services/nodeMailer";
+import manageUsers from "@/server/auth/users/manageUsers";
 // Utils
 import { getEnv } from "@/utils";
-import { errorResponse, successResponse } from "@/server/utils/utils";
+import {
+  errorResponse,
+  successResponse,
+  parseBody,
+} from "@/server/utils/utils";
 // Types
 import { NextApiRequest, NextApiResponse } from "next";
-import { CustomSession } from "@/server/types/session";
 
-const POST = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  user?: CustomSession
-) => {
-  if (!user) {
-    res.status(401).json(errorResponse("Unauthorized"));
+const postSchema = yup.object().shape({
+  email: yup.string().required().email(),
+});
+
+const POST = async (req: NextApiRequest, res: NextApiResponse) => {
+  const parsedBody = parseBody(req);
+
+  try {
+    await postSchema.validate(parsedBody);
+  } catch (error: any) {
+    res.status(400).json(errorResponse(error.message));
     return;
   }
 
-  if (user.email_verified) {
-    res.status(400).json(errorResponse("Email already verified."));
+  const { email } = parsedBody;
+
+  const user = await manageUsers.isUserExistsEmail(email);
+
+  if (!user) {
+    res.status(400).json(errorResponse("User does not exist."));
+    return;
+  }
+  if (user.emailVerified) {
+    res.status(400).json(errorResponse("User is already verified."));
     return;
   }
 
   // Create a verification token.
   const verificationToken = jwt.sign(
-    { userID: user.user_id },
+    { userID: user.uid },
     getEnv("JWT_SECRET_KEY"),
     { expiresIn: "24h" }
   );
@@ -37,13 +54,13 @@ const POST = async (
     subject: "Account Verification",
     text: `Please verify your account by clicking the following link: \n${getEnv(
       "BASE_URL_FRONTEND"
-    )}\/verify\/${verificationToken}\n\n`,
+    )}\/verify\/${verificationToken}\n\n
+    Verification token: ${verificationToken}`,
   };
 
   // Send the email.
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
       res
         .status(500)
         .json(errorResponse("Error while sending verification email."));

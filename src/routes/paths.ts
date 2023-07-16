@@ -1,5 +1,3 @@
-import CreateAccount from "@/pages/auth/create-account";
-
 export const paths = {
   menu: "/",
   auth: {

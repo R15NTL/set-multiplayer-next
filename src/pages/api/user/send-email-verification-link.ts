@@ -7,7 +7,6 @@ export default async function sendEmailVerificationLink(
   res: NextApiResponse
 ) {
   await requestHandler(req, res, sendEmailVerificationLinkMethods, {
-    authorize: true,
-    allowUnverifiedEmail: true,
+    authorize: false,
   });
 }
