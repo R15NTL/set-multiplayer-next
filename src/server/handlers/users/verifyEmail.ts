@@ -55,7 +55,7 @@ const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
       emailVerified: true,
     });
   } catch (error) {
-    res.status(400).json(errorResponse("Error while updating the user."));
+    res.status(500).json(errorResponse("Error while updating the user."));
     return;
   }
 
