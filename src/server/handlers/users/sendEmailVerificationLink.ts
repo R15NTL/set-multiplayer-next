@@ -36,7 +36,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
   if (user.emailVerified) {
-    res.status(400).json(errorResponse("User is already verified."));
+    res.status(400).json(errorResponse("Email is already verified."));
     return;
   }
 
@@ -65,7 +65,6 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(500)
         .json(errorResponse("Error while sending verification email."));
     } else {
-      console.log("Email sent: " + info.response);
       res
         .status(200)
         .json(successResponse("User verification email sent.", {}));

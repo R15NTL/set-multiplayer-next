@@ -1,7 +1,6 @@
 import { createMocks } from "node-mocks-http";
 import jwt from "jsonwebtoken";
 import manageUsers from "@/server/auth/users/manageUsers";
-import { getEnv } from "@/utils";
 import verifyEmailMethods from "@/server/handlers/users/verifyEmail";
 
 jest.mock("jsonwebtoken");
@@ -24,13 +23,23 @@ describe("PUT /verifyEmail", () => {
     mockIsUserExistsId
   );
   (manageUsers.updateUser as jest.Mock).mockImplementation(mockUpdateUser);
-  (getEnv as jest.Mock).mockReturnValue("test-secret");
 
   beforeEach(() => {
+    mockIsUserExistsId.mockResolvedValue({
+      emailVerified: false,
+      uid: "test-user-id",
+    });
+    mockVerify.mockReturnValue({
+      userID: "test-user-id",
+    });
+    mockUpdateUser.mockResolvedValue({
+      emailVerified: true,
+      uid: "test-user-id",
+    });
     jest.clearAllMocks();
   });
 
-  test("should return 400 if token is not provided", async () => {
+  test("should respond 400 Bad Request when token field is empty", async () => {
     const { req, res } = createMocks({
       method: "PUT",
       body: {
@@ -44,7 +53,7 @@ describe("PUT /verifyEmail", () => {
     expect(res._getData()).toContain("token is a required field");
   });
 
-  test("should return 400 if token is not verified", async () => {
+  test("should respond 400 Bad Request if token verification fails", async () => {
     mockVerify.mockImplementation(() => {
       throw new Error();
     });
@@ -62,11 +71,8 @@ describe("PUT /verifyEmail", () => {
     expect(res._getData()).toContain("Invalid token.");
   });
 
-  test("should return 400 if user no longer exists", async () => {
+  test("should respond 400 Bad Request if user no longer exists", async () => {
     mockIsUserExistsId.mockResolvedValue(false);
-    mockVerify.mockReturnValue({
-      userID: "test-user-id",
-    });
 
     const { req, res } = createMocks({
       method: "PUT",
@@ -81,12 +87,9 @@ describe("PUT /verifyEmail", () => {
     expect(res._getData()).toContain("User no longer exists.");
   });
 
-  test("should return 400 if user is already verified", async () => {
+  test("should respond 400 Bad Request if user is already verified", async () => {
     mockIsUserExistsId.mockResolvedValue({
       emailVerified: true,
-    });
-    mockVerify.mockReturnValue({
-      userID: "test-user-id",
     });
 
     const { req, res } = createMocks({
@@ -102,14 +105,7 @@ describe("PUT /verifyEmail", () => {
     expect(res._getData()).toContain("User is already verified.");
   });
 
-  test("should return 500 if error while updating the user", async () => {
-    mockIsUserExistsId.mockResolvedValue({
-      emailVerified: false,
-      uid: "test-user-id",
-    });
-    mockVerify.mockReturnValue({
-      userID: "test-user-id",
-    });
+  test("should respond 500 Internal Server Error if error while updating the user", async () => {
     mockUpdateUser.mockRejectedValue(new Error());
 
     const { req, res } = createMocks({
@@ -125,21 +121,7 @@ describe("PUT /verifyEmail", () => {
     expect(res._getData()).toContain("Error while updating the user.");
   });
 
-  test("should return 200 if user is verified", async () => {
-    mockIsUserExistsId.mockResolvedValue({
-      emailVerified: false,
-      uid: "test-user-id",
-    });
-
-    mockVerify.mockReturnValue({
-      userID: "test-user-id",
-    });
-
-    mockUpdateUser.mockResolvedValue({
-      emailVerified: true,
-      uid: "test-user-id",
-    });
-
+  test("should respond 200 OK if email is successfully verified", async () => {
     const { req, res } = createMocks({
       method: "PUT",
       body: {
