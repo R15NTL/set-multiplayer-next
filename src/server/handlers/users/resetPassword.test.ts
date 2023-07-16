@@ -1,7 +1,7 @@
 import { createMocks } from "node-mocks-http";
 import jwt from "jsonwebtoken";
 import manageUsers from "@/server/auth/users/manageUsers";
-import verifyEmailMethods from "@/server/handlers/users/verifyEmail";
+import resetPasswordMethods from "./resetPassword";
 
 jest.mock("jsonwebtoken");
 jest.mock("@/server/auth/users/manageUsers", () => ({
@@ -17,6 +17,8 @@ function createMockRequest(bodyOverrides: any = {}) {
   const { req, res } = createMocks({
     method: "PUT",
     body: {
+      password: "test-password",
+      confirm_password: "test-password",
       token: "test-token",
       ...bodyOverrides,
     },
@@ -24,7 +26,7 @@ function createMockRequest(bodyOverrides: any = {}) {
   return { req, res };
 }
 
-describe("PUT /verifyEmail", () => {
+describe("PUT /resetPassword", () => {
   const mockVerify = jest.fn();
   const mockIsUserExistsId = jest.fn();
   const mockUpdateUser = jest.fn();
@@ -57,10 +59,22 @@ describe("PUT /verifyEmail", () => {
       token: "",
     });
 
-    await verifyEmailMethods.PUT(req as any, res as any);
+    await resetPasswordMethods.PUT(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(400);
     expect(res._getData()).toContain("token is a required field");
+  });
+
+  test("should respond 400 Bad Request when password and confirm_password fields do not match", async () => {
+    const { req, res } = createMockRequest({
+      password: "test-password",
+      confirm_password: "test-password2",
+    });
+
+    await resetPasswordMethods.PUT(req as any, res as any);
+
+    expect(res._getStatusCode()).toBe(400);
+    expect(res._getData()).toContain("Passwords must match");
   });
 
   test("should respond 400 Bad Request if token verification fails", async () => {
@@ -70,7 +84,7 @@ describe("PUT /verifyEmail", () => {
 
     const { req, res } = createMockRequest();
 
-    await verifyEmailMethods.PUT(req as any, res as any);
+    await resetPasswordMethods.PUT(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(400);
     expect(res._getData()).toContain("Invalid token.");
@@ -81,42 +95,29 @@ describe("PUT /verifyEmail", () => {
 
     const { req, res } = createMockRequest();
 
-    await verifyEmailMethods.PUT(req as any, res as any);
+    await resetPasswordMethods.PUT(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(400);
     expect(res._getData()).toContain("User no longer exists.");
   });
 
-  test("should respond 400 Bad Request if user is already verified", async () => {
-    mockIsUserExistsId.mockResolvedValue({
-      emailVerified: true,
-    });
-
-    const { req, res } = createMockRequest();
-
-    await verifyEmailMethods.PUT(req as any, res as any);
-
-    expect(res._getStatusCode()).toBe(400);
-    expect(res._getData()).toContain("User is already verified.");
-  });
-
-  test("should respond 500 Internal Server Error if error while updating the user", async () => {
+  test("should respond 500 Internal Server Error if error while updating password", async () => {
     mockUpdateUser.mockRejectedValue(new Error());
 
     const { req, res } = createMockRequest();
 
-    await verifyEmailMethods.PUT(req as any, res as any);
+    await resetPasswordMethods.PUT(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(500);
-    expect(res._getData()).toContain("Error while updating the user.");
+    expect(res._getData()).toContain("Error while updating password.");
   });
 
-  test("should respond 200 OK if email is successfully verified", async () => {
+  test("should respond 200 OK if password is successfully updated", async () => {
     const { req, res } = createMockRequest();
 
-    await verifyEmailMethods.PUT(req as any, res as any);
+    await resetPasswordMethods.PUT(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(200);
-    expect(res._getData()).toContain("User verified.");
+    expect(res._getData()).toContain("Password updated.");
   });
 });

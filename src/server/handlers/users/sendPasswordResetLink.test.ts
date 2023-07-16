@@ -1,5 +1,5 @@
 import { createMocks } from "node-mocks-http";
-import sendEmailVerificationLinkMethods from "./sendEmailVerificationLink";
+import sendPasswordResetLinkMethods from "./sendPasswordResetLink";
 import { transporter } from "@/server/auth/services/nodeMailer";
 import manageUsers from "@/server/auth/users/manageUsers";
 
@@ -36,7 +36,7 @@ function createMockRequest(bodyOverrides: any = {}) {
   return { req, res };
 }
 
-describe("POST /sendEmailVerificationLink", () => {
+describe("POST /sendPasswordResetLink", () => {
   const mockIsUserExistsEmail = jest.fn();
   const mockUpdateUser = jest.fn();
   const mockSendMail = jest.fn();
@@ -64,26 +64,13 @@ describe("POST /sendEmailVerificationLink", () => {
       email: "",
     });
 
-    await sendEmailVerificationLinkMethods.POST(req as any, res as any);
+    await sendPasswordResetLinkMethods.POST(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(400);
     expect(res._getData()).toContain("email is a required field");
   });
 
-  test("should respond with 400 Bad Request when email has already been verified", async () => {
-    mockIsUserExistsEmail.mockImplementation(() =>
-      createMockUser({ emailVerified: true })
-    );
-
-    const { req, res } = createMockRequest();
-
-    await sendEmailVerificationLinkMethods.POST(req as any, res as any);
-
-    expect(res._getStatusCode()).toBe(400);
-    expect(res._getData()).toContain("Email is already verified");
-  });
-
-  test("should respond with 500 Internal Server Error when sending the verification email fails", async () => {
+  test("should respond with 500 Internal Server Error when sending the password reset email fails", async () => {
     mockSendMail.mockImplementation(
       (options: any, callback: (error: boolean) => void) => {
         callback(true);
@@ -92,18 +79,18 @@ describe("POST /sendEmailVerificationLink", () => {
 
     const { req, res } = createMockRequest();
 
-    await sendEmailVerificationLinkMethods.POST(req as any, res as any);
+    await sendPasswordResetLinkMethods.POST(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(500);
-    expect(res._getData()).toContain("Error while sending verification email");
+    expect(res._getData()).toContain("Error while sending password reset link");
   });
 
   test("should respond with 200 OK when verification email is successfully sent", async () => {
     const { req, res } = createMockRequest();
 
-    await sendEmailVerificationLinkMethods.POST(req as any, res as any);
+    await sendPasswordResetLinkMethods.POST(req as any, res as any);
 
     expect(res._getStatusCode()).toBe(200);
-    expect(res._getData()).toContain("email sent");
+    expect(res._getData()).toContain("Password reset link sent");
   });
 });
