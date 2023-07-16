@@ -40,6 +40,7 @@ export const requestHandler = async (
 
     // Authorization check.
     const user = authorize && (await authorizeUser(req));
+    console.log("user", user);
     if (authorize && !user) {
       res.status(401).json(errorResponse("Unauthorized"));
       return;
@@ -48,7 +49,7 @@ export const requestHandler = async (
     // If user has not verified their email.
     const userHasVerifiedEmail = user && user.email_verified;
     if (authorize && !allowUnverifiedEmail && !userHasVerifiedEmail) {
-      res.status(401).json(errorResponse("Email not verified"));
+      res.status(403).json(errorResponse("Email not verified"));
       return;
     }
 
