@@ -27,7 +27,7 @@ export const requestHandler = async (
 ) => {
   try {
     const methods = Object.keys(handlers);
-    if (req.method && !methods.includes(req.method)) {
+    if (!req?.method || !methods.includes(req.method)) {
       res.status(405).json(errorResponse(`Method ${req.method} Not Allowed`));
       return;
     }
@@ -40,7 +40,6 @@ export const requestHandler = async (
 
     // Authorization check.
     const user = authorize && (await authorizeUser(req));
-    console.log("user", user);
     if (authorize && !user) {
       res.status(401).json(errorResponse("Unauthorized"));
       return;

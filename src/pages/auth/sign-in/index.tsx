@@ -45,7 +45,6 @@ export default function SignIn() {
         user.getIdToken().then((idToken) => {
           // Here, you now have the ID token
           // You can now send this token to your backend
-          console.log(idToken);
           signIn("credentials", {
             token: idToken,
           });

@@ -27,14 +27,12 @@ export const authOptions = {
         try {
           const decodedToken = await adminAuth.verifyIdToken(token);
           const { uid, email, email_verified } = decodedToken;
-          console.log(decodedToken);
           return {
             id: uid,
             email,
             email_verified,
           };
         } catch (error) {
-          console.log(error);
           return null;
         }
       },
@@ -51,7 +49,6 @@ export const authOptions = {
         if (password !== getEnv("ADMIN_PASSWORD")) return null;
 
         const userRecord = await manageUsers.getOrCreateAdminUser();
-        console.log(password);
         return {
           id: userRecord.uid,
           name: "Admin",
@@ -64,8 +61,6 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }: any) {
-      console.log("signIn", { user, account, profile, email, credentials });
-
       if (account?.provider === "credentials") {
         Object.assign(account, user);
         return true;

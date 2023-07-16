@@ -143,7 +143,6 @@ const manageUsers = {
   async getOrCreateGoogleUser(profile: GoogleUserProfile) {
     const { picture, sub, name } = profile;
     const userExists = await manageUsers.isUserExistsId(sub);
-    console.log("userExists", userExists);
     if (!!userExists) return userExists;
 
     const userRecord = await manageUsers.createUser({
