@@ -3,7 +3,8 @@ import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 // Providers
 import { SessionProvider } from "next-auth/react";
-import SocketProvider from "@/features/sockets/SocketProvider";
+import { AxiosProvider } from "@/services/axios/AxiosProvider";
+import SocketProvider from "@/services/sockets/SocketProvider";
 // Fonts
 import { Poppins } from "next/font/google";
 // Analytics
@@ -30,12 +31,14 @@ export default function App({ Component, pageProps }: MyAppProps) {
 
   return (
     <div className={`${poppins.className}`}>
-      <SocketProvider>
-        <SessionProvider session={pageProps.session}>
-          {getLayout(<Component {...pageProps} />)}
-          <Analytics />
-        </SessionProvider>
-      </SocketProvider>
+      <AxiosProvider>
+        <SocketProvider>
+          <SessionProvider session={pageProps.session}>
+            {getLayout(<Component {...pageProps} />)}
+            <Analytics />
+          </SessionProvider>
+        </SocketProvider>
+      </AxiosProvider>
     </div>
   );
 }

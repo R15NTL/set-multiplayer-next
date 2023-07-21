@@ -1,4 +1,4 @@
-import type { Card } from "../gameLogic/types";
+import type { Card } from "../../features/gameLogic/types";
 
 export interface GameSnapshot {
   cardStack: Card[];
