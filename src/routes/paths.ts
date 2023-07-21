@@ -6,6 +6,9 @@ export const paths = {
     },
     createAccount: {
       root: "/auth/create-account",
+      finishUp: {
+        root: "/auth/create-account/finish-up",
+      },
     },
   },
   multiplayer: {
@@ -27,5 +30,10 @@ export const paths = {
 export const apiRoutes = {
   ioTokens: {
     root: "/api/io-tokens",
+  },
+  user: {
+    createAccount: {
+      root: "/api/user/create-account",
+    },
   },
 };
