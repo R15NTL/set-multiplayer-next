@@ -8,4 +8,13 @@ export const paths = {
       root: "/auth/create-account",
     },
   },
+  multiplayer: {
+    root: "/multiplayer",
+  },
+};
+
+export const apiRoutes = {
+  ioTokens: {
+    root: "/api/io-tokens",
+  },
 };
