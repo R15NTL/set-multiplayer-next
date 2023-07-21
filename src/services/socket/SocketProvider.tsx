@@ -1,12 +1,8 @@
 import React, { createContext, useState, useEffect, useMemo } from "react";
 // Socket.io
 import { io, Socket } from "socket.io-client";
-// Hooks
-import { useAxios } from "@/hooks/useAxios";
 // Types
 import type { ReceiveRoomsItem, Room } from "./types";
-// Routes
-import { apiRoutes } from "@/routes/paths";
 
 interface SocketProviderProps {
   children: React.ReactNode;
@@ -17,7 +13,7 @@ interface SocketContextProviderValue {
   lobbyRooms: ReceiveRoomsItem[];
   currentRoom: Room | null;
   errors: string[];
-  socket: Socket | null;
+  socket: Socket;
   connect: () => void;
   disconnect: () => void;
 }
@@ -27,7 +23,7 @@ export const SocketContext = createContext<
 >(undefined);
 
 const socket = io(process.env.NEXT_PUBLIC_IO_SERVER_URL ?? "", {
-  autoConnect: false,
+  autoConnect: true,
   transports: ["websocket"],
 });
 
@@ -48,9 +44,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     socket.on("disconnect", onDisconnect);
     socket.on("receive-rooms", onReceiveRooms);
     socket.on("receive-room", onReceiveRoom);
-    socket.on("error", (error: string) =>
-      setErrors((errors) => [...errors, error])
-    );
+    socket.on("error", (error: string) => {
+      console.error(error);
+      setErrors((errors) => [...errors, error]);
+    });
 
     return () => {
       socket.off("connect", onConnect);

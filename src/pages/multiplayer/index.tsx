@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
-import { useSocket } from "@/hooks/useSocket";
+import { useRouter } from "next/router";
+import { paths } from "@/routes/paths";
 
 export default function index() {
-  const context = useSocket();
-  const { connect, disconnect } = context;
-
+  const router = useRouter();
   useEffect(() => {
-    console.log(context);
-  }, [context]);
-
-  useEffect(() => {
-    connect();
+    router.replace(paths.multiplayer.lobby.root);
   }, []);
 
   return <div>Please wait...</div>;

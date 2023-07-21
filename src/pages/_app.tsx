@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 // Providers
 import { SessionProvider } from "next-auth/react";
 import { AxiosProvider } from "@/services/axios/AxiosProvider";
-import SocketProvider from "@/services/sockets/SocketProvider";
+import SocketProvider from "@/services/socket/SocketProvider";
 // Fonts
 import { Poppins } from "next/font/google";
 // Analytics

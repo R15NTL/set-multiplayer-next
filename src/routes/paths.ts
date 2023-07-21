@@ -10,6 +10,17 @@ export const paths = {
   },
   multiplayer: {
     root: "/multiplayer",
+    lobby: {
+      root: "/multiplayer/lobby",
+      createRoom: {
+        root: "/multiplayer/lobby/create-room",
+      },
+    },
+    game: {
+      root: "/multiplayer/game",
+      addedToRoom: "/multiplayer/game/added-to-room",
+      waitingForPlayers: "/multiplayer/game/waiting-for-players",
+    },
   },
 };
 
