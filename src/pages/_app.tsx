@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 // Providers
 import { SessionProvider } from "next-auth/react";
+import SocketProvider from "@/features/sockets/SocketProvider";
 // Fonts
 import { Poppins } from "next/font/google";
 // Analytics
@@ -30,10 +30,12 @@ export default function App({ Component, pageProps }: MyAppProps) {
 
   return (
     <div className={`${poppins.className}`}>
-      <SessionProvider session={pageProps.session}>
-        {getLayout(<Component {...pageProps} />)}
-        <Analytics />
-      </SessionProvider>
+      <SocketProvider>
+        <SessionProvider session={pageProps.session}>
+          {getLayout(<Component {...pageProps} />)}
+          <Analytics />
+        </SessionProvider>
+      </SocketProvider>
     </div>
   );
 }
