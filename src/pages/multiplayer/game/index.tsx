@@ -3,8 +3,18 @@ import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 // Paths
 import { paths } from "@/routes/paths";
+// Auth guard
+import AuthGuard from "@/features/auth/AuthGuard";
+// Layout
+import MainLayout from "@/layouts/mainLayout/MainLayout";
 
-export default function index() {
+Game.getLayout = (page: React.ReactNode) => (
+  <MainLayout>
+    <AuthGuard>{page}</AuthGuard>
+  </MainLayout>
+);
+
+export default function Game() {
   const { replace } = useRouter();
   const { currentRoom } = useSocket();
 
@@ -18,5 +28,5 @@ export default function index() {
     }
   }, [currentRoom]);
 
-  return <div>index</div>;
+  return <div>Game</div>;
 }

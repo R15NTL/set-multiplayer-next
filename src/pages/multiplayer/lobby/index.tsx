@@ -2,6 +2,16 @@ import React from "react";
 import { useSocket } from "@/hooks/useSocket";
 import { Button } from "@/components/button";
 import { paths } from "@/routes/paths";
+// Auth guard
+import AuthGuard from "@/features/auth/AuthGuard";
+// Layout
+import MainLayout from "@/layouts/mainLayout/MainLayout";
+
+Lobby.getLayout = (page: React.ReactNode) => (
+  <MainLayout>
+    <AuthGuard>{page}</AuthGuard>
+  </MainLayout>
+);
 
 export default function Lobby() {
   const { lobbyRooms } = useSocket();

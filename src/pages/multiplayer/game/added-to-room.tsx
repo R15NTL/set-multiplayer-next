@@ -3,8 +3,18 @@ import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 import { paths } from "@/routes/paths";
 import { emitters } from "@/services/socket/emitters";
+// Auth guard
+import AuthGuard from "@/features/auth/AuthGuard";
+// Layout
+import MainLayout from "@/layouts/mainLayout/MainLayout";
 
-export default function addedToRoom() {
+AddedToRoom.getLayout = (page: React.ReactNode) => (
+  <MainLayout>
+    <AuthGuard>{page}</AuthGuard>
+  </MainLayout>
+);
+
+export default function AddedToRoom() {
   const { replace, query } = useRouter();
   const { currentRoom, socket } = useSocket();
 
@@ -17,5 +27,6 @@ export default function addedToRoom() {
       emitters.common.requestRoomData((...args) => socket.emit(...args));
     }
   }, [currentRoom]);
-  return <div>added-to-room</div>;
+
+  return <div>Connecting</div>;
 }

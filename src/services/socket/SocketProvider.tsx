@@ -59,7 +59,7 @@ export default function SocketProvider({ children }: SocketProviderProps) {
   }, [socket]);
 
   const connect = () => {
-    if (isConnected) return;
+    if (isConnected) socket.disconnect();
     socket.connect();
   };
 

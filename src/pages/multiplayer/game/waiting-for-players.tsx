@@ -3,8 +3,20 @@ import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 // Paths
 import { paths } from "@/routes/paths";
+// Components
+import { Button } from "@/components/button";
+// Auth guard
+import AuthGuard from "@/features/auth/AuthGuard";
+// Layout
+import MainLayout from "@/layouts/mainLayout/MainLayout";
 
-export default function waitingForPlayers() {
+WaitingForPlayers.getLayout = (page: React.ReactNode) => (
+  <MainLayout>
+    <AuthGuard>{page}</AuthGuard>
+  </MainLayout>
+);
+
+export default function WaitingForPlayers() {
   const { currentRoom } = useSocket();
 
   const { replace } = useRouter();
@@ -27,6 +39,7 @@ export default function waitingForPlayers() {
           </li>
         ))}
       </ul>
+      <Button>Start game</Button>
     </div>
   );
 }

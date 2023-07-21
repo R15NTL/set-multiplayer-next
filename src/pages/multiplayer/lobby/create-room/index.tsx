@@ -7,6 +7,16 @@ import { emitters, CreateRoomParams } from "@/services/socket/emitters";
 import { useAxios } from "@/hooks/useAxios";
 // Paths
 import { apiRoutes, paths } from "@/routes/paths";
+// Auth guard
+import AuthGuard from "@/features/auth/AuthGuard";
+// Layout
+import MainLayout from "@/layouts/mainLayout/MainLayout";
+
+CreateRoom.getLayout = (page: React.ReactNode) => (
+  <MainLayout>
+    <AuthGuard>{page}</AuthGuard>
+  </MainLayout>
+);
 
 export default function CreateRoom() {
   const { replace } = useRouter();
