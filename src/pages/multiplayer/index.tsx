@@ -10,8 +10,7 @@ export default function index() {
   }, [context]);
 
   useEffect(() => {
-    const success = connect();
-    console.log({ success });
+    connect();
   }, []);
 
   return <div>Please wait...</div>;

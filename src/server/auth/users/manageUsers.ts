@@ -141,12 +141,21 @@ const manageUsers = {
   },
 
   async getOrCreateGoogleUser(profile: GoogleUserProfile) {
-    const { picture, sub, name } = profile;
-    const userExists = await manageUsers.isUserExistsId(sub);
-    if (!!userExists) return userExists;
+    const { picture, name, email } = profile;
+    const userExists = await manageUsers.isUserExistsEmail(email);
+
+    if (!!userExists) {
+      if (userExists.emailVerified === false) {
+        await manageUsers.updateUser(userExists.uid, {
+          emailVerified: true,
+        });
+      }
+
+      return userExists;
+    }
 
     const userRecord = await manageUsers.createUser({
-      id: sub,
+      email: email,
       displayName: name,
       emailVerified: true,
       photoURL: picture,

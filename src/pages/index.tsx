@@ -6,6 +6,8 @@ import MenuButton from "@/features/home/MenuButton";
 import IconCircle from "@/features/home/IconCircle";
 // Animate
 import { motion } from "framer-motion";
+// Paths
+import { paths } from "@/routes/paths";
 
 // Stagger effect
 const buttonVariants = {
@@ -44,7 +46,11 @@ export default function Index() {
     >
       <motion.div className="m-auto flex gap-5 flex-col w-full max-w-lg">
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton title="Multiplayer" color="multiplayer">
+          <MenuButton
+            title="Multiplayer"
+            color="multiplayer"
+            href={paths.multiplayer.root}
+          >
             <IconCircle icon="solar:users-group-two-rounded-bold" />
           </MenuButton>
         </motion.div>
