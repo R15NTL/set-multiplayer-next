@@ -1,15 +1,19 @@
 import React, { useState, useRef } from "react";
 import ButtonRipple from "./ButtonRipple";
+import { Icon } from "@iconify/react";
 
 export interface ButtonBaseProps
   extends React.HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+  loading?: boolean;
 }
 
 export default function ButtonBase({
   className,
   children,
   disabled,
+  loading,
   onClick,
   ...other
 }: ButtonBaseProps) {
@@ -23,7 +27,7 @@ export default function ButtonBase({
 
   return (
     <button
-      disabled={disabled}
+      disabled={disabled === true || loading === true}
       ref={buttonContainerRef}
       onClick={handleClick}
       className={`
@@ -38,12 +42,15 @@ outline -outline-offset-1 outline-slate-50/50
       {...other}
     >
       <span className="relative z-10">{children}</span>
-      {disabled !== true && (
-        <ButtonRipple
-          clickEvent={clickEvent}
-          container={buttonContainerRef.current}
-        />
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-400 z-10">
+          <Icon icon="svg-spinners:ring-resize" />
+        </div>
       )}
+      <ButtonRipple
+        clickEvent={clickEvent}
+        container={buttonContainerRef.current}
+      />
     </button>
   );
 }

@@ -29,7 +29,9 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, password, name } = parsedBody;
 
   if (await manageUsers.isUserExistsEmail(email)) {
-    res.status(400).json(errorResponse("User already exists"));
+    res
+      .status(400)
+      .json(errorResponse("A user already exists with this email"));
     return;
   }
 
@@ -40,7 +42,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   if (!user) {
-    res.status(400).json(errorResponse("User already exists"));
+    res.status(400).json(errorResponse("Error creating user"));
     return;
   }
 
