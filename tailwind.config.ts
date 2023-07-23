@@ -1,12 +1,13 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -17,10 +18,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -35,7 +36,7 @@ module.exports = {
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
+          DEFAULT: "var(--muted)",
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
@@ -47,9 +48,34 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
+          DEFAULT: "var(--card)",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        "multiplayer-dark": "#ef4444",
+        "multiplayer-mid": "#f87171",
+        "multiplayer-light": "#fca5a5",
+
+        "single-player-dark": "#9233ea",
+        "single-player-mid": "#a955f7",
+        "single-player-light": "#c084fc",
+
+        "settings-dark": "#15803d",
+        "settings-mid": "#16a34a",
+        "settings-light": "#22c55e",
+      },
+      padding: {
+        "header-height": "var(--header-height)",
+        "page-x-padding": "1.25rem",
+        "page-y-padding": "2.5rem",
+      },
+      margin: {
+        "header-height": "var(--header-height)",
+        "page-x-margin": "1.25rem",
+        "page-y-margin": "2.5rem",
+      },
+      height: {
+        "header-height": "var(--header-height)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,4 +99,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

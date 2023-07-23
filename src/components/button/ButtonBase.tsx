@@ -28,7 +28,8 @@ export default function ButtonBase({
       onClick={handleClick}
       className={`
       relative overflow-hidden
-      py-2 px-3 text-sm text-left font-medium 
+      py-2 px-3 text-sm font-medium 
+       text-center
 rounded-md
 outline -outline-offset-1 outline-slate-50/50
  shadow-xl 

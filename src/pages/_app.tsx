@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: MyAppProps) {
   const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
 
   return (
-    <div className={`${poppins.className}`}>
+    <div className={`dark ${poppins.className}`}>
       <QueryClientProvider client={queryClient}>
         <AxiosProvider>
           <SocketProvider>
