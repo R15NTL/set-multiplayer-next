@@ -8,6 +8,8 @@ import IconCircle from "@/features/home/IconCircle";
 import { motion } from "framer-motion";
 // Paths
 import { paths } from "@/routes/paths";
+// Auth
+import EmailVerifiedGuard from "@/features/auth/EmailVerifiedGuard/EmailVerifiedGuard";
 
 // Stagger effect
 const buttonVariants = {
@@ -33,7 +35,9 @@ const containerVariants = {
 };
 
 Index.getLayout = (page: React.ReactNode) => (
-  <MainLayout className="px-page-x-padding">{page}</MainLayout>
+  <MainLayout className="px-page-x-padding">
+    <EmailVerifiedGuard>{page}</EmailVerifiedGuard>
+  </MainLayout>
 );
 
 export default function Index() {

@@ -1,48 +1,27 @@
 import React, { useEffect, useState } from "react";
-// Next
-import { useRouter } from "next/router";
-// Yup
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-// React Hook Form
-import { useForm } from "react-hook-form";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
-// Services
-import { useCreateAccount } from "@/services/mutations/account";
 // Components
-import { Button } from "@/components/button";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardHeader,
-  CardFooter,
-} from "@/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-  FormDescription,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-// Paths
-import { paths } from "@/routes/paths";
+import { Card } from "@/components/ui/card";
 
 // Features
 import CreateAccountForm from "@/features/auth/createAccount/CreateAccountForm";
+import AccountCreated from "@/features/auth/createAccount/AccountCreated";
 
 CreateAccount.getLayout = (page: React.ReactNode) => (
   <MainLayout>{page}</MainLayout>
 );
 
 export default function CreateAccount() {
+  const [createdWithEmail, setCreatedWithEmail] = useState<string | null>(null);
+
+  const handleCreated = (email: string) => setCreatedWithEmail(email);
+
+  if (createdWithEmail) return <AccountCreated email={createdWithEmail} />;
+
   return (
     <Card className=" m-auto w-full max-w-md flex flex-col gap-3">
-      <CreateAccountForm />
+      <CreateAccountForm handleCreated={handleCreated} />
     </Card>
   );
 }

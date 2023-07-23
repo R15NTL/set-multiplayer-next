@@ -16,3 +16,19 @@ export const useCreateAccount = () => {
     return response.data;
   });
 };
+
+interface SendEmailVerificationParams {
+  email: string;
+}
+
+export const useSendVerificationEmail = () => {
+  const { axiosInstance } = useAxios();
+
+  return useMutation(async ({ email }: SendEmailVerificationParams) => {
+    const response = await axiosInstance.post(
+      "api/user/email-verification/send",
+      { email }
+    );
+    return response.data;
+  });
+};

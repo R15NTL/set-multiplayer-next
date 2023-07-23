@@ -46,11 +46,13 @@ const createAccountSchema = yup.object().shape({
     .required("Confirm password is required"),
 });
 
-interface CreateAccountFormProps {}
+interface CreateAccountFormProps {
+  handleCreated: (email: string) => void;
+}
 
-export default function CreateAccountForm({}: CreateAccountFormProps) {
-  const { push } = useRouter();
-
+export default function CreateAccountForm({
+  handleCreated,
+}: CreateAccountFormProps) {
   const [error, setError] = useState<string | null>(null);
   const { mutate: createAccount, isLoading: creatingAccount } =
     useCreateAccount();
@@ -77,7 +79,7 @@ export default function CreateAccountForm({}: CreateAccountFormProps) {
       },
       {
         onSuccess: () => {
-          push(paths.auth.signIn.root);
+          handleCreated(data.email);
         },
         onError: (error) => {
           console.log(error);
