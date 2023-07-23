@@ -1,8 +1,15 @@
 import { requestHandler } from "./handleRequest";
 import { authorizeUser } from "../users/authorize";
 import { createMocks } from "node-mocks-http";
+import manageUsers from "../users/manageUsers";
 
 jest.mock("../users/authorize");
+jest.mock("@/server/auth/users/manageUsers", () => ({
+  __esModule: true,
+  default: {
+    getUserById: jest.fn(),
+  },
+}));
 
 // Types
 type methods = "GET" | "POST" | "PUT" | "DELETE";
@@ -58,9 +65,13 @@ function mockAuthorizeUser(authorize: boolean, overrides: any = {}) {
 
   (authorizeUser as jest.Mock).mockResolvedValue({
     email_verified: true,
-    uid: "test-user-id",
+    user_id: "test-user-id",
     ...overrides,
   });
+}
+
+function mockGetUserById(user: any) {
+  (manageUsers.getUserById as jest.Mock).mockResolvedValue(user);
 }
 
 describe("requestHandler", () => {
@@ -96,9 +107,10 @@ describe("requestHandler", () => {
 
   test("should respond 403 Forbidden when user is authorized but email is not verified", async () => {
     const { req, res, handlers, settings } = createMockRequest({});
-    mockAuthorizeUser(true, {
-      email_verified: false,
-      uid: "test-user-id",
+    mockAuthorizeUser(true, {});
+
+    mockGetUserById({
+      emailVerified: false,
     });
 
     await requestHandler(req as any, res as any, handlers, settings);
@@ -124,6 +136,10 @@ describe("requestHandler", () => {
       allowUnverifiedEmail: false,
     });
 
+    mockGetUserById({
+      emailVerified: true,
+    });
+
     await requestHandler(req as any, res as any, handlers, settings);
 
     expect(res._getStatusCode()).toBe(200);
@@ -138,7 +154,7 @@ describe("requestHandler", () => {
 
     mockAuthorizeUser(true, {
       email_verified: false,
-      uid: "test-user-id",
+      user_id: "test-user-id",
     });
 
     await requestHandler(req as any, res as any, handlers, settings);

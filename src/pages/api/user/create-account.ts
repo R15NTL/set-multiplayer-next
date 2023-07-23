@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { requestHandler } from "@/server/auth/services/handleRequest";
-import createAccountMethods from "@/server/handlers/users/account";
+import createAccountMethods from "@/server/handlers/users/create-account";
 
 export default async function createAccount(
   req: NextApiRequest,

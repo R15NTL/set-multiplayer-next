@@ -1,7 +1,8 @@
 import { authorizeUser } from "../users/authorize";
 import { NextApiRequest, NextApiResponse } from "next";
 import { errorResponse } from "@/server/utils/utils";
-import { CustomSession } from "@/server/types/session";
+import manageUsers from "../users/manageUsers";
+import type { UserRecord } from "firebase-admin/auth";
 
 interface RequestHandlerSettings {
   authorize: boolean;
@@ -11,7 +12,7 @@ interface RequestHandlerSettings {
 type Handler = (
   req: NextApiRequest,
   res: NextApiResponse,
-  user?: CustomSession
+  user?: UserRecord
 ) => void | Promise<void>;
 
 export const requestHandler = async (
@@ -39,14 +40,21 @@ export const requestHandler = async (
     }
 
     // Authorization check.
-    const user = authorize && (await authorizeUser(req));
-    if (authorize && !user) {
+    const isAuthorized = authorize && (await authorizeUser(req));
+    const user =
+      isAuthorized && (await manageUsers.getUserById(isAuthorized.user_id));
+    if (authorize && !isAuthorized) {
       res.status(401).json(errorResponse("Unauthorized"));
       return;
     }
 
+    if (authorize && !user) {
+      res.status(401).json(errorResponse("User not found"));
+      return;
+    }
+
     // If user has not verified their email.
-    const userHasVerifiedEmail = user && user.email_verified;
+    const userHasVerifiedEmail = user && user.emailVerified;
     if (authorize && !allowUnverifiedEmail && !userHasVerifiedEmail) {
       res.status(403).json(errorResponse("Email not verified"));
       return;

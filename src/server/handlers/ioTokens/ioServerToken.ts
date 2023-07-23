@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getEnv } from "@/utils";
 import jwt from "jsonwebtoken";
-import { CustomSession } from "@/server/types/session";
 import { successResponse } from "@/server/utils/utils";
+import type { UserRecord } from "firebase-admin/auth";
 
 const GET = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  user?: CustomSession
+  user?: UserRecord
 ) => {
   if (!user) {
     return res
@@ -18,8 +18,8 @@ const GET = async (
 
   const token = jwt.sign(
     {
-      user_id: user.user_id,
-      username: user.name,
+      user_id: user.uid,
+      username: user.displayName,
     },
     ioServerSecret,
     {

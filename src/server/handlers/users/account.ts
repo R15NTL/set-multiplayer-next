@@ -1,51 +1,31 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import * as yup from "yup";
-import manageUsers from "@/server/auth/users/manageUsers";
-import {
-  errorResponse,
-  successResponse,
-  parseBody,
-} from "@/server/utils/utils";
+import { getEnv } from "@/utils";
+import jwt from "jsonwebtoken";
+import { CustomSession } from "@/server/types/session";
+import { successResponse } from "@/server/utils/utils";
 
-const postSchema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().required().email(),
-  password: yup.string().required().min(8),
-  confirm_password: yup
-    .string()
-    .required()
-    .oneOf([yup.ref("password")], "Passwords must match"),
-});
-
-const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-  const parsedBody = parseBody(req);
-
-  try {
-    await postSchema.validate(parsedBody);
-  } catch (error: any) {
-    res.status(400).json(errorResponse(error.message));
-    return;
-  }
-  const { email, password, name } = parsedBody;
-
-  if (await manageUsers.isUserExistsEmail(email)) {
-    res.status(400).json(errorResponse("User already exists"));
-    return;
-  }
-
-  const user = await manageUsers.createUser({
-    displayName: name,
-    email,
-    password,
-  });
-
+const GET = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  user?: CustomSession
+) => {
   if (!user) {
-    res.status(400).json(errorResponse("User already exists"));
-    return;
+    return res
+      .status(500)
+      .json({ error: "User authorization is not enabled for this request" });
   }
 
-  res.status(200).json(successResponse("User created", {}));
+  const account = {
+    user_id: user.user_id,
+    username: user.name,
+    email: user.email,
+    email_verified: user.email_verified,
+  };
+
+  res.status(200).json(successResponse("Success", { account }));
 };
 
-const createAccountMethods = { POST };
-export default createAccountMethods;
+const ioServerTokenMethods = {
+  GET,
+};
+export default ioServerTokenMethods;
