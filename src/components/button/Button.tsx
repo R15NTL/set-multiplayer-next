@@ -2,10 +2,11 @@ import React from "react";
 import Link, { LinkProps } from "next/link";
 // Local
 import ButtonContained, { ButtonContainedProps } from "./ButtonContained";
+import ButtonBase from "./ButtonBase";
 
 export interface ButtonProps extends ButtonContainedProps {
   href?: LinkProps["href"];
-  variant?: "contained";
+  variant?: "contained" | "outlined";
 }
 
 export default function Button({
@@ -13,10 +14,12 @@ export default function Button({
   variant = "contained",
   ...other
 }: ButtonProps) {
-  const renderButton = (
-    <ButtonContained tabIndex={href ? -1 : other.tabIndex} {...other} />
-  );
+  const renderButton = () => {
+    if (variant === "outlined")
+      return <ButtonBase tabIndex={href ? -1 : other.tabIndex} {...other} />;
+    return <ButtonContained tabIndex={href ? -1 : other.tabIndex} {...other} />;
+  };
 
-  if (href) return <Link href={href}>{renderButton}</Link>;
-  return <>{renderButton}</>;
+  if (href) return <Link href={href}>{renderButton()}</Link>;
+  return <>{renderButton()}</>;
 }

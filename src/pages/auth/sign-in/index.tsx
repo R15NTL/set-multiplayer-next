@@ -3,83 +3,178 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 // Routes
 import { paths } from "@/routes/paths";
+// Icons
+import { Icon } from "@iconify/react";
+// Form
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 // Components
 import { Button } from "@/components/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import MainLayout from "@/layouts/mainLayout/MainLayout";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 // Auth
 import { useSession, signIn } from "next-auth/react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { type } from "os";
+import GuestGuard from "@/features/auth/GuestGuard";
 
-SignIn.getLayout = (page: React.ReactNode) => <MainLayout>{page}</MainLayout>;
+SignIn.getLayout = (page: React.ReactNode) => (
+  <MainLayout>
+    <GuestGuard>{page}</GuestGuard>
+  </MainLayout>
+);
+
+const signInSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid email address")
+    .required("Please enter a valid email address"),
+  password: yup.string().required("Password is a required field"),
+});
 
 export default function SignIn() {
-  const { data: session } = useSession();
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
+  // State
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const getHandleCredentialsChange =
-    (key: keyof typeof credentials) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCredentials((prev) => ({ ...prev, [key]: e.target.value }));
-    };
-
+  // Handlers
   const handleSignInWithGoogle = () => signIn("google-sign-in");
 
-  const handleSignInWithEmailAndPassword = () => {
+  // Form
+  const form = useForm<yup.InferType<typeof signInSchema>>({
+    resolver: yupResolver(signInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSignInWithEmailAndPassword = (
+    data: yup.InferType<typeof signInSchema>
+  ) => {
     if (typeof window === "undefined") return;
     initializeApp({
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     });
-
     const auth = getAuth();
+    setIsLoading(true);
 
-    signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+    signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         user.getIdToken().then((idToken) => {
-          // Here, you now have the ID token
-          // You can now send this token to your backend
           signIn("credentials", {
             token: idToken,
           });
         });
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        // ...handle errors here
+        setIsLoading(false);
+        setError(errorMessage);
       });
   };
 
   return (
     <>
-      <div className=" px-page-x-padding py-page-y-padding">
-        <Button onClick={handleSignInWithGoogle}>Sign in with google</Button>
-        <p>Or</p>
-        <input
-          className="text-black"
-          value={credentials.email}
-          onChange={getHandleCredentialsChange("email")}
-          type="email"
-          placeholder="Email"
-        />
-        <input
-          className="text-black"
-          value={credentials.password}
-          onChange={getHandleCredentialsChange("password")}
-          type="password"
-          placeholder="Password"
-        />
-        <Button onClick={handleSignInWithEmailAndPassword}>Sign in</Button>
-        <Link href={paths.auth.createAccount.root}>Create account</Link>
-      </div>
+      <Card className="m-auto w-full max-w-sm flex flex-col gap-3">
+        <CardHeader className="space-y-1">
+          <CardTitle>Sign in</CardTitle>
+        </CardHeader>
+        <Form {...form}>
+          <form
+            className="flex flex-col gap-3"
+            onSubmit={form.handleSubmit(handleSignInWithEmailAndPassword)}
+          >
+            <CardContent className="grid gap-3">
+              <div className=" flex flex-col">
+                <Button
+                  variant="outlined"
+                  type="button"
+                  onClick={handleSignInWithGoogle}
+                >
+                  <span>
+                    <Icon className="inline mr-3" icon="logos:google-icon" />
+                  </span>
+                  <span>Sign in with Google</span>
+                </Button>
+              </div>
+              <div className="relative mt-2">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">
+                    Or
+                  </span>
+                </div>
+              </div>
+              {error && (
+                <Alert variant="destructive">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+              <div className="flex flex-col gap-3">
+                <FormField
+                  name="email"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="me@example.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  name="password"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input type="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full" loading={isLoading}>
+                Sign in
+              </Button>
+            </CardFooter>
+          </form>
+        </Form>
+      </Card>
     </>
   );
 }

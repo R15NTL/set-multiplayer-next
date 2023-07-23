@@ -18,5 +18,7 @@ export default function GuestGuard({ children }: GuestGuardProps) {
     }
   }, [status]);
 
+  if (status !== "unauthenticated") return <div>loading...</div>;
+
   return <>{children}</>;
 }
