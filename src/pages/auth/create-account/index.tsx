@@ -7,6 +7,7 @@ import * as yup from "yup";
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Services
 import { useAxios } from "@/hooks/useAxios";
+import { useCreateAccount } from "@/services/mutations/account";
 // Components
 import { Button } from "@/components/button";
 // Paths
@@ -28,57 +29,41 @@ const createAccountSchema = yup.object().shape({
 });
 
 interface CreateAccountFormValues {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
 export default function CreateAccount() {
-  const { axiosInstance } = useAxios();
   const { replace } = useRouter();
+  const { mutate: createAccount } = useCreateAccount();
 
   const [formValues, setFormValues] = useState<CreateAccountFormValues>({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const [validForm, setValidForm] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    createAccountSchema
-      .validate(formValues)
-      .then(() => {
-        setValidForm(true);
-        setError(null);
-      })
-      .catch((err) => {
-        setValidForm(false);
-        setError(err.message);
-      });
-  }, [formValues]);
 
   const handleCreateAccount = async () => {
-    if (!validForm) return;
-    try {
-      const response = await axiosInstance.post(
-        apiRoutes.user.createAccount.root,
-        {
-          email: formValues.email,
-          password: formValues.password,
-          confirm_password: formValues.confirmPassword,
-        }
-      );
-
-      if (response.status === 200) {
-        replace(paths.auth.createAccount.finishUp.root);
+    createAccount(
+      {
+        name: formValues.name,
+        email: formValues.email,
+        password: formValues.password,
+        confirm_password: formValues.confirmPassword,
+      },
+      {
+        onSuccess: () => {
+          replace(paths.auth.createAccount.finishUp.root);
+        },
       }
-    } catch (err) {}
+    );
   };
 
   return (
     <div>
-      {error && <p className="text-red-500">{error}</p>}
       <input type="email" className="text-black" placeholder="Email" />
       <input type="password" className="text-black" placeholder="Password" />
       <input
@@ -86,7 +71,9 @@ export default function CreateAccount() {
         className="text-black"
         placeholder="Confirm password"
       />
-      <Button>Create account</Button>
+      <Button disabled onClick={handleCreateAccount}>
+        Create account
+      </Button>
     </div>
   );
 }

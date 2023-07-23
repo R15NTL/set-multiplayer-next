@@ -5,10 +5,17 @@ import type { NextPage } from "next";
 import { SessionProvider } from "next-auth/react";
 import { AxiosProvider } from "@/services/axios/AxiosProvider";
 import SocketProvider from "@/services/socket/SocketProvider";
+// React Query
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // Fonts
 import { Poppins } from "next/font/google";
 // Analytics
 import { Analytics } from "@vercel/analytics/react";
+
+// ----------------QueryClient----------------
+
+const queryClient = new QueryClient();
 
 // ----------------Fonts----------------
 const poppins = Poppins({
@@ -31,14 +38,17 @@ export default function App({ Component, pageProps }: MyAppProps) {
 
   return (
     <div className={`${poppins.className}`}>
-      <AxiosProvider>
-        <SocketProvider>
-          <SessionProvider session={pageProps.session}>
-            {getLayout(<Component {...pageProps} />)}
-            <Analytics />
-          </SessionProvider>
-        </SocketProvider>
-      </AxiosProvider>
+      <QueryClientProvider client={queryClient}>
+        <AxiosProvider>
+          <SocketProvider>
+            <SessionProvider session={pageProps.session}>
+              {getLayout(<Component {...pageProps} />)}
+              <Analytics />
+            </SessionProvider>
+          </SocketProvider>
+        </AxiosProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </div>
   );
 }

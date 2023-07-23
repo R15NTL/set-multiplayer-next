@@ -2,11 +2,14 @@ import React, { useState, useRef } from "react";
 import ButtonRipple from "./ButtonRipple";
 
 export interface ButtonBaseProps
-  extends React.HTMLAttributes<HTMLButtonElement> {}
+  extends React.HTMLAttributes<HTMLButtonElement> {
+  disabled?: boolean;
+}
 
 export default function ButtonBase({
   className,
   children,
+  disabled,
   onClick,
   ...other
 }: ButtonBaseProps) {
@@ -20,6 +23,7 @@ export default function ButtonBase({
 
   return (
     <button
+      disabled={disabled}
       ref={buttonContainerRef}
       onClick={handleClick}
       className={`
@@ -29,14 +33,16 @@ rounded-md
 outline -outline-offset-1 outline-slate-50/50
  shadow-xl 
  transition-all duration-300 ease-in-out
-  ${className}`}
+  ${className} ${disabled && "bg-slate-400 hover:bg-slate-400"}`}
       {...other}
     >
       <span className="relative z-10">{children}</span>
-      <ButtonRipple
-        clickEvent={clickEvent}
-        container={buttonContainerRef.current}
-      />
+      {disabled !== true && (
+        <ButtonRipple
+          clickEvent={clickEvent}
+          container={buttonContainerRef.current}
+        />
+      )}
     </button>
   );
 }
