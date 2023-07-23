@@ -1,13 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getEnv } from "@/utils";
-import jwt from "jsonwebtoken";
-import { CustomSession } from "@/server/types/session";
 import { successResponse } from "@/server/utils/utils";
+import type { UserRecord } from "firebase-admin/auth";
 
 const GET = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  user?: CustomSession
+  user?: UserRecord
 ) => {
   if (!user) {
     return res
@@ -16,16 +14,16 @@ const GET = async (
   }
 
   const account = {
-    user_id: user.user_id,
-    username: user.name,
+    user_id: user.uid,
+    username: user.displayName,
     email: user.email,
-    email_verified: user.email_verified,
+    email_verified: user.emailVerified,
   };
 
   res.status(200).json(successResponse("Success", { account }));
 };
 
-const ioServerTokenMethods = {
+const accountMethods = {
   GET,
 };
-export default ioServerTokenMethods;
+export default accountMethods;
