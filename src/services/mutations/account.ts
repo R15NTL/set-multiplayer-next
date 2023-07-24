@@ -43,3 +43,21 @@ export const useSendPasswordResetLink = () => {
     return response.data;
   });
 };
+
+interface ResetPasswordParams {
+  token?: string;
+  password: string;
+  confirm_password: string;
+}
+
+export const useResetPassword = () => {
+  const { axiosInstance } = useAxios();
+
+  return useMutation(async (data: ResetPasswordParams) => {
+    const response = await axiosInstance.put(
+      "api/user/reset-password/reset",
+      data
+    );
+    return response.data;
+  });
+};

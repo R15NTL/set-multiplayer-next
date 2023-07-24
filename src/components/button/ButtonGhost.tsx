@@ -19,7 +19,7 @@ export default function ButtonGhost({
         color === "multiplayer" && "text-multiplayer-mid",
         color === "singleplayer" && "text-single-player-mid",
         color === "settings" && "text-settings-mid",
-        "outline-0 hover:outline-0 border-none outline-offset-0 shadow-none hover:shadow-md",
+        "outline-0 hover:outline-0 border-none outline-offset-0 shadow-none hover:shadow-sm",
         className
       )}
     >

@@ -52,7 +52,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     subject: "Reset Password",
     text: `Reset your Set multiplayer password by clicking the following link: \n${getEnv(
       "BASE_URL_FRONTEND"
-    )}\/reset-password\/reset?token=${verificationToken}\n\n
+    )}\/auth\/forgot-password\/reset?token=${verificationToken}\n\n
     If you did not request this, please ignore this email and your password will remain unchanged.\n`,
   };
 

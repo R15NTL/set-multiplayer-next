@@ -177,9 +177,11 @@ export default function SignIn() {
               <Button type="submit" className="w-full" loading={isLoading}>
                 Sign in
               </Button>
-              <Button variant="ghost" className="w-full" type="button">
-                Don't have an account? Sign up
-              </Button>
+              <Link className="w-full" href={paths.auth.createAccount.root}>
+                <Button variant="ghost" className="w-full" type="button">
+                  Don't have an account? Sign up
+                </Button>
+              </Link>
             </CardFooter>
           </form>
         </Form>
