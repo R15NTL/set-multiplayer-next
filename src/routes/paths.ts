@@ -4,6 +4,10 @@ export const paths = {
     signIn: {
       root: "/auth/sign-in",
     },
+    forgotPassword: {
+      send: "/auth/forgot-password/send",
+      reset: "/auth/forgot-password/reset",
+    },
     createAccount: {
       root: "/auth/create-account",
       finishUp: {

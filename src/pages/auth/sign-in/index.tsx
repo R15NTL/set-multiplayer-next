@@ -166,7 +166,10 @@ export default function SignIn() {
                   )}
                 />
               </div>
-              <Link href="#" className="text-xs ml-auto hover:underline my-1">
+              <Link
+                href={paths.auth.forgotPassword.send}
+                className="text-xs ml-auto hover:underline my-1"
+              >
                 Forgot password?
               </Link>
             </CardContent>

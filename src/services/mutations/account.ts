@@ -32,3 +32,14 @@ export const useSendVerificationEmail = () => {
     return response.data;
   });
 };
+
+export const useSendPasswordResetLink = () => {
+  const { axiosInstance } = useAxios();
+
+  return useMutation(async ({ email }: SendEmailVerificationParams) => {
+    const response = await axiosInstance.post("api/user/reset-password/send", {
+      email,
+    });
+    return response.data;
+  });
+};
