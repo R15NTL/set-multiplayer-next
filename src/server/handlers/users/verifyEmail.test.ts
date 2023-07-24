@@ -41,6 +41,7 @@ describe("PUT /verifyEmail", () => {
       uid: "test-user-id",
     });
     mockVerify.mockReturnValue({
+      purpose: "email-verification",
       userID: "test-user-id",
     });
     mockUpdateUser.mockResolvedValue({

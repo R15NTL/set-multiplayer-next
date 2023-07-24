@@ -76,10 +76,10 @@ export default function AccountCreated({ email }: AccountCreatedProps) {
     );
 
   return (
-    <div className="flex flex-col m-auto w-full max-w-md gap-10 text-center items-center pb-5">
+    <div className="flex flex-col m-auto w-full max-w-md gap-5 text-center items-center pb-5">
       <Icon
-        icon="svg-spinners:blocks-shuffle-3"
-        className="h-28 w-28 text-muted"
+        icon="svg-spinners:3-dots-bounce"
+        className="h-16 w-16 text-muted"
       />
       <div className="flex flex-col gap-3">
         <h1 className="font-medium">Please wait...</h1>

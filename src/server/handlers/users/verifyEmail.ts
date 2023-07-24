@@ -33,6 +33,7 @@ const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const validate = jwt.verify(token, getEnv("JWT_SECRET_KEY"));
     decodedToken = validate;
+    if (decodedToken.purpose !== "email-verification") throw new Error();
   } catch (error) {
     res.status(400).json(errorResponse("Invalid token."));
     return;

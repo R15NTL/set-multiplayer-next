@@ -38,7 +38,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Create a verification token.
   const verificationToken = jwt.sign(
-    { userID: user.uid },
+    { userID: user.uid, purpose: "password-reset" },
     getEnv("JWT_SECRET_KEY"),
     {
       expiresIn: 1000 * 60 * 20, // 20 minutes
@@ -50,10 +50,10 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     from: getEnv("NODEMAILER_EMAIL_PROVIDER_SENDER"),
     to: user.email,
     subject: "Reset Password",
-    text: `Reset your password by clicking the following link: \n${getEnv(
+    text: `Reset your Set multiplayer password by clicking the following link: \n${getEnv(
       "BASE_URL_FRONTEND"
-    )}\/verify\/${verificationToken}\n\n
-    Verification token: ${verificationToken}`,
+    )}\/reset-password\/reset?token=${verificationToken}\n\n
+    If you did not request this, please ignore this email and your password will remain unchanged.\n`,
   };
 
   // Send the email.

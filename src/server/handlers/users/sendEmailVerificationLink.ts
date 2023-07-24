@@ -42,7 +42,7 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Create a verification token.
   const verificationToken = jwt.sign(
-    { userID: user.uid },
+    { userID: user.uid, purpose: "email-verification" },
     getEnv("JWT_SECRET_KEY"),
     {
       expiresIn: 1000 * 60 * 20, // 20 minutes

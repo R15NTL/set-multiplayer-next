@@ -43,6 +43,7 @@ describe("PUT /resetPassword", () => {
       uid: "test-user-id",
     });
     mockVerify.mockReturnValue({
+      purpose: "password-reset",
       userID: "test-user-id",
     });
     mockUpdateUser.mockResolvedValue({
