@@ -46,11 +46,11 @@ export default function AccountCreated({ email }: AccountCreatedProps) {
           className="h-28 w-28 text-muted"
         />
         <div className="flex flex-col gap-3">
-          <h1 className="font-medium">You've got mail!</h1>
+          <h1 className="font-medium">Email verification link sent</h1>
 
           <p className="text-sm">
-            We have sent an email verification link to {email}. This link is
-            valid for 30 minutes.
+            We have sent an email verification link to {email}. Please follow
+            the instructions in the email to verify your account.
           </p>
         </div>
       </div>

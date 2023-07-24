@@ -61,3 +61,19 @@ export const useResetPassword = () => {
     return response.data;
   });
 };
+
+interface VerifyEmailParams {
+  token?: string;
+}
+
+export const useVerifyEmail = () => {
+  const { axiosInstance } = useAxios();
+
+  return useMutation(async (data: VerifyEmailParams) => {
+    const response = await axiosInstance.put(
+      "api/user/email-verification/verify",
+      data
+    );
+    return response.data;
+  });
+};

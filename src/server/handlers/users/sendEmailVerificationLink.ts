@@ -56,8 +56,11 @@ const POST = async (req: NextApiRequest, res: NextApiResponse) => {
     subject: "Account Verification",
     text: `Please verify your account by clicking the following link: \n${getEnv(
       "BASE_URL_FRONTEND"
-    )}\/verify\/${verificationToken}\n\n
-    Verification token: ${verificationToken}`,
+    )}\/auth\/verify-email?token=${verificationToken}&email=${encodeURIComponent(
+      user.email!
+    )}\n\n
+    If you did not request this, please ignore this email.\n
+    `,
   };
 
   // Send the email.
