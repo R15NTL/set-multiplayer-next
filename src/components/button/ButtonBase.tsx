@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import ButtonRipple from "./ButtonRipple";
 import { Icon } from "@iconify/react";
+import { cn } from "@/lib/utils";
 
 export interface ButtonBaseProps
   extends React.HTMLAttributes<HTMLButtonElement> {
@@ -30,15 +31,19 @@ export default function ButtonBase({
       disabled={disabled === true || loading === true}
       ref={buttonContainerRef}
       onClick={handleClick}
-      className={`
+      className={cn(
+        `
       relative overflow-hidden
       py-2 px-3 text-sm font-medium 
        text-center
-rounded-md
-outline -outline-offset-1 outline-slate-50/50
+rounded-md hover:bg-slate-700/30
+outline -outline-offset-1 outline-slate-600/80
  shadow-xl 
  transition-all duration-300 ease-in-out
-  ${className} ${disabled && "bg-slate-400 hover:bg-slate-400"}`}
+  `,
+        className,
+        ` ${disabled && "bg-slate-400 hover:bg-slate-400"}`
+      )}
       {...other}
     >
       <span className="relative z-10">{children}</span>

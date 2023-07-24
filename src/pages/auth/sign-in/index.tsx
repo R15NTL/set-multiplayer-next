@@ -105,7 +105,7 @@ export default function SignIn() {
             className="flex flex-col gap-3"
             onSubmit={form.handleSubmit(handleSignInWithEmailAndPassword)}
           >
-            <CardContent className="grid gap-3">
+            <CardContent className="grid gap-3 pb-0">
               <div className=" flex flex-col">
                 <Button
                   variant="outlined"
@@ -166,10 +166,16 @@ export default function SignIn() {
                   )}
                 />
               </div>
+              <Link href="#" className="text-xs ml-auto hover:underline my-1">
+                Forgot password?
+              </Link>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex flex-col gap-3">
               <Button type="submit" className="w-full" loading={isLoading}>
                 Sign in
+              </Button>
+              <Button variant="ghost" className="w-full" type="button">
+                Don't have an account? Sign up
               </Button>
             </CardFooter>
           </form>

@@ -17,7 +17,7 @@ export default function ButtonContained({
       return (
         <ButtonBase
           {...other}
-          className={` bg-multiplayer-mid hover:bg-multiplayer-dark  ${className}`}
+          className={` bg-multiplayer-mid hover:bg-multiplayer-dark outline-slate-50/50  ${className}`}
         >
           {children}
         </ButtonBase>
@@ -26,7 +26,7 @@ export default function ButtonContained({
       return (
         <ButtonBase
           {...other}
-          className={` bg-single-player-mid hover:bg-single-player-dark  ${className}`}
+          className={` bg-single-player-mid hover:bg-single-player-dark outline-slate-50/50 ${className}`}
         >
           {children}
         </ButtonBase>
@@ -35,7 +35,7 @@ export default function ButtonContained({
       return (
         <ButtonBase
           {...other}
-          className={` bg-settings-mid hover:bg-settings-dark  ${className}`}
+          className={` bg-settings-mid hover:bg-settings-dark outline-slate-50/50 ${className}`}
         >
           {children}
         </ButtonBase>
