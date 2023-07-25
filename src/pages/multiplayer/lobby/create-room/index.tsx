@@ -3,6 +3,18 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/button";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters, CreateRoomParams } from "@/services/socket/emitters";
+// Components
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardFooter,
+  CardDescription,
+} from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 // Services
 import { useAxios } from "@/hooks/useAxios";
 // Paths
@@ -63,24 +75,40 @@ export default function CreateRoom() {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        className="text-black"
-        value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
-      />
-      <select
-        className="text-black"
-        value={gameType}
-        onChange={(e) =>
-          setGameType(e.target.value as CreateRoomParams["game_type"])
-        }
-      >
-        <option value="knockout">Knockout</option>
-        <option value="competitive">Competitive</option>
-      </select>
-      <Button onClick={handleCreateRoom}>Create</Button>
-    </div>
+    <Card className="m-auto w-full max-w-lg">
+      <CardHeader>
+        <CardTitle>Create room</CardTitle>
+        <CardDescription>Invite your friends to play with you.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Label htmlFor="room-name">Room name</Label>
+        <Input
+          id="room-name"
+          type="text"
+          value={roomName}
+          onChange={(e) => setRoomName(e.target.value)}
+        />
+        <Label htmlFor="game-type">Game type</Label>
+        <RadioGroup
+          id="game-type"
+          value={gameType}
+          onValueChange={(value: CreateRoomParams["game_type"]) =>
+            setGameType(value)
+          }
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem id="knockout" value="knockout" />
+            <Label htmlFor="knockout">Knockout</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem id="competitive" value="competitive" />
+            <Label htmlFor="competitive">Competitive</Label>
+          </div>
+        </RadioGroup>
+      </CardContent>
+      <CardFooter>
+        <Button onClick={handleCreateRoom}>Create</Button>
+      </CardFooter>
+    </Card>
   );
 }
