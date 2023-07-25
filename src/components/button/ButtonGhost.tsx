@@ -9,7 +9,7 @@ export interface ButtonGhostProps extends ButtonBaseProps {
 export default function ButtonGhost({
   className,
   children,
-  color = "multiplayer",
+  color,
   ...other
 }: ButtonGhostProps) {
   return (

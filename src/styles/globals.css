@@ -7,10 +7,10 @@
     --background: #1e293b;
     --foreground: 210 40% 98%;
 
-    --muted: #475569;
+    --muted: #94a3b8;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: #1e293b;
     --popover-foreground: 210 40% 98%;
 
     --card: #1e293b;
@@ -25,7 +25,7 @@
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: #f87171;
     --accent-foreground: 210 40% 98%;
 
     --destructive: #f43f5e;
