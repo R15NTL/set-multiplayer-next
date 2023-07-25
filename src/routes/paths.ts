@@ -1,5 +1,8 @@
 export const paths = {
   menu: "/",
+  account: {
+    root: "/account",
+  },
   auth: {
     signIn: {
       root: "/auth/sign-in",

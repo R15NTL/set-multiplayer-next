@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
 import { paths } from "@/routes/paths";
 // Components
 import { Button } from "@/components/button";
@@ -61,10 +62,12 @@ export default function AccountPopover() {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem onSelect={() => {}} className="">
-                  <Icon icon="tabler:settings" className="mr-2" />
-                  <span>Manage account</span>
-                </DropdownMenuItem>
+                <Link href={paths.account.root} passHref>
+                  <DropdownMenuItem onSelect={() => {}} className="">
+                    <Icon icon="tabler:settings" className="mr-2" />
+                    <span>Manage account</span>
+                  </DropdownMenuItem>
+                </Link>
 
                 <DialogTrigger className="w-full">
                   <DropdownMenuItem>
