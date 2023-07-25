@@ -7,6 +7,9 @@ import { paths } from "@/routes/paths";
 import AuthGuard from "@/features/auth/AuthGuard";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
+// Features
+import WaitingForPlayers from "@/features/multiplayer/game/WaitingForPlayers";
+import GameRoom from "@/features/multiplayer/game/GameRoom";
 
 Game.getLayout = (page: React.ReactNode) => (
   <MainLayout>
@@ -22,11 +25,11 @@ export default function Game() {
     if (!currentRoom) {
       replace(paths.multiplayer.lobby.root);
     }
-
-    if (currentRoom?.game_status === "waiting-for-players") {
-      replace(paths.multiplayer.game.waitingForPlayers);
-    }
   }, [currentRoom]);
 
-  return <div>Game</div>;
+  if (currentRoom?.game_status === "waiting-for-players") {
+    return <WaitingForPlayers />;
+  }
+
+  return <GameRoom />;
 }

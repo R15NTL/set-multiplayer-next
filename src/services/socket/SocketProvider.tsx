@@ -36,7 +36,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
 
   useEffect(() => {
     const onConnect = () => setIsConnected(true);
-    const onDisconnect = () => setIsConnected(false);
+    const onDisconnect = () => {
+      setCurrentRoom(null);
+      setIsConnected(false);
+    };
     const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => setLobbyRooms(rooms);
     const onReceiveRoom = (room: Room | null) => setCurrentRoom(room);
 

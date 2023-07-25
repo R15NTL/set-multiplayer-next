@@ -29,7 +29,6 @@ export const paths = {
     game: {
       root: "/multiplayer/game",
       addedToRoom: "/multiplayer/game/added-to-room",
-      waitingForPlayers: "/multiplayer/game/waiting-for-players",
     },
   },
 };
