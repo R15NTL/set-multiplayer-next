@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useToast } from "@/components/ui/use-toast";
 // Routes
 import { paths } from "@/routes/paths";
 // Socket.io
@@ -33,6 +34,7 @@ const socket = io(process.env.NEXT_PUBLIC_IO_SERVER_URL ?? "", {
 
 export default function SocketProvider({ children }: SocketProviderProps) {
   const { pathname } = useRouter();
+  const { toast } = useToast();
 
   // State
   const [isConnected, setIsConnected] = useState(false);
@@ -50,6 +52,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
   };
   const onReceiveRoom = (room: Room | null) => setCurrentRoom(room);
 
+  const onReceiveError = ({ message }: { message: string }) => {
+    toast({ description: message, variant: "destructive" });
+  };
+
   useEffect(() => {
     if (pathname.startsWith(paths.multiplayer.root) && !isConnected)
       socket.connect();
@@ -65,17 +71,14 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     socket.on("disconnect", onDisconnect);
     socket.on("receive-rooms", onReceiveRooms);
     socket.on("receive-room", onReceiveRoom);
-    socket.on("error", (error: string) => {
-      console.error(error);
-      setErrors((errors) => [...errors, error]);
-    });
+    socket.on("error", onReceiveError);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
       socket.off("receive-rooms", onReceiveRooms);
       socket.off("receive-room", onReceiveRoom);
-      socket.off("error");
+      socket.off("error", onReceiveError);
     };
   }, [socket]);
 

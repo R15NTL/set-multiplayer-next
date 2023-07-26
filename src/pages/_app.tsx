@@ -1,6 +1,8 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
+// Components
+import { Toaster } from "@/components/ui/toaster";
 // Providers
 import { SessionProvider } from "next-auth/react";
 import { AxiosProvider } from "@/services/axios/AxiosProvider";
@@ -44,6 +46,7 @@ export default function App({ Component, pageProps }: MyAppProps) {
             <SessionProvider session={pageProps.session}>
               {getLayout(<Component {...pageProps} />)}
               <Analytics />
+              <Toaster />
             </SessionProvider>
           </SocketProvider>
         </AxiosProvider>
