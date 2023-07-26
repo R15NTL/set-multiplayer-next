@@ -12,13 +12,17 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+// Local
+import PlayerCard from "./playerCard";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
+// Account
+import { useGetAccount } from "@/services/queries/account";
 
 export default function WaitingForPlayers() {
   const { currentRoom, socket } = useSocket();
+  const { data: account } = useGetAccount();
 
   const { replace } = useRouter();
 
@@ -29,6 +33,14 @@ export default function WaitingForPlayers() {
   }, [currentRoom]);
 
   const hostId = currentRoom?.host.user_id;
+
+  const sortedPlayers =
+    currentRoom?.room_players?.sort((a, b) => {
+      if (a.user.user_id === account?.user_id) {
+        return -1;
+      }
+      return a.user.username.localeCompare(b.user.username);
+    }) ?? [];
 
   const handleStartGame = () => {
     const playersToRemove: string[] = [];
@@ -47,10 +59,22 @@ export default function WaitingForPlayers() {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-3">
-          <Card className="h-32"></Card>
-          <Card className="h-32"></Card>
-          <Card className="h-32"></Card>
-          <Card className="h-32"></Card>
+          <PlayerCard
+            name={sortedPlayers[0]?.user?.username}
+            id={sortedPlayers[0]?.user?.user_id}
+          />
+          <PlayerCard
+            name={sortedPlayers[1]?.user?.username}
+            id={sortedPlayers[1]?.user?.user_id}
+          />
+          <PlayerCard
+            name={sortedPlayers[2]?.user?.username}
+            id={sortedPlayers[2]?.user?.user_id}
+          />
+          <PlayerCard
+            name={sortedPlayers[3]?.user?.username}
+            id={sortedPlayers[3]?.user?.user_id}
+          />
         </div>
       </CardContent>
       <CardFooter>

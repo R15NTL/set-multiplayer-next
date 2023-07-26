@@ -87,8 +87,8 @@ export default function Lobby() {
       </CardHeader>
       <CardContent>
         <Card className="">
-          <Table className="relative">
-            <ScrollArea className="h-[60vh] max-h-64 rounded-lg">
+          <ScrollArea className="h-[60vh] max-h-64 rounded-lg relative">
+            <Table className="">
               <TableHeader className=" sticky top-0 bg-border">
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="w-[150px]">Room name</TableHead>
@@ -98,16 +98,16 @@ export default function Lobby() {
               </TableHeader>
 
               <TableBody>
-                {MOCK_ROOMS.map((room) => (
+                {lobbyRooms.map((room) => (
                   <TableRow key={room.id} className="cursor-pointer">
                     <TableCell className="font-medium">{room.name}</TableCell>
-                    <TableCell>Waiting for players</TableCell>
+                    <TableCell>TODO</TableCell>
                     <TableCell>{room.playerCount}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
-            </ScrollArea>
-          </Table>
+            </Table>
+          </ScrollArea>
         </Card>
       </CardContent>
       <CardFooter className="flex justify-end">

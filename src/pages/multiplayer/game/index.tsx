@@ -8,7 +8,7 @@ import AuthGuard from "@/features/auth/AuthGuard";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Features
-import WaitingForPlayers from "@/features/multiplayer/game/WaitingForPlayers";
+import WaitingForPlayers from "@/features/multiplayer/game/waitingForPlayers/WaitingForPlayers";
 import GameRoom from "@/features/multiplayer/game/GameRoom";
 
 Game.getLayout = (page: React.ReactNode) => (

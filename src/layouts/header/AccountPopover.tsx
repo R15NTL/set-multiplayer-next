@@ -49,9 +49,7 @@ export default function AccountPopover() {
         >
           <DropdownMenu>
             <DropdownMenuTrigger className="flex rounded-full outline-none">
-              <Button className="p-0 rounded-full" variant="ghost">
-                <Icon icon="tabler:user-circle" className="w-10 h-10" />
-              </Button>
+              <Icon icon="tabler:user-circle" className="w-10 h-10" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="flex flex-col max-w-[14rem]">
               <DropdownMenuLabel>
