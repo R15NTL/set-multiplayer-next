@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/button";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters, CreateRoomParams } from "@/services/socket/emitters";
+import SocketGuard from "@/services/socket/SocketGuard";
 // Components
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,7 +27,9 @@ import MainLayout from "@/layouts/mainLayout/MainLayout";
 
 CreateRoom.getLayout = (page: React.ReactNode) => (
   <MainLayout>
-    <AuthGuard>{page}</AuthGuard>
+    <AuthGuard>
+      <SocketGuard>{page}</SocketGuard>
+    </AuthGuard>
   </MainLayout>
 );
 
@@ -57,7 +60,6 @@ export default function CreateRoom() {
     try {
       const data = await axiosInstance.get(apiRoutes.ioTokens.root);
       const token = data.data.data.data.token;
-      console.log(token);
 
       const params: CreateRoomParams = {
         room_name: roomName,

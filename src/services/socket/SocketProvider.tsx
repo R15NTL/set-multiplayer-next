@@ -1,8 +1,12 @@
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+// Routes
+import { paths } from "@/routes/paths";
 // Socket.io
 import { io, Socket } from "socket.io-client";
 // Types
 import type { ReceiveRoomsItem, Room } from "./types";
+import { emitters } from "./emitters";
 
 interface SocketProviderProps {
   children: React.ReactNode;
@@ -23,26 +27,40 @@ export const SocketContext = createContext<
 >(undefined);
 
 const socket = io(process.env.NEXT_PUBLIC_IO_SERVER_URL ?? "", {
-  autoConnect: true,
+  autoConnect: false,
   transports: ["websocket"],
 });
 
 export default function SocketProvider({ children }: SocketProviderProps) {
+  const { pathname } = useRouter();
+
   // State
   const [isConnected, setIsConnected] = useState(false);
   const [lobbyRooms, setLobbyRooms] = useState<ReceiveRoomsItem[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
 
-  useEffect(() => {
-    const onConnect = () => setIsConnected(true);
-    const onDisconnect = () => {
-      setCurrentRoom(null);
-      setIsConnected(false);
-    };
-    const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => setLobbyRooms(rooms);
-    const onReceiveRoom = (room: Room | null) => setCurrentRoom(room);
+  const onConnect = () => setIsConnected(true);
+  const onDisconnect = () => {
+    setCurrentRoom(null);
+    setIsConnected(false);
+  };
+  const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => {
+    setLobbyRooms(rooms);
+  };
+  const onReceiveRoom = (room: Room | null) => setCurrentRoom(room);
 
+  useEffect(() => {
+    if (pathname.startsWith(paths.multiplayer.root) && !isConnected)
+      socket.connect();
+    else if (!pathname.startsWith(paths.multiplayer.root) && isConnected)
+      socket.disconnect();
+
+    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root))
+      emitters.common.leaveRoom((...args) => socket.emit(...args));
+  }, [pathname, isConnected]);
+
+  useEffect(() => {
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("receive-rooms", onReceiveRooms);

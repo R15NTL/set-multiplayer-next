@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
+import { emitters } from "@/services/socket/emitters";
+import SocketGuard from "@/services/socket/SocketGuard";
 // Components
 import { Button } from "@/components/button";
 import {
@@ -20,7 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
 // Routes
 import { paths } from "@/routes/paths";
 // Auth guard
@@ -30,7 +32,9 @@ import MainLayout from "@/layouts/mainLayout/MainLayout";
 
 Lobby.getLayout = (page: React.ReactNode) => (
   <MainLayout>
-    <AuthGuard>{page}</AuthGuard>
+    <AuthGuard>
+      <SocketGuard>{page}</SocketGuard>
+    </AuthGuard>
   </MainLayout>
 );
 
@@ -78,7 +82,22 @@ const MOCK_ROOMS = [
 ];
 
 export default function Lobby() {
-  const { lobbyRooms } = useSocket();
+  const { lobbyRooms, isConnected, socket } = useSocket();
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    if (isConnected) {
+      emitters.lobby.getRooms((...args) => socket.emit(...args));
+    }
+  }, [isConnected]);
+
+  const handleJoinRoom = (roomId: string) => {
+    replace({
+      pathname: paths.multiplayer.lobby.joinRoom.root,
+      query: { room_id: roomId },
+    });
+  };
+
   return (
     <Card className="m-auto w-full max-w-lg">
       <CardHeader>
@@ -99,7 +118,13 @@ export default function Lobby() {
 
               <TableBody>
                 {lobbyRooms.map((room) => (
-                  <TableRow key={room.id} className="cursor-pointer">
+                  <TableRow
+                    key={room.id}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleJoinRoom(room.id);
+                    }}
+                  >
                     <TableCell className="font-medium">{room.name}</TableCell>
                     <TableCell>TODO</TableCell>
                     <TableCell>{room.playerCount}</TableCell>

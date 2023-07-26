@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 // Local
-import PlayerCard from "./playerCard";
+import PlayerCard from "./PlayerCard";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";

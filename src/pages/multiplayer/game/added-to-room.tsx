@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 import { paths } from "@/routes/paths";
 import { emitters } from "@/services/socket/emitters";
+import SocketGuard from "@/services/socket/SocketGuard";
 // Auth guard
 import AuthGuard from "@/features/auth/AuthGuard";
 // Layout
@@ -10,7 +11,9 @@ import MainLayout from "@/layouts/mainLayout/MainLayout";
 
 AddedToRoom.getLayout = (page: React.ReactNode) => (
   <MainLayout>
-    <AuthGuard>{page}</AuthGuard>
+    <AuthGuard>
+      <SocketGuard>{page}</SocketGuard>
+    </AuthGuard>
   </MainLayout>
 );
 
@@ -28,5 +31,5 @@ export default function AddedToRoom() {
     }
   }, [currentRoom]);
 
-  return <div>Connecting</div>;
+  return <div>Connecting...</div>;
 }

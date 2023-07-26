@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
+import SocketGuard from "@/services/socket/SocketGuard";
 // Paths
 import { paths } from "@/routes/paths";
 // Auth guard
@@ -13,7 +14,9 @@ import GameRoom from "@/features/multiplayer/game/GameRoom";
 
 Game.getLayout = (page: React.ReactNode) => (
   <MainLayout>
-    <AuthGuard>{page}</AuthGuard>
+    <AuthGuard>
+      <SocketGuard>{page}</SocketGuard>
+    </AuthGuard>
   </MainLayout>
 );
 
