@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //import { useSelector } from "react-redux";
 import SetCard from "./SetCard";
 import { Color, Shape, Shading, Quantity } from "../gameLogic/types";
 
 export interface SetTableProps {
+  onFindSet?: (indexes: number[]) => void;
   data:
     | null
     | undefined
@@ -16,14 +17,25 @@ export interface SetTableProps {
       }[];
 }
 
-function SetTable({ data }: SetTableProps) {
+function SetTable({ data, onFindSet }: SetTableProps) {
   if (!data) return null;
+  const [selectedCards, setSelectedCards] = useState<number[]>([]);
+
+  useEffect(() => {
+    setSelectedCards([]);
+  }, [data]);
+
+  useEffect(() => {
+    if (selectedCards.length === 3) onFindSet?.(selectedCards);
+  }, [selectedCards]);
 
   const setCards = data.map((card, index) => {
     return (
       <SetCard
+        selectedCards={selectedCards}
+        setSelectedCards={setSelectedCards}
         key={card.arrId}
-        id={index}
+        index={index}
         color={card.color}
         quantity={card.quantity}
         shape={card.shape}
