@@ -5,6 +5,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { paths } from "@/routes/paths";
 // Socket.io
 import { io, Socket } from "socket.io-client";
+// Account
+import { useGetAccount } from "../queries/account";
 // Types
 import type { ReceiveRoomsItem, Room } from "./types";
 import { emitters } from "./emitters";
@@ -14,6 +16,7 @@ interface SocketProviderProps {
 }
 
 interface SocketContextProviderValue {
+  isHost: boolean;
   isConnected: boolean;
   lobbyRooms: ReceiveRoomsItem[];
   currentRoom: Room | null;
@@ -35,6 +38,7 @@ const socket = io(process.env.NEXT_PUBLIC_IO_SERVER_URL ?? "", {
 export default function SocketProvider({ children }: SocketProviderProps) {
   const { pathname, replace } = useRouter();
   const { toast } = useToast();
+  const { data: account } = useGetAccount();
 
   // State
   const [isConnected, setIsConnected] = useState(false);
@@ -104,7 +108,7 @@ export default function SocketProvider({ children }: SocketProviderProps) {
       setJoinRequest(false);
       emitters.common.leaveRoom((...args) => socket.emit(...args));
     }
-  }, [joinRequest, pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     socket.on("connect", onConnect);
@@ -137,7 +141,11 @@ export default function SocketProvider({ children }: SocketProviderProps) {
 
   const disconnect = () => socket.disconnect();
 
+  // Data
+  const isHost = currentRoom?.host?.user_id === account?.user_id;
+
   const value = {
+    isHost,
     isConnected,
     lobbyRooms,
     currentRoom,

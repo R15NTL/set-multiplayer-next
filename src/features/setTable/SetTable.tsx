@@ -43,7 +43,11 @@ function SetTable({ data, onFindSet }: SetTableProps) {
       />
     );
   });
-  return <div className="grid grid-cols-3">{setCards}</div>;
+  return (
+    <>
+      <div className="grid grid-cols-3">{setCards}</div>
+    </>
+  );
 }
 
 export default SetTable;

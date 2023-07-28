@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/button";
 // Features
@@ -17,8 +10,10 @@ import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
 // Account
 import { useGetAccount } from "@/services/queries/account";
+// Gamelogic
+import GameLogic from "@/features/gameLogic/gameLogic";
 
-export default function GameRoom() {
+export default function InGame() {
   const { currentRoom, socket } = useSocket();
   const { data: account } = useGetAccount();
 
@@ -50,6 +45,11 @@ export default function GameRoom() {
       );
     }
   };
+
+  const handleFindTestSet = () => {
+    const gameLogic = new GameLogic(currentRoom?.game_state ?? undefined);
+    handleFindSet(gameLogic.getHint());
+  };
   return (
     <div className="m-auto w-full max-w-lg grid gap-5">
       <div className=" grid grid-cols-2 gap-5">
@@ -66,6 +66,7 @@ export default function GameRoom() {
         <InGamePlayerCard player={sortedPlayers[0]} />
         <InGamePlayerCard player={sortedPlayers[2]} />
       </div>
+      <Button onClick={handleFindTestSet}>Find test set</Button>
       <Card>
         {currentRoom?.join_requests.map((request) => (
           <div key={request.user.user_id}>

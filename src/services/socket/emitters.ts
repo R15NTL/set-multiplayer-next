@@ -22,7 +22,7 @@ interface HostValidateJoinRequestParams {
   player_id: string;
 }
 
-interface StartNewRoundParams {
+export interface StartNewRoundParams {
   game_type: CreateRoomParams["game_type"];
 }
 

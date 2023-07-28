@@ -40,18 +40,18 @@ export default function App({ Component, pageProps }: MyAppProps) {
 
   return (
     <div className={`dark ${poppins.className}`}>
-      <QueryClientProvider client={queryClient}>
-        <AxiosProvider>
-          <SocketProvider>
-            <SessionProvider session={pageProps.session}>
+      <SessionProvider session={pageProps.session}>
+        <QueryClientProvider client={queryClient}>
+          <AxiosProvider>
+            <SocketProvider>
               {getLayout(<Component {...pageProps} />)}
               <Analytics />
               <Toaster />
-            </SessionProvider>
-          </SocketProvider>
-        </AxiosProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+            </SocketProvider>
+          </AxiosProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </SessionProvider>
     </div>
   );
 }

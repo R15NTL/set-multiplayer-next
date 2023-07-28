@@ -21,7 +21,7 @@ import { emitters } from "@/services/socket/emitters";
 import { useGetAccount } from "@/services/queries/account";
 
 export default function WaitingForPlayers() {
-  const { currentRoom, socket } = useSocket();
+  const { currentRoom, socket, isHost } = useSocket();
   const { data: account } = useGetAccount();
 
   const { replace } = useRouter();
@@ -78,7 +78,7 @@ export default function WaitingForPlayers() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleStartGame}>Start game</Button>
+        {isHost && <Button onClick={handleStartGame}>Start game</Button>}
       </CardFooter>
     </Card>
   );
