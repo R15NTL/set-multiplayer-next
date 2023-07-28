@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // Next
 import { useRouter } from "next/router";
 // Layout
@@ -28,8 +28,9 @@ export default function JoinRoom() {
   const { socket, isConnected } = useSocket();
   const room_id = query.room_id as string;
 
+  const [requestSent, setRequestSent] = useState(false);
+
   const handleJoinRoom = async (roomId: string) => {
-    console.log("Joining room");
     try {
       const data = await axiosInstance.get(apiRoutes.ioTokens.root);
       const token = data.data.data.data.token;
@@ -43,10 +44,13 @@ export default function JoinRoom() {
   };
 
   useEffect(() => {
-    if (!!room_id && isConnected) handleJoinRoom(room_id);
-  }, [room_id, isConnected]);
+    if (requestSent) return;
 
-  useEffect(() => {}, []);
+    if (room_id && isConnected) {
+      setRequestSent(true);
+      handleJoinRoom(room_id);
+    }
+  }, [room_id, isConnected]);
 
   return <div className="m-auto">Connecting...</div>;
 }

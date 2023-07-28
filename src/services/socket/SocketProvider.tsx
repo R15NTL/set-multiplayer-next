@@ -33,7 +33,7 @@ const socket = io(process.env.NEXT_PUBLIC_IO_SERVER_URL ?? "", {
 });
 
 export default function SocketProvider({ children }: SocketProviderProps) {
-  const { pathname } = useRouter();
+  const { pathname, replace } = useRouter();
   const { toast } = useToast();
 
   // State
@@ -41,30 +41,70 @@ export default function SocketProvider({ children }: SocketProviderProps) {
   const [lobbyRooms, setLobbyRooms] = useState<ReceiveRoomsItem[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
+  const [joinRequest, setJoinRequest] = useState(false);
 
+  // Handlers
   const onConnect = () => setIsConnected(true);
   const onDisconnect = () => {
     setCurrentRoom(null);
     setIsConnected(false);
+    replace(paths.menu);
   };
   const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => {
     setLobbyRooms(rooms);
   };
   const onReceiveRoom = (room: Room | null) => setCurrentRoom(room);
-
   const onReceiveError = ({ message }: { message: string }) => {
     toast({ description: message, variant: "destructive" });
   };
+  const handleAddedToGame = (data: { room_id: string }) => {
+    setJoinRequest(false);
+    replace({
+      pathname: paths.multiplayer.game.addedToRoom,
+      query: { room_id: data.room_id },
+    });
+  };
+  const handleRemovedFromRoom = () => {
+    setCurrentRoom(null);
+    setJoinRequest(false);
+  };
+  const handleRoomNoLongerExists = () => {
+    setCurrentRoom(null);
+    setJoinRequest(false);
+  };
+  const handleAddedToJoinRequests = () => {
+    setJoinRequest(true);
+    replace(paths.multiplayer.lobby.joinRequest);
+  };
 
+  // Effects
   useEffect(() => {
     if (pathname.startsWith(paths.multiplayer.root) && !isConnected)
       socket.connect();
     else if (!pathname.startsWith(paths.multiplayer.root) && isConnected)
       socket.disconnect();
+  }, [pathname, isConnected]);
+
+  useEffect(() => {
+    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root))
+      replace(paths.multiplayer.game.root);
+    else if (!currentRoom && pathname.startsWith(paths.multiplayer.game.root)) {
+      replace(paths.multiplayer.lobby.root);
+    }
 
     if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root))
+      replace(paths.multiplayer.game.root);
+  }, [currentRoom === null]);
+
+  useEffect(() => {
+    if (
+      joinRequest &&
+      !pathname.startsWith(paths.multiplayer.lobby.joinRequest)
+    ) {
+      setJoinRequest(false);
       emitters.common.leaveRoom((...args) => socket.emit(...args));
-  }, [pathname, isConnected]);
+    }
+  }, [joinRequest, pathname]);
 
   useEffect(() => {
     socket.on("connect", onConnect);
@@ -72,6 +112,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     socket.on("receive-rooms", onReceiveRooms);
     socket.on("receive-room", onReceiveRoom);
     socket.on("error", onReceiveError);
+    socket.on("added-to-game", handleAddedToGame);
+    socket.on("removed-from-room", handleRemovedFromRoom);
+    socket.on("room-no-longer-exists", handleRoomNoLongerExists);
+    socket.on("added-to-join-requests", handleAddedToJoinRequests);
 
     return () => {
       socket.off("connect", onConnect);
@@ -79,6 +123,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
       socket.off("receive-rooms", onReceiveRooms);
       socket.off("receive-room", onReceiveRoom);
       socket.off("error", onReceiveError);
+      socket.off("added-to-game", handleAddedToGame);
+      socket.off("removed-from-room", handleRemovedFromRoom);
+      socket.off("room-no-longer-exists", handleRoomNoLongerExists);
+      socket.off("added-to-join-requests", handleAddedToJoinRequests);
     };
   }, [socket]);
 

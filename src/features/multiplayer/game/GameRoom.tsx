@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/button";
 // Features
 import SetTable from "@/features/setTable";
 import InGamePlayerCard from "./inGamePlayerCard";
@@ -28,6 +29,12 @@ export default function GameRoom() {
       }
       return a.user.username.localeCompare(b.user.username);
     }) ?? [];
+
+  const handleAcceptJoinRequest = (player_id: string) => {
+    emitters.game.common.hostValidateJoinRequest({ player_id }, (...args) =>
+      socket.emit(...args)
+    );
+  };
 
   const handleFindSet = (indexes: number[]) => {
     if (currentRoom?.game_type === "competitive") {
@@ -59,6 +66,18 @@ export default function GameRoom() {
         <InGamePlayerCard player={sortedPlayers[0]} />
         <InGamePlayerCard player={sortedPlayers[2]} />
       </div>
+      <Card>
+        {currentRoom?.join_requests.map((request) => (
+          <div key={request.user.user_id}>
+            <p>{request.user.username} wants to join the game</p>
+            <Button
+              onClick={() => handleAcceptJoinRequest(request.user.user_id)}
+            >
+              Accept
+            </Button>
+          </div>
+        ))}
+      </Card>
     </div>
   );
 }

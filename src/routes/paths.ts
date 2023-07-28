@@ -28,6 +28,7 @@ export const paths = {
       createRoom: {
         root: "/multiplayer/lobby/create-room",
       },
+      joinRequest: "/multiplayer/lobby/join-request",
     },
     game: {
       root: "/multiplayer/game",
