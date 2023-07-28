@@ -12,6 +12,7 @@ import { Button } from "@/components/button";
 // Features
 import SetTable from "@/features/setTable";
 import InGamePlayerCard from "../InGame/inGamePlayerCard";
+import JoinRequests from "../../../components/JoinRequests";
 import StartNewRound from "./StartNewRound";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
@@ -49,7 +50,14 @@ export default function EndOfGame() {
           </Card>
         ))}
       </CardContent>
-      <CardFooter>{isHost && <StartNewRound />}</CardFooter>
+      <CardFooter>
+        {isHost && (
+          <>
+            <StartNewRound />
+            <JoinRequests />
+          </>
+        )}
+      </CardFooter>
     </Card>
   );
 }

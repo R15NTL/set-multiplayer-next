@@ -5,6 +5,7 @@ import { Button } from "@/components/button";
 // Features
 import SetTable from "@/features/setTable";
 import InGamePlayerCard from "./inGamePlayerCard";
+import JoinRequests from "../../../components/JoinRequests";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -24,12 +25,6 @@ export default function InGame() {
       }
       return a.user.username.localeCompare(b.user.username);
     }) ?? [];
-
-  const handleAcceptJoinRequest = (player_id: string) => {
-    emitters.game.common.hostValidateJoinRequest({ player_id }, (...args) =>
-      socket.emit(...args)
-    );
-  };
 
   const handleFindSet = (indexes: number[]) => {
     if (currentRoom?.game_type === "competitive") {
@@ -67,18 +62,7 @@ export default function InGame() {
         <InGamePlayerCard player={sortedPlayers[2]} />
       </div>
       <Button onClick={handleFindTestSet}>Find test set</Button>
-      <Card>
-        {currentRoom?.join_requests.map((request) => (
-          <div key={request.user.user_id}>
-            <p>{request.user.username} wants to join the game</p>
-            <Button
-              onClick={() => handleAcceptJoinRequest(request.user.user_id)}
-            >
-              Accept
-            </Button>
-          </div>
-        ))}
-      </Card>
+      <JoinRequests />
     </div>
   );
 }
