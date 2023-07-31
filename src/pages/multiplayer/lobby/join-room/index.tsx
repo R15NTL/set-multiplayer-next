@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 // Next
 import { useRouter } from "next/router";
 // Layout
@@ -28,7 +28,7 @@ export default function JoinRoom() {
   const { socket, isConnected } = useSocket();
   const room_id = query.room_id as string;
 
-  const [requestSent, setRequestSent] = useState(false);
+  const isSentRef = useRef(false);
 
   const handleJoinRoom = async (roomId: string) => {
     try {
@@ -44,10 +44,10 @@ export default function JoinRoom() {
   };
 
   useEffect(() => {
-    if (requestSent) return;
+    if (isSentRef.current) return;
 
     if (room_id && isConnected) {
-      setRequestSent(true);
+      isSentRef.current = true;
       handleJoinRoom(room_id);
     }
   }, [room_id, isConnected]);

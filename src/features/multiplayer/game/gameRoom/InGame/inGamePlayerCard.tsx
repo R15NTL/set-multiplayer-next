@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Player } from "@/services/socket/types";
 // Utils
 import { getInitials } from "@/lib/utils";
+import { getPlayerStatus } from "@/utils";
 
 interface InGamePlayerCardProps {
   player: Player | undefined;
@@ -20,6 +21,7 @@ export default function inGamePlayerCard({ player }: InGamePlayerCardProps) {
       <div>
         <h6 className="text-sm font-medium">{player?.user.username}</h6>
         <p className="text-sm">Score: {player?.score}</p>
+        <p className="text-sm">{player ? getPlayerStatus(player) : ""}</p>
       </div>
     </Card>
   );

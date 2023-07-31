@@ -81,7 +81,8 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     replace(paths.multiplayer.lobby.joinRequest);
   };
 
-  // Effects
+  // --------------------EFFECTS--------------------
+  // Ensure socket is only connected when in /multiplayer
   useEffect(() => {
     if (pathname.startsWith(paths.multiplayer.root) && !isConnected)
       socket.connect();
@@ -89,17 +90,28 @@ export default function SocketProvider({ children }: SocketProviderProps) {
       socket.disconnect();
   }, [pathname, isConnected]);
 
+  // Forward user to the game room if they are in game
   useEffect(() => {
-    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root))
+    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root)) {
+      setJoinRequest(false);
       replace(paths.multiplayer.game.root);
-    else if (!currentRoom && pathname.startsWith(paths.multiplayer.game.root)) {
-      replace(paths.multiplayer.lobby.root);
+    } else if (
+      !currentRoom &&
+      pathname.startsWith(paths.multiplayer.game.root)
+    ) {
+      {
+        setJoinRequest(false);
+        replace(paths.multiplayer.lobby.root);
+      }
     }
 
-    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root))
+    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root)) {
+      setJoinRequest(false);
       replace(paths.multiplayer.game.root);
+    }
   }, [currentRoom === null]);
 
+  // Join requests
   useEffect(() => {
     if (
       joinRequest &&
@@ -110,6 +122,15 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (
+      !joinRequest &&
+      pathname.startsWith(paths.multiplayer.lobby.joinRequest)
+    )
+      replace(paths.multiplayer.lobby.root);
+  }, [joinRequest]);
+
+  // Socket listeners
   useEffect(() => {
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
@@ -134,6 +155,7 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     };
   }, [socket]);
 
+  // --------------------PROVIDER VALUE--------------------
   const connect = () => {
     if (isConnected) socket.disconnect();
     socket.connect();

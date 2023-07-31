@@ -17,10 +17,8 @@ import StartNewRound from "./StartNewRound";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
-// Account
-import { useGetAccount } from "@/services/queries/account";
-// Gamelogic
-import GameLogic from "@/features/gameLogic/gameLogic";
+// Utils
+import { getPlayerStatus } from "@/utils";
 
 export default function EndOfGame() {
   const { currentRoom, socket, isHost } = useSocket();
@@ -37,6 +35,9 @@ export default function EndOfGame() {
     currentRoom?.room_players?.filter((player) => player.status === "player") ??
     [];
 
+  const newRoundIn5Seconds =
+    playersInGame.length > 1 && currentRoom?.game_type === "knockout";
+
   return (
     <Card className="m-auto flex flex-col w-full max-w-lg">
       <CardHeader>
@@ -47,13 +48,15 @@ export default function EndOfGame() {
           <Card key={player.user.user_id} className="flex flex-col">
             <h6>{player.user.username}</h6>
             <p>Score: {player.score}</p>
+            <p>{getPlayerStatus(player)}</p>
           </Card>
         ))}
+        {newRoundIn5Seconds && "New round in 5 seconds"}
       </CardContent>
       <CardFooter>
         {isHost && (
           <>
-            <StartNewRound />
+            {!newRoundIn5Seconds && <StartNewRound />}
             <JoinRequests />
           </>
         )}

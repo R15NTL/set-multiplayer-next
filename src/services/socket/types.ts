@@ -14,7 +14,7 @@ export type User = {
 
 export type Player = {
   score: number;
-  status: "player" | "audience";
+  status: "player" | "audience" | "knocked-out";
   user: User;
 };
 
