@@ -40,42 +40,42 @@ Lobby.getLayout = (page: React.ReactNode) => (
 
 const MOCK_ROOMS = [
   {
-    id: 1,
+    id: "1",
     name: "Room 1",
     playerCount: 2,
   },
   {
-    id: 2,
+    id: "2",
     name: "Room 2",
     playerCount: 3,
   },
   {
-    id: 3,
+    id: "3",
     name: "Room 3",
     playerCount: 4,
   },
   {
-    id: 4,
+    id: "4",
     name: "Room 4",
     playerCount: 5,
   },
   {
-    id: 5,
+    id: "5",
     name: "Room 5",
     playerCount: 6,
   },
   {
-    id: 6,
+    id: "6",
     name: "Room 6",
     playerCount: 7,
   },
   {
-    id: 7,
+    id: "7",
     name: "Room 7",
     playerCount: 8,
   },
   {
-    id: 8,
+    id: "8",
     name: "Room 8",
     playerCount: 9,
   },
@@ -105,34 +105,32 @@ export default function Lobby() {
         <CardDescription>Join a room or create your own</CardDescription>
       </CardHeader>
       <CardContent>
-        <Card className="">
-          <ScrollArea className="h-[60vh] max-h-64 rounded-lg relative">
-            <Table className="">
-              <TableHeader className=" sticky top-0 bg-border">
-                <TableRow className="hover:bg-transparent">
-                  <TableHead className="w-[150px]">Room name</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>No. players</TableHead>
-                </TableRow>
-              </TableHeader>
+        <Card className="h-[40vh] max-h-[500px] overflow-y-auto">
+          <Table className="">
+            <TableHeader className=" sticky top-0 w-full z-20 bg-border">
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="w-[150px]">Room name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>No. players</TableHead>
+              </TableRow>
+            </TableHeader>
 
-              <TableBody>
-                {lobbyRooms.map((room) => (
-                  <TableRow
-                    key={room.id}
-                    className="cursor-pointer"
-                    onClick={() => {
-                      handleJoinRoom(room.id);
-                    }}
-                  >
-                    <TableCell className="font-medium">{room.name}</TableCell>
-                    <TableCell>TODO</TableCell>
-                    <TableCell>{room.playerCount}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollArea>
+            <TableBody>
+              {lobbyRooms.map((room) => (
+                <TableRow
+                  key={room.id}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleJoinRoom(room.id);
+                  }}
+                >
+                  <TableCell className="font-medium">{room.name}</TableCell>
+                  <TableCell>TODO</TableCell>
+                  <TableCell>{room.playerCount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Card>
       </CardContent>
       <CardFooter className="flex justify-end">

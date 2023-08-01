@@ -18,6 +18,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 // Services
 import { useAxios } from "@/hooks/useAxios";
+import { useGetAccount } from "@/services/queries/account";
 // Paths
 import { apiRoutes, paths } from "@/routes/paths";
 // Auth guard
@@ -35,8 +36,11 @@ CreateRoom.getLayout = (page: React.ReactNode) => (
 
 export default function CreateRoom() {
   const { replace } = useRouter();
+  const { data: account } = useGetAccount();
 
-  const [roomName, setRoomName] = useState("My room");
+  const [roomName, setRoomName] = useState(
+    `${account?.username ?? "Unknown"}'s room`
+  );
   const [gameType, setGameType] =
     useState<CreateRoomParams["game_type"]>("knockout");
   const { axiosInstance } = useAxios();
@@ -82,33 +86,43 @@ export default function CreateRoom() {
         <CardTitle>Create room</CardTitle>
         <CardDescription>Invite your friends to play with you.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Label htmlFor="room-name">Room name</Label>
-        <Input
-          id="room-name"
-          type="text"
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
-        />
-        <Label htmlFor="game-type">Game type</Label>
-        <RadioGroup
-          id="game-type"
-          value={gameType}
-          onValueChange={(value: CreateRoomParams["game_type"]) =>
-            setGameType(value)
-          }
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem id="knockout" value="knockout" />
-            <Label htmlFor="knockout">Knockout</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem id="competitive" value="competitive" />
-            <Label htmlFor="competitive">Competitive</Label>
-          </div>
-        </RadioGroup>
+      <CardContent className=" grid gap-5">
+        <div className="grid gap-2">
+          <Label htmlFor="room-name">Room name</Label>
+          <Input
+            id="room-name"
+            type="text"
+            value={roomName}
+            onChange={(e) => setRoomName(e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor="game-type">Game type</Label>
+          <RadioGroup
+            className="grid gap-3 py-1"
+            id="game-type"
+            value={gameType}
+            onValueChange={(value: CreateRoomParams["game_type"]) =>
+              setGameType(value)
+            }
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem id="knockout" value="knockout" />
+              <Label className="font-normal" htmlFor="knockout">
+                Knockout
+              </Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem id="competitive" value="competitive" />
+              <Label className="font-normal" htmlFor="competitive">
+                Competitive
+              </Label>
+            </div>
+          </RadioGroup>
+        </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex justify-end">
         <Button onClick={handleCreateRoom}>Create</Button>
       </CardFooter>
     </Card>

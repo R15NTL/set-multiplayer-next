@@ -68,10 +68,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const renderChildren = () => (
       <span>
-        <span
-          className="relative z-10 inline-flex items-center text-center"
-          ref={buttonContainerRef}
-        >
+        <span className="inset-0 absolute" ref={buttonContainerRef} />
+        <span className="relative z-10 inline-flex items-center text-center">
           {children}
         </span>
         {loading && (
