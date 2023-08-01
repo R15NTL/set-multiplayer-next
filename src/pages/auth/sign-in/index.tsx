@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -108,7 +108,7 @@ export default function SignIn() {
             <CardContent className="grid gap-3 pb-0">
               <div className=" flex flex-col">
                 <Button
-                  variant="outlined"
+                  variant="outline"
                   type="button"
                   onClick={handleSignInWithGoogle}
                 >

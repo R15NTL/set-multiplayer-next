@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters, StartNewRoundParams } from "@/services/socket/emitters";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogDescription,

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 // Local
 import Header from "../header/Header";
-// Auth
-import { useSession } from "next-auth/react";
+// Utils
+import { cn } from "@/lib/utils";
 
 interface MainLayoutProps {
   children?: React.ReactNode;
@@ -10,15 +10,12 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({ children, className }: MainLayoutProps) {
-  const session = useSession();
-
-  useEffect(() => {
-    console.log({ session });
-  }, [session]);
   return (
-    <div className={`min-h-screen flex flex-col pt-header-height ${className}`}>
+    <div
+      className={cn(`min-h-screen flex flex-col pt-header-height`, className)}
+    >
       <Header />
-      <main className="flex-grow flex">{children}</main>
+      <main className="flex-grow flex px-page-x-padding">{children}</main>
     </div>
   );
 }

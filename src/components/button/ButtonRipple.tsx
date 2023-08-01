@@ -2,8 +2,8 @@ import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 
 interface ButtonRippleProps {
-  clickEvent: React.MouseEvent<HTMLButtonElement> | null;
-  container: HTMLButtonElement | null;
+  clickEvent: React.MouseEvent<HTMLElement> | null;
+  container: HTMLElement | null;
 }
 
 export default function ButtonRipple({

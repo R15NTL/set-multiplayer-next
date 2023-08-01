@@ -4,7 +4,7 @@ import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Auth
 import AuthGuard from "@/features/auth/AuthGuard";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,

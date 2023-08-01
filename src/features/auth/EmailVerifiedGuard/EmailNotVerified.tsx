@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // Icons
 import { Icon } from "@iconify/react";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 // Services
 import { useSendVerificationEmail } from "@/services/mutations/account";
 

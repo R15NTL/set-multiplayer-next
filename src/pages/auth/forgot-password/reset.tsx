@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 // Form
 import * as yup from "yup";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Card,
@@ -107,7 +107,10 @@ export default function ForgotPasswordReset() {
             You can now sign in using your new password
           </p>
         </div>
-        <Button href={paths.auth.signIn.root} className="mt-3">
+        <Button
+          onClick={() => replace(paths.auth.signIn.root)}
+          className="mt-3"
+        >
           Go to login
         </Button>
       </div>

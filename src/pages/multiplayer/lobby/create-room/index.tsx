@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters, CreateRoomParams } from "@/services/socket/emitters";
 import SocketGuard from "@/services/socket/SocketGuard";

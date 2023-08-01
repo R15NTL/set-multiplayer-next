@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 // Icons
 import { Icon } from "@iconify/react";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";

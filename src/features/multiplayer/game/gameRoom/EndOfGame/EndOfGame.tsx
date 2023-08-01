@@ -6,9 +6,6 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Dialog } from "@/components/ui/dialog";
-import { Button } from "@/components/button";
 // Features
 import SetTable from "@/features/setTable";
 import InGamePlayerCard from "../InGame/inGamePlayerCard";

@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 // Features
 import SetTable from "@/features/setTable";
 import InGamePlayerCard from "./inGamePlayerCard";

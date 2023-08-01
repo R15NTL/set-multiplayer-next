@@ -1,11 +1,12 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
+import React, { useState, useRef, Fragment } from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import ButtonRipple from "../button/ButtonRipple";
+import { Icon } from "@iconify/react";
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex relative overflow-hidden items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -31,26 +32,73 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+  asChild?: boolean;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      children,
+      onClick,
+      loading,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button";
+
+    const [clickEvent, setClickEvent] =
+      useState<React.MouseEvent<HTMLButtonElement> | null>(null);
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      setClickEvent(e);
+      onClick?.(e);
+    };
+    const buttonContainerRef = useRef<HTMLButtonElement>(null);
+
+    const renderChildren = () => (
+      <span>
+        <span
+          className="relative z-10 inline-flex items-center text-center"
+          ref={buttonContainerRef}
+        >
+          {children}
+        </span>
+        {loading && (
+          <span className="absolute inset-0 flex items-center justify-center bg-slate-400 z-10">
+            <Icon icon="svg-spinners:ring-resize" />
+          </span>
+        )}
+        <ButtonRipple
+          container={buttonContainerRef.current}
+          clickEvent={clickEvent}
+        />
+      </span>
+    );
+
     return (
       <Comp
+        onClick={handleClick}
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={disabled || loading}
         {...props}
-      />
-    )
+      >
+        {renderChildren()}
+      </Comp>
+    );
   }
-)
-Button.displayName = "Button"
+);
+Button.displayName = "Button";
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

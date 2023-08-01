@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 // Paths
 import { paths } from "@/routes/paths";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,

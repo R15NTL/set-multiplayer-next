@@ -26,6 +26,10 @@ interface SocketContextProviderValue {
   disconnect: () => void;
 }
 
+interface RemovedFromRoomData {
+  removed_by_host: boolean;
+}
+
 export const SocketContext = createContext<
   SocketContextProviderValue | undefined
 >(undefined);
@@ -68,9 +72,15 @@ export default function SocketProvider({ children }: SocketProviderProps) {
       query: { room_id: data.room_id },
     });
   };
-  const handleRemovedFromRoom = () => {
+  const handleRemovedFromRoom = (data: RemovedFromRoomData) => {
     setCurrentRoom(null);
     setJoinRequest(false);
+    if (data.removed_by_host) {
+      toast({
+        description: "You were removed this from the room by the host",
+        variant: "destructive",
+      });
+    }
   };
   const handleRoomNoLongerExists = () => {
     setCurrentRoom(null);

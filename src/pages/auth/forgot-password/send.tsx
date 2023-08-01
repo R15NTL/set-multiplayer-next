@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react";
 // Form
 import * as yup from "yup";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Auth

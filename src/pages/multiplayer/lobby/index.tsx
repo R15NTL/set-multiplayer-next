@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
 import SocketGuard from "@/services/socket/SocketGuard";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -17,7 +18,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -136,8 +136,10 @@ export default function Lobby() {
         </Card>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button href={paths.multiplayer.lobby.createRoom.root}>
-          Create room
+        <Button asChild>
+          <Link href={paths.multiplayer.lobby.createRoom.root}>
+            Create room
+          </Link>
         </Button>
       </CardFooter>
     </Card>
