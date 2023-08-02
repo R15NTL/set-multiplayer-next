@@ -6,6 +6,7 @@ import SetTable from "@/features/setTable";
 import InGamePlayerCard from "./inGamePlayerCard";
 import JoinRequests from "../../../components/JoinRequests";
 import StatusBar from "../common/StatusBar";
+import FunctionBar from "../common/FunctionBar";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -73,8 +74,7 @@ export default function InGame() {
           <InGamePlayerCard player={sortedPlayers[0]} />
           <InGamePlayerCard player={sortedPlayers[1]} />
         </div>
-        <Button onClick={handleFindTestSet}>Find test set</Button>
-        <JoinRequests />
+        <FunctionBar handleFindTestSet={handleFindTestSet} />
       </div>
     </div>
   );
