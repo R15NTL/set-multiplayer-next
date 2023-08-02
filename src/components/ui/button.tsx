@@ -24,7 +24,7 @@ const buttonVariants = cva(
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        icon: "w-10 h-10 items-center",
       },
     },
     defaultVariants: {
@@ -69,7 +69,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const renderChildren = () => (
       <span>
         <span className="inset-0 absolute" ref={buttonContainerRef} />
-        <span className="relative z-10 inline-flex items-center text-center">
+        <span className="relative z-10 flex items-center text-center">
           {children}
         </span>
         {loading && (

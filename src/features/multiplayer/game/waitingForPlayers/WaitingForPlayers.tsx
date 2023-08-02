@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 // Local
 import PlayerCard from "./PlayerCard";
+import LeaveRoomDialog from "../../components/LeaveRoomDialog";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -58,7 +59,7 @@ export default function WaitingForPlayers() {
         <CardDescription>Room: {currentRoom?.room_name}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <PlayerCard
             name={sortedPlayers[0]?.user?.username}
             id={sortedPlayers[0]?.user?.user_id}
@@ -77,8 +78,15 @@ export default function WaitingForPlayers() {
           />
         </div>
       </CardContent>
-      <CardFooter>
-        {isHost && <Button onClick={handleStartGame}>Start game</Button>}
+      <CardFooter className="justify-end gap-3">
+        <LeaveRoomDialog
+          trigger={<Button variant="outline">Leave room</Button>}
+        />
+        {isHost && (
+          <Button className="" onClick={handleStartGame}>
+            Start game
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

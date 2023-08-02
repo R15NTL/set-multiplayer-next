@@ -14,6 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { HostChip } from "@/components/host-chip";
 // Icons
 import { Icon } from "@iconify/react";
 // Utils
@@ -44,21 +45,25 @@ export default function PlayerCard({ name, id }: PlayerCardProps) {
 
   return (
     <Card className="flex  gap-3 p-3">
-      <div className="grid gap-3">
+      <div className="flex gap-3  overflow-hidden items-center">
         <div className={!!id ? "" : " opacity-0"}>
           <Avatar>
             <AvatarFallback>{getInitials(name)}</AvatarFallback>
           </Avatar>
         </div>
-        <p className="text-sm font-medium">{name}</p>
+        <div className="overflow-hidden grid">
+          <p className="text-sm font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+            {name}
+          </p>
+        </div>
       </div>
-      <div>
-        {isHost && !isMe && (
+      <div className="ml-auto flex items-center">
+        {currentRoom?.host.user_id === id && <HostChip />}
+        {isHost && !isMe && !!id && (
           <AlertDialog>
-            <AlertDialogTrigger>
-              <Button>
-                <Icon icon="mdi:account-remove" className="mr-2" />
-                Remove
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Icon icon="mdi:account-remove" className="w-4 h-4" />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
