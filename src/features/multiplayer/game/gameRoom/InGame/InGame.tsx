@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import SetTable from "@/features/setTable";
 import InGamePlayerCard from "./inGamePlayerCard";
 import JoinRequests from "../../../components/JoinRequests";
+import StatusBar from "../common/StatusBar";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -45,23 +46,36 @@ export default function InGame() {
     handleFindSet(gameLogic.getHint());
   };
   return (
-    <div className="m-auto w-full max-w-lg grid gap-5">
-      <div className=" grid grid-cols-2 gap-5">
-        <InGamePlayerCard player={sortedPlayers[3]} />
-        <InGamePlayerCard player={sortedPlayers[1]} />
-      </div>
-      <Card>
+    <div className=" w-full min-h-full mx-auto max-w-md 2xl:max-w-lg flex flex-col gap-3 xl:gap-5">
+      <StatusBar />
+      <div className=" flex-1">
         <SetTable
           data={currentRoom?.game_state?.setTable}
           onFindSet={handleFindSet}
         />
-      </Card>
-      <div className=" grid grid-cols-2 gap-5">
-        <InGamePlayerCard player={sortedPlayers[0]} />
-        <InGamePlayerCard player={sortedPlayers[2]} />
       </div>
-      <Button onClick={handleFindTestSet}>Find test set</Button>
-      <JoinRequests />
+      <div className="grid gap-3 xl:gap-5">
+        {sortedPlayers.length > 2 && (
+          <div
+            className={`grid  gap-3 xl:gap-5 ${
+              sortedPlayers.length > 3 ? "grid-cols-2" : "grid-cols-1"
+            }`}
+          >
+            <InGamePlayerCard player={sortedPlayers[3]} />
+            <InGamePlayerCard player={sortedPlayers[2]} />
+          </div>
+        )}
+        <div
+          className={`grid  gap-3 xl:gap-5 ${
+            sortedPlayers.length > 1 ? "grid-cols-2" : "grid-cols-1"
+          }`}
+        >
+          <InGamePlayerCard player={sortedPlayers[0]} />
+          <InGamePlayerCard player={sortedPlayers[1]} />
+        </div>
+        <Button onClick={handleFindTestSet}>Find test set</Button>
+        <JoinRequests />
+      </div>
     </div>
   );
 }

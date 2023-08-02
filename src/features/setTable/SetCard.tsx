@@ -43,15 +43,9 @@ function SetCard({
   return (
     <div
       onClick={handleClick}
-      className={`bg-foreground text-black m-1 p-1 rounded-md shadow-md h-24 border-4 cursor-pointer animate-card-fly-in
-      flex 
-      ${
-        selected
-          ? "border-blue-500"
-          : false // isHinted
-          ? " border-multiplayer700"
-          : "border-foreground"
-      }`}
+      className={`bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer aspect-[88/63]
+      flex gap-[3%]
+      ${selected ? "border-blue-500" : "border-foreground"}`}
     >
       <div className="flex-1"></div>
       {cardImgs}

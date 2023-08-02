@@ -72,7 +72,7 @@ function CardImg({ color, shape, shade }: CardImgProps) {
     }
   };
   return (
-    <div className=" m-auto w-1/3 p-1">
+    <div className=" m-auto h-full aspect-[1/2]">
       <svg
         version="1.1"
         id="Layer_1"

@@ -45,7 +45,7 @@ function SetTable({ data, onFindSet }: SetTableProps) {
   });
   return (
     <>
-      <div className="grid grid-cols-3">{setCards}</div>
+      <div className="grid grid-cols-3 gap-1">{setCards}</div>
     </>
   );
 }
