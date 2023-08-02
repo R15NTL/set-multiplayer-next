@@ -34,7 +34,7 @@ export default function JoinRequests() {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button>Join requests ({JoinRequests.length})</Button>
+        <Button variant="outline">Join requests ({JoinRequests.length})</Button>
       </PopoverTrigger>
       <PopoverContent>
         <h6>Join requests</h6>
@@ -47,8 +47,9 @@ export default function JoinRequests() {
               <div className="flex items-center">
                 <div>{player.user.username}</div>
               </div>
-              <div>
+              <div className="flex gap-3">
                 <Button
+                  variant="outline"
                   onClick={() => handleRejectJoinRequest(player.user.user_id)}
                 >
                   Reject
