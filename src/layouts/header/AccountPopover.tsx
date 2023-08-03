@@ -3,7 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { paths } from "@/routes/paths";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -91,7 +91,7 @@ export default function AccountPopover() {
             <DialogFooter>
               <Button
                 onClick={() => setLogoutDialogOpen(false)}
-                variant="outlined"
+                variant="outline"
               >
                 <span>Cancel</span>
               </Button>

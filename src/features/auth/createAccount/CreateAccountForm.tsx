@@ -6,13 +6,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 // React Hook Form
 import { useForm } from "react-hook-form";
-// Icons
-import { Icon } from "@iconify/react";
 // Services
 import { useCreateAccount } from "@/services/mutations/account";
 import { AxiosError } from "axios";
 // Components
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,

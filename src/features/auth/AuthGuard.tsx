@@ -1,6 +1,7 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import { useGetAccount } from "@/services/queries/account";
+import SignIn from "./signIn/SignIn";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const { data: account, isLoading, isSuccess } = useGetAccount();
 
   if (status === "unauthenticated") {
-    return <div>Login</div>;
+    return <SignIn />;
   }
 
   if (status === "loading" || isLoading) {
