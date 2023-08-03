@@ -22,6 +22,9 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+// Utils
+import { getInitials } from "@/lib/utils";
 // Icons
 import { Icon } from "@iconify/react";
 // Services
@@ -49,7 +52,11 @@ export default function AccountPopover() {
         >
           <DropdownMenu>
             <DropdownMenuTrigger className="flex rounded-full outline-none">
-              <Icon icon="tabler:user-circle" className="w-10 h-10" />
+              <Avatar>
+                <AvatarFallback>
+                  {getInitials(account?.username || "")}
+                </AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="flex flex-col max-w-[14rem]">
               <DropdownMenuLabel>
