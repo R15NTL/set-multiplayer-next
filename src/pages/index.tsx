@@ -59,12 +59,12 @@ export default function Index() {
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton color="singleplayer" title="Single player">
+          <MenuButton href="#" color="singleplayer" title="Single player">
             <IconCircle icon="solar:user-bold" />
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton color="settings" title="How to play">
+          <MenuButton href="#" color="settings" title="How to play">
             <IconCircle icon="solar:book-bookmark-bold" />
           </MenuButton>
         </motion.div>

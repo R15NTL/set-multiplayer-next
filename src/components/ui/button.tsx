@@ -1,5 +1,6 @@
 import React, { useState, useRef, Fragment } from "react";
 import { Slot } from "@radix-ui/react-slot";
+import Link, { LinkProps } from "next/link";
 import { cva, type VariantProps } from "class-variance-authority";
 import ButtonRipple from "../button/ButtonRipple";
 import { Icon } from "@iconify/react";
@@ -37,8 +38,8 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
   loading?: boolean;
+  href?: LinkProps["href"];
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -47,7 +48,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant,
       size,
-      asChild = false,
+      href,
       children,
       onClick,
       loading,
@@ -56,7 +57,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : "button";
+    const Comp = href ? Slot : "button";
+    const LinkComp = href ? Link : "span";
 
     const [clickEvent, setClickEvent] =
       useState<React.MouseEvent<HTMLButtonElement> | null>(null);
@@ -67,9 +69,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const buttonContainerRef = useRef<HTMLButtonElement>(null);
 
     const renderChildren = () => (
-      <span>
+      <LinkComp href={href!}>
         <span className="inset-0 absolute" ref={buttonContainerRef} />
-        <span className="relative z-10 flex items-center text-center">
+        <span className="relative z-10 flex items-center text-center w-full">
           {children}
         </span>
         {loading && (
@@ -81,7 +83,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           container={buttonContainerRef.current}
           clickEvent={clickEvent}
         />
-      </span>
+      </LinkComp>
     );
 
     return (
@@ -90,6 +92,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         disabled={disabled || loading}
+        // @ts-ignore
+        asChild={Comp === "button" ? undefined : !!href}
         {...props}
       >
         {renderChildren()}
