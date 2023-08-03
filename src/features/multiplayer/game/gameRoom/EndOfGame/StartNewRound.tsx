@@ -41,7 +41,7 @@ export default function StartNewRound() {
         <DialogHeader>
           <DialogTitle>Start new round</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
+        <DialogDescription className="grid gap-3 text-foreground pt-3">
           <Label htmlFor="game-type">Game type</Label>
           <RadioGroup
             id="game-type"

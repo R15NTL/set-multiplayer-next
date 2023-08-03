@@ -19,16 +19,18 @@
     --border: #475569;
     --input: #475569;
 
-    --primary: #f87171;
+    --primary: 0 91% 71%;
+    --primary-light: 0 34.5% 98.8%;
+    --primary-dark: 0 71.5% 93.7%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
 
-    --accent: #f87171;
+    --accent: 210, 16.4%, 46.9%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: #f43f5e;
+    --destructive: 97.1% 74.2% 95.7%;
     --destructive-foreground: 0 85.7% 97.3%;
 
     --ring: #475569;

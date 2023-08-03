@@ -10,11 +10,10 @@ import {
 // Icons
 import { Icon } from "@iconify/react";
 // Features
-import SetTable from "@/features/setTable";
 import EndOfGamePlayerCard from "./EndOfGamePlayerCard";
 import JoinRequests from "../../../components/JoinRequests";
 import StartNewRound from "./StartNewRound";
-import { HostChip } from "@/components/host-chip";
+import FunctionBar from "../common/FunctionBar";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -50,30 +49,35 @@ export default function EndOfGame() {
     winner && account && winner.user.user_id === account.user_id;
 
   return (
-    <Card className="m-auto flex flex-col w-full max-w-lg">
-      <CardHeader>
-        <CardTitle>End of game</CardTitle>
-        {winner && (
-          <CardDescription>
-            {winnerIsMe ? "You" : winner.user.username} won the game!
-          </CardDescription>
-        )}
-      </CardHeader>
+    <>
+      <div className="m-auto grid gap-3 w-full max-w-lg">
+        <Card>
+          <CardHeader>
+            <CardTitle>Well done!</CardTitle>
+            {winner && (
+              <CardDescription>
+                {winnerIsMe ? "You" : winner.user.username} won the game!
+              </CardDescription>
+            )}
+          </CardHeader>
 
-      <CardContent className="grid gap-3">
-        {sortedPlayers.map((player, index) => (
-          <EndOfGamePlayerCard key={player.user.user_id} player={player} />
-        ))}
-        {newRoundIn5Seconds && "New round in 5 seconds"}
-      </CardContent>
-      <CardFooter className="justify-end gap-3">
-        {isHost && (
-          <>
-            <JoinRequests />
-            {!newRoundIn5Seconds && <StartNewRound />}
-          </>
-        )}
-      </CardFooter>
-    </Card>
+          <CardContent className="grid gap-3">
+            {sortedPlayers.map((player, index) => (
+              <EndOfGamePlayerCard key={player.user.user_id} player={player} />
+            ))}
+            {newRoundIn5Seconds && "New round in 5 seconds"}
+          </CardContent>
+          <CardFooter className="justify-end gap-3">
+            {isHost && (
+              <>
+                <JoinRequests />
+                {!newRoundIn5Seconds && <StartNewRound />}
+              </>
+            )}
+          </CardFooter>
+        </Card>
+        <FunctionBar handleFindTestSet={() => {}} />
+      </div>
+    </>
   );
 }

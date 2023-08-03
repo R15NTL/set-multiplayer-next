@@ -22,8 +22,10 @@ export default function StatusBar() {
           {roomName}
         </span>
       </p>
-      <p className="flex items-center gap-1 text-accent sm:flex-1 justify-center ">
-        <Icon icon="tabler:user-x" />
+      <p className="flex items-center gap-1 text-muted sm:flex-1 justify-center ">
+        <Icon
+          icon={gameType === "Competitive" ? "tabler:users" : "tabler:user-x"}
+        />
         <span>{gameType}</span>
       </p>
       <p className="flex items-center gap-1 sm:flex-1 text-right justify-end text-md font-medium">

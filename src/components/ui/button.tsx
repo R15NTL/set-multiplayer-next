@@ -75,7 +75,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           {children}
         </span>
         {loading && (
-          <span className="absolute inset-0 flex items-center justify-center bg-slate-400 z-10">
+          <span className="absolute inset-0 flex items-center justify-center z-10">
             <Icon icon="svg-spinners:ring-resize" />
           </span>
         )}

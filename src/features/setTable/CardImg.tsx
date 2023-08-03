@@ -8,16 +8,18 @@ import SolidDiamond from "./cardImgs/SolidDiamond";
 import EmptyOval from "./cardImgs/EmptyOval";
 import EmptyDiamond from "./cardImgs/EmptyDiamond";
 import EmptySnake from "./cardImgs/EmptySnake";
+import { cn } from "@/lib/utils";
 
 import type { Shading, Color, Shape, Quantity } from "../gameLogic/types";
 
 export interface CardImgProps {
-  color: Color;
+  color: string;
   shape: Shape;
   shade: Shading;
+  className?: string;
 }
 
-function CardImg({ color, shape, shade }: CardImgProps) {
+function CardImg({ color, shape, shade, className }: CardImgProps) {
   const colorStyle = () => {
     switch (color) {
       case "red":
@@ -27,7 +29,7 @@ function CardImg({ color, shape, shade }: CardImgProps) {
       case "purple":
         return "#6C089E";
       default:
-        return "#799E08";
+        return color;
     }
   };
   const element = () => {
@@ -72,10 +74,9 @@ function CardImg({ color, shape, shade }: CardImgProps) {
     }
   };
   return (
-    <div className=" m-auto h-full aspect-[1/2]">
+    <div className={cn("m-auto h-full aspect-[1/2]")}>
       <svg
         version="1.1"
-        id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
         y="0px"
