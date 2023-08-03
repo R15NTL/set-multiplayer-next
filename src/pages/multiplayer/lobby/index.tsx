@@ -134,10 +134,8 @@ export default function Lobby() {
         </Card>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button asChild>
-          <Link href={paths.multiplayer.lobby.createRoom.root}>
-            Create room
-          </Link>
+        <Button href={paths.multiplayer.lobby.createRoom.root}>
+          Create room
         </Button>
       </CardFooter>
     </Card>
