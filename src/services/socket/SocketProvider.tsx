@@ -102,7 +102,11 @@ export default function SocketProvider({ children }: SocketProviderProps) {
 
   // Forward user to the game room if they are in game
   useEffect(() => {
-    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root)) {
+    if (
+      currentRoom &&
+      isConnected &&
+      !pathname.startsWith(paths.multiplayer.game.root)
+    ) {
       setJoinRequest(false);
       replace(paths.multiplayer.game.root);
     } else if (

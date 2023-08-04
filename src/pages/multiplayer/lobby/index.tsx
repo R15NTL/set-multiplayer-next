@@ -88,6 +88,7 @@ export default function Lobby() {
   useEffect(() => {
     if (isConnected) {
       emitters.lobby.getRooms((...args) => socket.emit(...args));
+      emitters.common.checkIfInRoom((...args) => socket.emit(...args));
     }
   }, [isConnected]);
 

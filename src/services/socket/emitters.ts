@@ -74,6 +74,8 @@ export const emitters = {
   common: {
     leaveRoom: (cb: SocketEmitter) => cb("leave-room"),
 
+    checkIfInRoom: (cb: SocketEmitter) => cb("check-if-in-room"),
+
     requestRoomData: (cb: SocketEmitter) => cb("request-room-data"),
   },
 };
