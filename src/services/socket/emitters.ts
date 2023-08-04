@@ -50,6 +50,9 @@ export const emitters = {
         cb: SocketEmitter
       ) => cb("host-validate-join-request", params),
 
+      sendChatMessage: (params: { message: string }, cb: SocketEmitter) =>
+        cb("send-chat-message", params),
+
       hostRemovePlayer: (params: { player_id: string }, cb: SocketEmitter) =>
         cb("host-remove-player", params),
 

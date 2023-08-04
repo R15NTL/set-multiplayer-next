@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
 // Local
 import { HostChip } from "@/components/host-chip";
+import ChatReceiver from "../common/ChatReceiver";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 // Types
@@ -21,7 +22,11 @@ export default function EndOfGamePlayerCard({
 }: EndOfGamePlayerCardProps) {
   const { currentRoom } = useSocket();
   return (
-    <Card key={player.user.user_id} className="p-3 flex">
+    <Card key={player.user.user_id} className="p-3 flex relative">
+      <ChatReceiver
+        userId={player.user.user_id}
+        className="absolute z-20 -top-5 -right-3"
+      />
       <div>
         <h6 className="font-medium">{player.user.username}</h6>
         <p className="text-sm flex items-center mt-1">

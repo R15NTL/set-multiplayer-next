@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react";
 import { useSocket } from "@/hooks/useSocket";
 // Local
 import { HostChip } from "@/components/host-chip";
+import ChatReceiver from "../common/ChatReceiver";
 // Types
 import { Player } from "@/services/socket/types";
 // Utils
@@ -35,6 +36,12 @@ export default function inGamePlayerCard({ player }: InGamePlayerCardProps) {
         position: player ? "relative" : "absolute",
       }}
     >
+      {player && (
+        <ChatReceiver
+          userId={player.user.user_id}
+          className="absolute z-20 -top-5 -right-3"
+        />
+      )}
       {isHost && (
         <HostChip
           noIcon

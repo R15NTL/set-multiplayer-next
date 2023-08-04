@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 // Features
 import JoinRequests from "@/features/multiplayer/components/JoinRequests";
 import RoomMenu from "./RoomMenu";
+import Chat from "./Chat";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -25,9 +26,7 @@ export default function FunctionBar({ handleFindTestSet }: FunctionBarProps) {
         <JoinRequests />
       </div>
       <div className="flex gap-3 items-center">
-        <Button size="icon" variant="outline">
-          <Icon icon="tabler:message-circle" className="w-5 h-5" />
-        </Button>
+        <Chat />
         <RoomMenu />
       </div>
     </div>

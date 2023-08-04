@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 import { AxiosProvider } from "@/services/axios/AxiosProvider";
 import SocketProvider from "@/services/socket/SocketProvider";
+import RoomChatProvider from "@/services/socket/RoomChatProvider";
 // React Query
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -44,9 +45,11 @@ export default function App({ Component, pageProps }: MyAppProps) {
         <QueryClientProvider client={queryClient}>
           <AxiosProvider>
             <SocketProvider>
-              {getLayout(<Component {...pageProps} />)}
-              <Analytics />
-              <Toaster />
+              <RoomChatProvider>
+                {getLayout(<Component {...pageProps} />)}
+                <Analytics />
+                <Toaster />
+              </RoomChatProvider>
             </SocketProvider>
           </AxiosProvider>
           <ReactQueryDevtools initialIsOpen={false} />
