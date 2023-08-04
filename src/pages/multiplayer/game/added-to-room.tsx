@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 import { paths } from "@/routes/paths";
@@ -8,6 +9,10 @@ import SocketGuard from "@/services/socket/SocketGuard";
 import AuthGuard from "@/features/auth/AuthGuard";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
+// Loading screen
+const LoadingScreen = dynamic(
+  () => import("@/components/loading-screen/LoadingScreen")
+);
 
 AddedToRoom.getLayout = (page: React.ReactNode) => (
   <MainLayout>
@@ -31,5 +36,5 @@ export default function AddedToRoom() {
     }
   }, [currentRoom]);
 
-  return <div>Connecting...</div>;
+  return <LoadingScreen />;
 }

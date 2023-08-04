@@ -1,8 +1,13 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import { useGetAccount } from "@/services/queries/account";
 // Components
 import EmailNotVerified from "./EmailNotVerified";
+
+const LoadingScreen = dynamic(
+  () => import("@/components/loading-screen/LoadingScreen")
+);
 
 interface EmailVerifiedGuardProps {
   children: React.ReactNode;
@@ -15,7 +20,7 @@ export default function EmailVerifiedGuard({
   const { data: account, isLoading } = useGetAccount();
 
   if (status === "loading" || (status === "authenticated" && isLoading)) {
-    return <div>Connecting...</div>;
+    return <LoadingScreen />;
   }
 
   if (account?.email_verified === false) {

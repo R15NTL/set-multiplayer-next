@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 // Next
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Auth guard
@@ -13,6 +14,10 @@ import { emitters } from "@/services/socket/emitters";
 import SocketGuard from "@/services/socket/SocketGuard";
 // Services
 import { useAxios } from "@/hooks/useAxios";
+// Loading screen
+const LoadingScreen = dynamic(
+  () => import("@/components/loading-screen/LoadingScreen")
+);
 
 JoinRoom.getLayout = (page: React.ReactNode) => (
   <MainLayout>
@@ -52,5 +57,5 @@ export default function JoinRoom() {
     }
   }, [room_id, isConnected]);
 
-  return <div className="m-auto">Connecting...</div>;
+  return <LoadingScreen />;
 }
