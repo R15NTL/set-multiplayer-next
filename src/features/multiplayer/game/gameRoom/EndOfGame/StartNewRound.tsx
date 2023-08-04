@@ -45,6 +45,7 @@ export default function StartNewRound() {
           <Label htmlFor="game-type">Game type</Label>
           <RadioGroup
             id="game-type"
+            className="grid gap-5 pb-3 pt-1 sm:pt-0 sm:gap-3 sm:pb-2"
             value={gameType}
             onValueChange={(value: StartNewRoundParams["game_type"]) =>
               setGameType(value)

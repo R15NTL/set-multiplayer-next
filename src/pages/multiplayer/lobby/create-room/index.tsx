@@ -97,10 +97,10 @@ export default function CreateRoom() {
           />
         </div>
 
-        <div className="grid gap-2">
+        <div className="grid gap-3">
           <Label htmlFor="game-type">Game type</Label>
           <RadioGroup
-            className="grid gap-3 py-1"
+            className="grid gap-5 pb-3 pt-1 sm:pt-0 sm:gap-3 sm:pb-2"
             id="game-type"
             value={gameType}
             onValueChange={(value: CreateRoomParams["game_type"]) =>
