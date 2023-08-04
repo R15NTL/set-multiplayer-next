@@ -29,7 +29,7 @@ export default function inGamePlayerCard({ player }: InGamePlayerCardProps) {
   const isMe = account?.user_id === player?.user.user_id;
   return (
     <Card
-      className="flex gap-2 p-2 xl:p-3 xl:gap-3 items-center"
+      className="flex gap-2 py-2 px-3 sm:py-3 sm:gap-3 items-center"
       style={{
         visibility: player ? "visible" : "hidden",
         height: player ? "auto" : "0px",
@@ -42,12 +42,7 @@ export default function inGamePlayerCard({ player }: InGamePlayerCardProps) {
           className="absolute z-20 -top-5 -right-3"
         />
       )}
-      {isHost && (
-        <HostChip
-          noIcon
-          className="absolute z-20 -bottom-1 -right-1 shadow-md"
-        />
-      )}
+
       <div>
         <Avatar>
           <AvatarFallback>{getInitials(player?.user.username)}</AvatarFallback>
@@ -71,6 +66,12 @@ export default function inGamePlayerCard({ player }: InGamePlayerCardProps) {
           </p>
         )}
       </div>
+      {isHost && (
+        <HostChip
+          noIcon
+          className="absolute sm:static ml-auto z-20 -bottom-1 -right-1 shadow-md"
+        />
+      )}
     </Card>
   );
 }
