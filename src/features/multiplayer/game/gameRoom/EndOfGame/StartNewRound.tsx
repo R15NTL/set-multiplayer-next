@@ -34,8 +34,8 @@ export default function StartNewRound() {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button>Start new round</Button>
+      <DialogTrigger asChild>
+        <Button className="w-full sm:w-auto">Start new game</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

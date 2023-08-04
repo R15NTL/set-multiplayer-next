@@ -11,9 +11,9 @@ import {
 import { Icon } from "@iconify/react";
 // Features
 import EndOfGamePlayerCard from "./EndOfGamePlayerCard";
-import JoinRequests from "../../../components/JoinRequests";
 import StartNewRound from "./StartNewRound";
 import FunctionBar from "../common/FunctionBar";
+import NewGameInNSeconds from "./NewGameInNSeconds";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -65,15 +65,10 @@ export default function EndOfGame() {
             {sortedPlayers.map((player, index) => (
               <EndOfGamePlayerCard key={player.user.user_id} player={player} />
             ))}
-            {newRoundIn5Seconds && "New round in 5 seconds"}
           </CardContent>
           <CardFooter className="justify-end gap-3">
-            {isHost && (
-              <>
-                <JoinRequests />
-                {!newRoundIn5Seconds && <StartNewRound />}
-              </>
-            )}
+            {newRoundIn5Seconds && <NewGameInNSeconds />}
+            {!newRoundIn5Seconds && isHost && <StartNewRound />}
           </CardFooter>
         </Card>
         <FunctionBar handleFindTestSet={() => {}} />
