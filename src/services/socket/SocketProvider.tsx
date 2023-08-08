@@ -56,7 +56,8 @@ export default function SocketProvider({ children }: SocketProviderProps) {
   const onDisconnect = () => {
     setCurrentRoom(null);
     setIsConnected(false);
-    replace(paths.menu);
+
+    if (pathname.startsWith(paths.multiplayer.root)) replace(paths.menu);
   };
   const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => {
     setLobbyRooms(rooms);
