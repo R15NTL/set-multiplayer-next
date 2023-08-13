@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "@/hooks/useAxios";
+import { useToast } from "@/components/ui/use-toast";
 
 interface CreateAccountParams {
   name: string;
@@ -76,4 +77,48 @@ export const useVerifyEmail = () => {
     );
     return response.data;
   });
+};
+
+interface UpdateAccountParams {
+  username: string;
+}
+
+export const useUpdateAccount = () => {
+  const { axiosInstance } = useAxios();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation(
+    async (data: UpdateAccountParams) => {
+      const response = await axiosInstance.put("api/user/account", data);
+
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["get-account"]);
+        toast({
+          title: "Account successfully updated",
+        });
+      },
+      onError: (error) => {
+        const message =
+          error instanceof Error &&
+          (error as any).response?.data?.data?.message;
+
+        if (typeof message === "string") {
+          toast({
+            title: message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Error updating account",
+          variant: "destructive",
+        });
+      },
+    }
+  );
 };

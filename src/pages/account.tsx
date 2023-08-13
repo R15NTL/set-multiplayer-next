@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+// Features
+import ManageAccount from "@/features/account/ManageAccount";
 // Services
 import { useGetAccount } from "@/services/queries/account";
 
@@ -36,25 +38,7 @@ export default function Account() {
           <TabsTrigger value="password">Password</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
-          <Card>
-            <CardHeader>
-              <CardTitle>Account</CardTitle>
-              <CardDescription>Make changes to your account</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <Label htmlFor="name">Screen name</Label>
-                <Input id="name" defaultValue={account?.username} />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="email">Email</Label>
-                <Input disabled id="email" value={account?.email ?? ""} />
-              </div>
-            </CardContent>
-            <CardFooter className="  flex justify-end">
-              <Button>Save changes</Button>
-            </CardFooter>
-          </Card>
+          <ManageAccount />
         </TabsContent>
         <TabsContent value="password">
           <Card>

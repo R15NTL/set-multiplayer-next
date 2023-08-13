@@ -40,10 +40,11 @@ export const requestHandler = async (
     }
 
     // Authorization check.
-    const isAuthorized = authorize && (await authorizeUser(req));
+    const isAuthorized = authorize && (await authorizeUser(req, res));
     const user =
       isAuthorized && (await manageUsers.getUserById(isAuthorized.user_id));
     if (authorize && !isAuthorized) {
+      console.log("Unauthorized", { isAuthorized, user });
       res.status(401).json(errorResponse("Unauthorized"));
       return;
     }

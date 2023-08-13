@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { successResponse } from "@/server/utils/utils";
+import { successResponse, errorResponse } from "@/server/utils/utils";
 import * as yup from "yup";
 import manageUsers from "@/server/auth/users/manageUsers";
 import type { UserRecord } from "firebase-admin/auth";
@@ -26,7 +26,7 @@ const GET = async (
 };
 
 const updateAccountSchema = yup.object().shape({
-  username: yup.string().required(),
+  username: yup.string().max(56).required(),
 });
 
 const PUT = async (
@@ -37,10 +37,21 @@ const PUT = async (
   if (!user) {
     return res
       .status(500)
-      .json({ error: "User authorization is not enabled for this request" });
+      .json(
+        errorResponse("User authorization is not enabled for this request")
+      );
   }
 
-  await updateAccountSchema.validate(req.body);
+  try {
+    await updateAccountSchema.validate(req.body);
+  } catch (error) {
+    if (error instanceof yup.ValidationError) {
+      return res.status(400).json(errorResponse(error.message));
+    }
+    return res
+      .status(500)
+      .json(errorResponse("Error while updating the user."));
+  }
 
   const { username } = req.body;
 
@@ -51,7 +62,7 @@ const PUT = async (
 
     res.status(200).json(successResponse("Account successfully updated", {}));
   } catch (error) {
-    res.status(500).json({ error: "Error while updating the user." });
+    res.status(500).json(errorResponse("Error while updating the user."));
   }
 };
 
