@@ -29,8 +29,8 @@ export default function Account() {
   const { data: account } = useGetAccount();
 
   return (
-    <div className=" m-auto">
-      <Tabs defaultValue="account" className="w-[400px]">
+    <div className="m-auto w-full max-w-md">
+      <Tabs defaultValue="account" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
@@ -39,13 +39,11 @@ export default function Account() {
           <Card>
             <CardHeader>
               <CardTitle>Account</CardTitle>
-              <CardDescription>
-                Make changes to your account here
-              </CardDescription>
+              <CardDescription>Make changes to your account</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="space-y-1">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">Screen name</Label>
                 <Input id="name" defaultValue={account?.username} />
               </div>
               <div className="space-y-1">
