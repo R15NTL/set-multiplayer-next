@@ -42,7 +42,7 @@ export default function CreateRoom() {
     `${account?.username ?? "Unknown"}'s room`
   );
   const [gameType, setGameType] =
-    useState<CreateRoomParams["game_type"]>("knockout");
+    useState<CreateRoomParams["game_type"]>("competitive");
   const { axiosInstance } = useAxios();
 
   const { socket } = useSocket();
@@ -98,26 +98,40 @@ export default function CreateRoom() {
         </div>
 
         <div className="grid gap-3">
-          <Label htmlFor="game-type">Game type</Label>
+          <Label htmlFor="game-type">Game mode</Label>
           <RadioGroup
-            className="grid gap-5 pb-3 pt-1 sm:pt-0 sm:gap-3 sm:pb-2"
+            className="grid  pb-2 gap-3 "
             id="game-type"
             value={gameType}
             onValueChange={(value: CreateRoomParams["game_type"]) =>
               setGameType(value)
             }
           >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem id="knockout" value="knockout" />
-              <Label className="font-normal" htmlFor="knockout">
-                Knockout
-              </Label>
+            <div className="grid gap-2">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem id="competitive" value="competitive" />
+                <Label className="font-normal" htmlFor="competitive">
+                  Competitive
+                </Label>
+              </div>
+              <p className="text-xs text-muted">
+                The player with the highest points is declared the winner.
+              </p>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem id="competitive" value="competitive" />
-              <Label className="font-normal" htmlFor="competitive">
-                Competitive
-              </Label>
+
+            <div className="grid gap-2">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem id="knockout" value="knockout" />
+                <Label className="font-normal" htmlFor="knockout">
+                  Knockout
+                </Label>
+              </div>
+
+              <p className="text-xs text-muted">
+                The player with the lowest points is eliminated from the game
+                until there is one player left in the game who will be declared
+                the winner.
+              </p>
             </div>
           </RadioGroup>
         </div>

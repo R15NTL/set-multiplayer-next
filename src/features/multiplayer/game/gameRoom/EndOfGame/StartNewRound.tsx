@@ -42,7 +42,7 @@ export default function StartNewRound() {
           <DialogTitle>Start new round</DialogTitle>
         </DialogHeader>
         <DialogDescription className="grid gap-3 text-foreground pt-3">
-          <Label htmlFor="game-type">Game type</Label>
+          <Label htmlFor="game-type">Game mode</Label>
           <RadioGroup
             id="game-type"
             className="grid gap-5 pb-3 pt-1 sm:pt-0 sm:gap-3 sm:pb-2"
@@ -52,12 +52,12 @@ export default function StartNewRound() {
             }
           >
             <div className="flex items-center space-x-2">
-              <RadioGroupItem id="knockout" value="knockout" />
-              <Label htmlFor="knockout">Knockout</Label>
-            </div>
-            <div className="flex items-center space-x-2">
               <RadioGroupItem id="competitive" value="competitive" />
               <Label htmlFor="competitive">Competitive</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem id="knockout" value="knockout" />
+              <Label htmlFor="knockout">Knockout</Label>
             </div>
           </RadioGroup>
         </DialogDescription>
