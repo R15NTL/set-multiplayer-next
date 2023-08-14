@@ -1,15 +1,14 @@
 import React from "react";
 import CardImg, { CardImgProps } from "./CardImg";
-//import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-//import { selectCard, deselectCard } from "../../../state/setTable";
-import { Color, Shape, Shading, Quantity } from "../gameLogic/types";
+import { Quantity } from "../gameLogic/types";
+import { cn } from "@/lib/utils";
 
 export interface SetCardProps extends CardImgProps {
   index: number;
   quantity: Quantity;
   selectedCards: number[];
   setSelectedCards: React.Dispatch<React.SetStateAction<number[]>>;
+  cardHighlightColor?: "default" | "green" | "red";
 }
 
 function SetCard({
@@ -20,6 +19,7 @@ function SetCard({
   index,
   selectedCards,
   setSelectedCards,
+  cardHighlightColor = "default",
 }: SetCardProps) {
   const cardImgs = [];
 
@@ -41,16 +41,21 @@ function SetCard({
   };
 
   return (
-    <div
-      onClick={handleClick}
-      className={`bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer aspect-[88/63]
-      flex gap-[3%]
-      ${selected ? "border-blue-500" : "border-foreground"}`}
+    <button
+      onMouseDown={handleClick}
+      className={cn(
+        `bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer aspect-[88/63]
+      flex gap-[3%] border-foreground`,
+        selected && "opacity-90",
+        selected && cardHighlightColor === "default" && "border-blue-500",
+        selected && cardHighlightColor === "green" && "border-emerald-500",
+        selected && cardHighlightColor === "red" && "border-rose-500"
+      )}
     >
       <div className="flex-1"></div>
       {cardImgs}
       <div className="flex-1"></div>
-    </div>
+    </button>
   );
 }
 
