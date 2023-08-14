@@ -29,7 +29,7 @@ const containerVariants = {
     y: 0,
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -72,6 +72,16 @@ export default function Index() {
             <IconCircle icon="solar:book-bookmark-bold" />
           </MenuButton>
         </motion.div>
+        <motion.p variants={buttonVariants} className="text-xs text-center">
+          👋 This site is under construction
+          <br />
+          <a
+            href="mailto:setmultiplayer@gmail.com"
+            className=" underline text-primary"
+          >
+            Feedback
+          </a>
+        </motion.p>
       </motion.div>
     </motion.div>
   );
