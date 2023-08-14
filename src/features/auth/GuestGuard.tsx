@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { paths } from "@/routes/paths";
+import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 
 interface GuestGuardProps {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ export default function GuestGuard({ children }: GuestGuardProps) {
     }
   }, [status]);
 
-  if (status !== "unauthenticated") return <div>loading...</div>;
+  if (status !== "unauthenticated") return <LoadingScreen />;
 
   return <>{children}</>;
 }

@@ -1,38 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Auth
 import AuthGuard from "@/features/auth/AuthGuard";
 // Components
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 // Features
 import ManageAccount from "@/features/account/ManageAccount";
+import ChangePassword from "@/features/account/ChangePassword";
 // Services
 import { useGetAccount } from "@/services/queries/account";
 
 Account.getLayout = (page: React.ReactNode) => (
-  <AuthGuard>
-    <MainLayout>{page}</MainLayout>
-  </AuthGuard>
+  <MainLayout>
+    <AuthGuard>{page}</AuthGuard>
+  </MainLayout>
 );
 
 export default function Account() {
-  const { data: account } = useGetAccount();
+  const [tab, setTab] = useState("account");
+
+  const handleTabChange = (value: string) => setTab(value);
 
   return (
     <div className="m-auto w-full max-w-md">
-      <Tabs defaultValue="account" className="w-full">
+      <Tabs
+        defaultValue="account"
+        className="w-full"
+        value={tab}
+        onValueChange={handleTabChange}
+      >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
@@ -41,27 +38,7 @@ export default function Account() {
           <ManageAccount />
         </TabsContent>
         <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter className="">
-              <Button className="">Save password</Button>
-            </CardFooter>
-          </Card>
+          <ChangePassword handleTabChange={handleTabChange} />
         </TabsContent>
       </Tabs>
     </div>

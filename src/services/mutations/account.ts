@@ -98,7 +98,7 @@ export const useUpdateAccount = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(["get-account"]);
         toast({
-          title: "Account successfully updated",
+          title: "Account updated",
         });
       },
       onError: (error) => {
@@ -116,6 +116,53 @@ export const useUpdateAccount = () => {
 
         toast({
           title: "Error updating account",
+          variant: "destructive",
+        });
+      },
+    }
+  );
+};
+
+interface ChangePasswordParams {
+  password: string;
+  confirm_password: string;
+}
+
+export const useChangePassword = () => {
+  const { axiosInstance } = useAxios();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation(
+    async (data: ChangePasswordParams) => {
+      const response = await axiosInstance.put(
+        "api/user/change-password",
+        data
+      );
+
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        toast({
+          title: "Password updated",
+        });
+      },
+      onError: (error) => {
+        const message =
+          error instanceof Error &&
+          (error as any).response?.data?.data?.message;
+
+        if (typeof message === "string") {
+          toast({
+            title: message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Error updating password",
           variant: "destructive",
         });
       },
