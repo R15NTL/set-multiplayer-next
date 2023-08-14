@@ -20,25 +20,14 @@ export interface SetTableProps {
 
 function SetTable({ data, onFindSet }: SetTableProps) {
   if (!data) return null;
+
+  // State
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [prevData, setPrevData] = useState("");
 
-  // Reset selected cards when data changes (Hook gets triggered
-  // when the data updates even if the data has not changed)
-  useEffect(() => {
-    const dataString = JSON.stringify(data);
-
-    if (prevData !== dataString) setSelectedCards([]);
-
-    setPrevData(dataString);
-  }, [data]);
-
-  useEffect(() => {
-    if (selectedCards.length === 3) onFindSet?.(selectedCards);
-  }, [selectedCards]);
-
-  const cardHighlightColor = useMemo(() => {
-    if (selectedCards.length !== 3) return "default";
+  // Memoized values
+  const isSet = useMemo(() => {
+    if (selectedCards.length !== 3) return false;
 
     const gameLogic = new GameLogic({
       cardStack: [],
@@ -53,9 +42,31 @@ function SetTable({ data, onFindSet }: SetTableProps) {
       selectedCards[2]
     );
 
-    return isSet ? "green" : "red";
+    return isSet;
   }, [selectedCards]);
 
+  const cardHighlightColor = useMemo(() => {
+    if (selectedCards.length !== 3) return "default";
+
+    return isSet ? "green" : "red";
+  }, [selectedCards, isSet]);
+
+  // Effects
+  useEffect(() => {
+    if (isSet) onFindSet?.(selectedCards);
+  }, [isSet]);
+
+  // Reset selected cards when data changes (Hook gets triggered
+  // when the data updates even if the data has not changed)
+  useEffect(() => {
+    const dataString = JSON.stringify(data);
+
+    if (prevData !== dataString) setSelectedCards([]);
+
+    setPrevData(dataString);
+  }, [data]);
+
+  // Render
   const setCards = data.map((card, index) => {
     return (
       <SetCard
@@ -71,6 +82,7 @@ function SetTable({ data, onFindSet }: SetTableProps) {
       />
     );
   });
+
   return (
     <>
       <div className="grid grid-cols-3 gap-1">{setCards}</div>
