@@ -115,7 +115,7 @@ export default function CreateRoom() {
                 </Label>
               </div>
               <p className="text-xs text-muted">
-                The player with the highest points is declared the winner.
+                Winner is the player with the most points
               </p>
             </div>
 
@@ -128,9 +128,8 @@ export default function CreateRoom() {
               </div>
 
               <p className="text-xs text-muted">
-                The player with the lowest points is eliminated from the game
-                until there is one player left in the game who will be declared
-                the winner.
+                Player with the fewest points is eliminated each round, Last
+                player standing wins
               </p>
             </div>
           </RadioGroup>
