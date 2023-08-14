@@ -19,15 +19,13 @@ export interface SetTableProps {
 }
 
 function SetTable({ data, onFindSet }: SetTableProps) {
-  if (!data) return null;
-
   // State
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [prevData, setPrevData] = useState("");
 
   // Memoized values
   const isSet = useMemo(() => {
-    if (selectedCards.length !== 3) return false;
+    if (selectedCards.length !== 3 || !data) return false;
 
     const gameLogic = new GameLogic({
       cardStack: [],
@@ -61,13 +59,15 @@ function SetTable({ data, onFindSet }: SetTableProps) {
   useEffect(() => {
     const dataString = JSON.stringify(data);
 
-    if (prevData !== dataString) setSelectedCards([]);
+    if (prevData !== dataString) {
+      setSelectedCards([]);
 
-    setPrevData(dataString);
+      setPrevData(dataString);
+    }
   }, [data]);
 
   // Render
-  const setCards = data.map((card, index) => {
+  const setCards = data?.map((card, index) => {
     return (
       <SetCard
         cardHighlightColor={cardHighlightColor}
@@ -82,6 +82,8 @@ function SetTable({ data, onFindSet }: SetTableProps) {
       />
     );
   });
+
+  if (!data) return null;
 
   return (
     <>

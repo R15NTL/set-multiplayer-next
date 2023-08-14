@@ -59,7 +59,11 @@ export default function Index() {
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton href="#" color="singleplayer" title="Single player">
+          <MenuButton
+            href={paths.singlePlayer.root}
+            color="singleplayer"
+            title="Single player"
+          >
             <IconCircle icon="solar:user-bold" />
           </MenuButton>
         </motion.div>
