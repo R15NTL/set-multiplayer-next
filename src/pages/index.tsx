@@ -29,7 +29,7 @@ const containerVariants = {
     y: 0,
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -59,7 +59,11 @@ export default function Index() {
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton href="#" color="singleplayer" title="Single player">
+          <MenuButton
+            href={paths.singlePlayer.root}
+            color="singleplayer"
+            title="Single player"
+          >
             <IconCircle icon="solar:user-bold" />
           </MenuButton>
         </motion.div>
@@ -68,6 +72,16 @@ export default function Index() {
             <IconCircle icon="solar:book-bookmark-bold" />
           </MenuButton>
         </motion.div>
+        <motion.p variants={buttonVariants} className="text-xs text-center">
+          👋 This site is under construction
+          <br />
+          <a
+            href="mailto:setmultiplayer@gmail.com"
+            className=" underline text-primary"
+          >
+            Feedback
+          </a>
+        </motion.p>
       </motion.div>
     </motion.div>
   );

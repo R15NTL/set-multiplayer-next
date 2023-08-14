@@ -18,6 +18,9 @@ export const paths = {
       },
     },
   },
+  singlePlayer: {
+    root: "/single-player",
+  },
   multiplayer: {
     root: "/multiplayer",
     lobby: {
