@@ -5,6 +5,8 @@ import { Card } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
 // Local
 import { useSinglePlayer } from "./SinglePlayerGameProvider";
+// Utils
+import { formatTimeFromSeconds } from "@/utils";
 
 export default function SinglePlayerStatusBar() {
   const { gameState, gameTimer } = useSinglePlayer();
@@ -13,12 +15,7 @@ export default function SinglePlayerStatusBar() {
 
   // Game timer format (mm:ss)
   const timer = React.useMemo(() => {
-    if (!gameTimer) return "00:00";
-    const minutes = Math.floor(gameTimer / 60);
-    const seconds = gameTimer % 60;
-    // Pad start format
-    const padStart = (value: number) => value.toString().padStart(2, "0");
-    return `${padStart(minutes)}:${padStart(seconds)}`;
+    return formatTimeFromSeconds(gameTimer);
   }, [gameTimer]);
 
   return (

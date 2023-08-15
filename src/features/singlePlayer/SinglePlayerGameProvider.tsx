@@ -5,10 +5,10 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
+// Components
+import { Button } from "@/components/ui/button";
 // Game logic
 import GameLogic, { GameSnapshot } from "../gameLogic/gameLogic";
-// ID generator
-import { nanoid } from "nanoid";
 
 interface SinglePlayerGameProviderProps {
   children: React.ReactNode;
@@ -28,7 +28,7 @@ export const SinglePlayerGameContext = createContext<
 export default function SinglePlayerGameProvider({
   children,
 }: SinglePlayerGameProviderProps) {
-  const [gameId, setGameId] = useState<string>(nanoid());
+  const [gameId, setGameId] = useState<string>(Date.now().toString());
   const [gameState, setGameState] = useState<GameSnapshot | null>(null);
   const [gameStartTime, setGameStartTime] = useState<number | null>(null);
   const [gameTimer, setGameTimer] = useState<number>(0);
@@ -39,16 +39,16 @@ export default function SinglePlayerGameProvider({
     gameLogic.startGame();
     const snapshot = gameLogic.saveGame();
     setGameState(snapshot);
-
+    setGameTimer(0);
     setGameStartTime(Date.now());
   }, [gameId]);
 
   // Game timer
   useEffect(() => {
-    if (!gameStartTime || gameState?.endOfGame) return;
+    if (gameStartTime === null || gameState?.endOfGame) return;
 
     const timer = setInterval(() => {
-      if (!gameStartTime) return;
+      if (gameStartTime === null) return;
 
       const diff = Math.floor((Date.now() - gameStartTime) / 1000);
 
@@ -58,14 +58,10 @@ export default function SinglePlayerGameProvider({
     return () => {
       clearInterval(timer);
     };
-  }, [gameStartTime, gameState?.endOfGame]);
-
-  //   useEffect(() => {
-  //     console.log({ gameTimer });
-  //   }, [gameTimer]);
+  }, [gameStartTime, gameState]);
 
   // Context functions
-  const startGame = () => setGameId(nanoid());
+  const startGame = () => setGameId(Date.now().toString());
 
   const findSet = (indexes: number[]) => {
     if (!gameState) return;

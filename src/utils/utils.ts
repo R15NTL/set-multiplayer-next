@@ -18,3 +18,13 @@ export const getPlayerStatus = (player: Player) => {
       return "Spectator";
   }
 };
+
+export const formatTimeFromSeconds = (seconds?: number | null) => {
+  if (!seconds) return "00:00";
+
+  const mm = Math.floor(seconds / 60);
+  const ss = seconds % 60;
+  // Pad start format
+  const padStart = (value: number) => value.toString().padStart(2, "0");
+  return `${padStart(mm)}:${padStart(ss)}`;
+};

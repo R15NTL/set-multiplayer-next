@@ -1,6 +1,9 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
+// Routes
+import { paths } from "@/routes/paths";
 // Components
 import { Toaster } from "@/components/ui/toaster";
 // Providers
@@ -35,12 +38,22 @@ interface MyAppProps extends AppProps {
   Component: NextPageWithLayout;
 }
 
+const getThemeColorClass = (pathname: string) => {
+  if (pathname.startsWith(paths.singlePlayer.root)) return "single-player";
+
+  return "";
+};
+
 // -----------------App-----------------
 export default function App({ Component, pageProps }: MyAppProps) {
   const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
 
+  const { pathname } = useRouter();
+
   return (
-    <div className={`dark ${poppins.className}`}>
+    <div
+      className={`dark ${getThemeColorClass(pathname)} ${poppins.className}`}
+    >
       <SessionProvider session={pageProps.session}>
         <QueryClientProvider client={queryClient}>
           <AxiosProvider>
