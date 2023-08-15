@@ -64,7 +64,11 @@ export default function Index() {
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton href="#" className="settings" title="How to play">
+          <MenuButton
+            href={paths.howToPlay.root}
+            className="settings"
+            title="How to play"
+          >
             <IconCircle icon="solar:book-bookmark-bold" />
           </MenuButton>
         </motion.div>
