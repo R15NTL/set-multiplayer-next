@@ -5,6 +5,8 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
+// Components
+import { Button } from "@/components/ui/button";
 // Game logic
 import GameLogic, { GameSnapshot } from "../gameLogic/gameLogic";
 // ID generator
@@ -59,10 +61,6 @@ export default function SinglePlayerGameProvider({
       clearInterval(timer);
     };
   }, [gameStartTime, gameState?.endOfGame]);
-
-  //   useEffect(() => {
-  //     console.log({ gameTimer });
-  //   }, [gameTimer]);
 
   // Context functions
   const startGame = () => setGameId(nanoid());
