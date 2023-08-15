@@ -52,6 +52,18 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
 
+        multiplayer: {
+          DEFAULT: "hsl(var(--multiplayer))",
+        },
+
+        "single-player": {
+          DEFAULT: "hsl(var(--single-player))",
+        },
+
+        settings: {
+          DEFAULT: "hsl(var(--settings))",
+        },
+
         "multiplayer-dark": "#ef4444",
         "multiplayer-mid": "#f87171",
         "multiplayer-light": "#fca5a5",

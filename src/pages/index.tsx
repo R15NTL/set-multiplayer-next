@@ -50,25 +50,21 @@ export default function Index() {
     >
       <motion.div className="m-auto flex gap-5 flex-col w-full max-w-lg">
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton
-            title="Multiplayer"
-            color="multiplayer"
-            href={paths.multiplayer.root}
-          >
+          <MenuButton title="Multiplayer" href={paths.multiplayer.root}>
             <IconCircle icon="solar:users-group-two-rounded-bold" />
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
           <MenuButton
+            className="single-player"
             href={paths.singlePlayer.root}
-            color="singleplayer"
             title="Single player"
           >
             <IconCircle icon="solar:user-bold" />
           </MenuButton>
         </motion.div>
         <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton href="#" color="settings" title="How to play">
+          <MenuButton href="#" className="settings" title="How to play">
             <IconCircle icon="solar:book-bookmark-bold" />
           </MenuButton>
         </motion.div>

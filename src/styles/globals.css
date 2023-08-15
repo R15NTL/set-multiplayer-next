@@ -38,6 +38,18 @@
     --radius: 0.5rem;
 
     --header-height: 3.5rem;
+
+    --single-player: 271 91% 65%;
+    --multi-player: 0 91% 71%;
+    --settings: 142 76% 36%;
+  }
+
+  .single-player {
+    --primary: 271 91% 65%;
+  }
+
+  .settings {
+    --primary: 142 76% 36%;
   }
 }
 
