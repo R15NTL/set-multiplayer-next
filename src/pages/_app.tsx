@@ -41,6 +41,8 @@ interface MyAppProps extends AppProps {
 const getThemeColorClass = (pathname: string) => {
   if (pathname.startsWith(paths.singlePlayer.root)) return "single-player";
 
+  if (pathname.startsWith(paths.howToPlay.root)) return "settings";
+
   return "";
 };
 

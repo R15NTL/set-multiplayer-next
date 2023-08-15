@@ -18,6 +18,9 @@ export const paths = {
       },
     },
   },
+  howToPlay: {
+    root: "/how-to-play",
+  },
   singlePlayer: {
     root: "/single-player",
   },
