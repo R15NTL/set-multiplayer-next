@@ -2,6 +2,7 @@ import React from "react";
 import CardImg, { CardImgProps } from "./CardImg";
 import { Quantity } from "../gameLogic/types";
 import { cn } from "@/lib/utils";
+import { isSafari } from "react-device-detect";
 
 export interface SetCardProps extends CardImgProps {
   index: number;
@@ -44,8 +45,10 @@ function SetCard({
     <button
       onMouseDown={handleClick}
       className={cn(
-        `bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer aspect-[88/63]
-      flex gap-[3%] border-foreground`,
+        `bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer ${
+          isSafari ? "aspect-[16/8]" : "aspect-[6/4]"
+        }
+      flex ${isSafari ? "gap-[2%]" : "gap-[3%]"} border-transparent border-4`,
         selected && "opacity-90",
         selected && cardHighlightColor === "default" && "border-blue-500",
         selected && cardHighlightColor === "green" && "border-emerald-500",
