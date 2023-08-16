@@ -44,8 +44,8 @@ function SetCard({
     <button
       onMouseDown={handleClick}
       className={cn(
-        `bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer aspect-[88/63]
-      flex gap-[3%] border-foreground`,
+        `bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer aspect-[16/9]
+      flex gap-[2%] border-foreground`,
         selected && "opacity-90",
         selected && cardHighlightColor === "default" && "border-blue-500",
         selected && cardHighlightColor === "green" && "border-emerald-500",

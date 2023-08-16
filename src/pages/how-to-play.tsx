@@ -57,12 +57,12 @@ export default function HowToPlay() {
           <section className="grid gap-2">
             <h2 className="text-muted text-lg font-medium">Setup</h2>
             <p className="text-sm">
-              When you start the game, cards are automatically dealt and
-              presented in a 3x4 grid.
+              When you start the game, cards are dealt and presented in a 3x4
+              grid.
             </p>
             <p className="text-sm">
-              In our case if more cards are needed, additional rows will be
-              added automatically to the grid.
+              If more cards are needed, additional rows will be added
+              automatically to the grid.
             </p>
           </section>
 
@@ -137,7 +137,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm">
+              <p className="text-sm pl-3 border-l-2">
                 Explanation: All cards are Red, all are Solid, and all have
                 Ovals. The quantity is also different for each, which adheres to
                 the "Variety" rule for the number attribute.
@@ -173,7 +173,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm">
+              <p className="text-sm pl-3 border-l-2">
                 Explanation: Here, the color attribute neither adheres to
                 Uniformity (all same) nor Variety (all different). Similarly,
                 shading is mixed between Solid and Striped, making this
@@ -210,7 +210,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm">
+              <p className="text-sm pl-3 border-l-2">
                 Explanation: The colors are all different, but they all have
                 Striped Diamonds. The numbers also differ, making this a valid
                 set.
@@ -247,7 +247,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm">
+              <p className="text-sm pl-3 border-l-2">
                 Explanation: Here, the cards have mixed attributes with neither
                 all same nor all different characteristics for shape, making
                 this set invalid.
