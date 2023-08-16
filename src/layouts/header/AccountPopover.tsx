@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { paths } from "@/routes/paths";
 // Components
@@ -33,8 +34,12 @@ import { useGetAccount } from "@/services/queries/account";
 export default function AccountPopover() {
   const { status } = useSession();
   const { data: account } = useGetAccount();
+  const { pathname } = useRouter();
 
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const isInMultiplayerGame = pathname.startsWith(paths.multiplayer.game.root);
 
   return (
     <>
@@ -50,10 +55,13 @@ export default function AccountPopover() {
             setLogoutDialogOpen(open);
           }}
         >
-          <DropdownMenu>
+          <DropdownMenu
+            open={dropdownOpen}
+            onOpenChange={(open) => setDropdownOpen(open)}
+          >
             <DropdownMenuTrigger className="flex rounded-full outline-none">
               <Avatar>
-                <AvatarFallback>
+                <AvatarFallback className={`${dropdownOpen && "opacity-90"}`}>
                   {getInitials(account?.username || "")}
                 </AvatarFallback>
               </Avatar>
@@ -67,8 +75,12 @@ export default function AccountPopover() {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <Link href={paths.account.root} passHref>
-                  <DropdownMenuItem onSelect={() => {}} className="">
+                <Link
+                  href={paths.account.root}
+                  target={isInMultiplayerGame ? "_blank" : ""}
+                  passHref
+                >
+                  <DropdownMenuItem className="">
                     <Icon icon="tabler:settings" className="mr-2" />
                     <span>Manage account</span>
                   </DropdownMenuItem>

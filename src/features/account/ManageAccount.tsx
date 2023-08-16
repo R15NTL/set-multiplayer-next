@@ -52,7 +52,7 @@ export default function ManageAccount() {
         <CardDescription>Make changes to your account</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        <div className="space-y-1">
+        <div className="space-y-2">
           <Label htmlFor="name">Screen name</Label>
           <Input
             id="name"
@@ -60,7 +60,7 @@ export default function ManageAccount() {
             onChange={handleUsernameChange}
           />
         </div>
-        <div className="space-y-1">
+        <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input disabled id="email" value={account?.email ?? ""} />
         </div>

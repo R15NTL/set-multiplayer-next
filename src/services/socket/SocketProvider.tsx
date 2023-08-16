@@ -56,11 +56,6 @@ export default function SocketProvider({ children }: SocketProviderProps) {
   const onDisconnect = () => {
     setCurrentRoom(null);
     setIsConnected(false);
-
-    // Wait for any redirects to finish before executing
-    setTimeout(() => {
-      if (pathname.startsWith(paths.multiplayer.root)) replace(paths.menu);
-    }, 800);
   };
   const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => {
     setLobbyRooms(rooms);

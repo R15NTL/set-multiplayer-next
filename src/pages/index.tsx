@@ -1,4 +1,6 @@
 import React from "react";
+// Next
+import Head from "next/head";
 // Layout
 import MainLayout from "../layouts/mainLayout/MainLayout";
 // Components
@@ -42,47 +44,52 @@ Index.getLayout = (page: React.ReactNode) => (
 
 export default function Index() {
   return (
-    <motion.div
-      className="py-page-y-padding m-auto flex-1 h-full flex items-center flex-grow"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
-      <motion.div className="m-auto flex gap-5 flex-col w-full max-w-lg">
-        <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton title="Multiplayer" href={paths.multiplayer.root}>
-            <IconCircle icon="solar:users-group-two-rounded-bold" />
-          </MenuButton>
+    <>
+      <Head>
+        <title>Set Multiplayer</title>
+      </Head>
+      <motion.div
+        className="py-page-y-padding m-auto flex-1 h-full flex items-center flex-grow"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div className="m-auto flex gap-5 flex-col w-full max-w-lg">
+          <motion.div className="flex flex-col" variants={buttonVariants}>
+            <MenuButton title="Multiplayer" href={paths.multiplayer.lobby.root}>
+              <IconCircle icon="solar:users-group-two-rounded-bold" />
+            </MenuButton>
+          </motion.div>
+          <motion.div className="flex flex-col" variants={buttonVariants}>
+            <MenuButton
+              className="single-player"
+              href={paths.singlePlayer.root}
+              title="Single player"
+            >
+              <IconCircle icon="solar:user-bold" />
+            </MenuButton>
+          </motion.div>
+          <motion.div className="flex flex-col" variants={buttonVariants}>
+            <MenuButton
+              href={paths.howToPlay.root}
+              className="settings"
+              title="How to play"
+            >
+              <IconCircle icon="solar:book-bookmark-bold" />
+            </MenuButton>
+          </motion.div>
+          <motion.p variants={buttonVariants} className="text-xs text-center">
+            👋 This site is under construction
+            <br />
+            <a
+              href="mailto:setmultiplayer@gmail.com"
+              className=" underline text-primary"
+            >
+              Feedback
+            </a>
+          </motion.p>
         </motion.div>
-        <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton
-            className="single-player"
-            href={paths.singlePlayer.root}
-            title="Single player"
-          >
-            <IconCircle icon="solar:user-bold" />
-          </MenuButton>
-        </motion.div>
-        <motion.div className="flex flex-col" variants={buttonVariants}>
-          <MenuButton
-            href={paths.howToPlay.root}
-            className="settings"
-            title="How to play"
-          >
-            <IconCircle icon="solar:book-bookmark-bold" />
-          </MenuButton>
-        </motion.div>
-        <motion.p variants={buttonVariants} className="text-xs text-center">
-          👋 This site is under construction
-          <br />
-          <a
-            href="mailto:setmultiplayer@gmail.com"
-            className=" underline text-primary"
-          >
-            Feedback
-          </a>
-        </motion.p>
       </motion.div>
-    </motion.div>
+    </>
   );
 }

@@ -20,7 +20,7 @@ export default function HowToPlay() {
         <title>How to Play Set - The Complete Guide</title>
         <meta
           name="description"
-          content="A comprehensive guide on how to play the Set card game, including rules, visuals, and strategies. Master the game of Set in minutes!"
+          content="A comprehensive guide on how to play the Set card game, including rules, and visuals. Master the game of Set in minutes!"
         />
         <meta
           name="keywords"
@@ -32,7 +32,7 @@ export default function HowToPlay() {
         />
         <meta
           property="og:description"
-          content="A comprehensive guide on how to play the Set card game, including rules, visuals, and strategies. Master the game of Set in minutes!"
+          content="A comprehensive guide on how to play the Set card game, including rules, and visuals. Master the game of Set in minutes!"
         />
       </Head>
       <Card className=" p-5 my-2  mx-auto w-full max-w-2xl bg-slate-900 border-none">
@@ -139,10 +139,10 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm pl-3 my-1 border-l-2">
-                Explanation: All cards are Red, all are Solid, and all have
-                Ovals. The quantity is also different for each, which adheres to
-                the "Variety" rule for the number attribute.
+              <p className="text-sm pl-3 my-1 border-l-2 border-border rounded-r-md bg-background p-2">
+                All cards are Red, all are Solid, and all have Ovals. The
+                quantity is also different for each, which adheres to the
+                "Variety" rule for the number attribute.
               </p>
             </div>
 
@@ -177,11 +177,10 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm my-1 pl-3 border-l-2">
-                Explanation: Here, the color attribute neither adheres to
-                Uniformity (all same) nor Variety (all different). Similarly,
-                shading is mixed between Solid and Striped, making this
-                collection invalid.
+              <p className="text-sm my-1 pl-3 border-l-2 border-border rounded-r-md bg-background p-2">
+                Here, the color attribute neither adheres to Uniformity (all
+                same) nor Variety (all different). Similarly, shading is mixed
+                between Solid and Striped, making this collection invalid.
               </p>
             </div>
 
@@ -216,10 +215,9 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm my-1 pl-3 border-l-2">
-                Explanation: The colors are all different, but they all have
-                Striped Diamonds. The numbers also differ, making this a valid
-                set.
+              <p className="text-sm my-1 pl-3 border-l-2 border-border rounded-r-md bg-background p-2">
+                The colors are all different, but they all have Striped
+                Diamonds. The numbers also differ, making this a valid set.
               </p>
             </div>
 
@@ -255,10 +253,10 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm my-1 pl-3 border-l-2">
-                Explanation: Here, the cards have mixed attributes with neither
-                all same nor all different characteristics for shape, making
-                this set invalid.
+              <p className="text-sm my-1 pl-3 border-l-2 border-border rounded-r-md bg-background p-2">
+                Here, the cards have mixed attributes with neither all same nor
+                all different characteristics for shape, making this set
+                invalid.
               </p>
             </div>
           </section>

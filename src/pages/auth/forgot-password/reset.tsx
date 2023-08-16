@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 // Next
-import Link from "next/link";
+import Head from "next/head";
 import { useRouter } from "next/router";
 // Routes
 import { paths } from "@/routes/paths";
@@ -99,80 +99,90 @@ export default function ForgotPasswordReset() {
 
   if (isReset)
     return (
-      <div className="m-auto w-full max-w-lg flex flex-col text-center items-center gap-5">
-        <Icon icon="tabler:lock-check" className="text-muted w-32 h-32" />
-        <div className="flex flex-col gap-3">
-          <h1 className="font-medium">Password reset!</h1>
-          <p className=" text-sm">
-            You can now sign in using your new password
-          </p>
+      <>
+        <Head>
+          <title>Password reset! | Set Multiplayer</title>
+        </Head>
+        <div className="m-auto w-full max-w-lg flex flex-col text-center items-center gap-5">
+          <Icon icon="tabler:lock-check" className="text-muted w-32 h-32" />
+          <div className="flex flex-col gap-3">
+            <h1 className="font-medium">Password reset!</h1>
+            <p className=" text-sm">
+              You can now sign in using your new password
+            </p>
+          </div>
+          <Button
+            onClick={() => replace(paths.auth.signIn.root)}
+            className="mt-3"
+          >
+            Go to login
+          </Button>
         </div>
-        <Button
-          onClick={() => replace(paths.auth.signIn.root)}
-          className="mt-3"
-        >
-          Go to login
-        </Button>
-      </div>
+      </>
     );
 
   return (
-    <Card className="m-auto w-full max-w-lg">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleResetPassword)}
-          className="flex flex-col gap-3"
-        >
-          <CardHeader>
-            <CardTitle>Set a new password</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription className="flex">
-                  <p>{error}</p>
-                </AlertDescription>
-              </Alert>
-            )}
+    <>
+      <Head>
+        <title>Set a new password | Set Multiplayer</title>
+      </Head>
+      <Card className="m-auto w-full max-w-lg">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleResetPassword)}
+            className="flex flex-col gap-3"
+          >
+            <CardHeader>
+              <CardTitle>Set a new password</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-3">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertDescription className="flex">
+                    <p>{error}</p>
+                  </AlertDescription>
+                </Alert>
+              )}
 
-            <FormField
-              name="password"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Min length 8 characters"
-                      type="password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="confirmPassword"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="" type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full" loading={isResetting}>
-              Reset password
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
-    </Card>
+              <FormField
+                name="password"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Min length 8 characters"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="confirmPassword"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="" type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full" loading={isResetting}>
+                Reset password
+              </Button>
+            </CardFooter>
+          </form>
+        </Form>
+      </Card>
+    </>
   );
 }
