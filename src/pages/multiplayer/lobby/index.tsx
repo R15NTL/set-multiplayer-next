@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
+// Next
+import Head from "next/head";
 import { useRouter } from "next/router";
+// Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
 import SocketGuard from "@/services/socket/SocketGuard";
@@ -115,59 +118,64 @@ export default function Lobby() {
   };
 
   return (
-    <Card className="m-auto w-full max-w-lg">
-      <CardHeader>
-        <CardTitle>Lobby</CardTitle>
-        <CardDescription>Join a room or create your own</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Card className="h-[40vh] max-h-[500px] overflow-y-auto">
-          <Table className="">
-            <TableHeader className=" sticky top-0 w-full z-20 bg-border">
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[150px]">Room name</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="flex items-center">
-                  <span className="ml-auto">No. players</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {lobbyRooms.map((room) => (
-                <TableRow
-                  key={room.id}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    handleJoinRoom(room.id);
-                  }}
-                >
-                  <TableCell className="font-medium">{room.name}</TableCell>
-                  <TableCell
-                    className={cn(
-                      "text-xs",
-                      room.room_status === "waiting-for-players" &&
-                        "text-emerald-500",
-                      room.room_status === "in-game" && "text-yellow-600",
-                      room.room_status === "full" && "text-rose-400"
-                    )}
-                  >
-                    {getRoomStatus(room.room_status)}
-                  </TableCell>
-                  <TableCell className=" text-right">
-                    {room.playerCount}
-                  </TableCell>
+    <>
+      <Head>
+        <title>Lobby | Set Multiplayer</title>
+      </Head>
+      <Card className="m-auto w-full max-w-lg">
+        <CardHeader>
+          <CardTitle>Lobby</CardTitle>
+          <CardDescription>Join a room or create your own</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Card className="h-[40vh] max-h-[500px] overflow-y-auto">
+            <Table className="">
+              <TableHeader className=" sticky top-0 w-full z-20 bg-border">
+                <TableRow className="hover:bg-transparent">
+                  <TableHead className="w-[150px]">Room name</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="flex items-center">
+                    <span className="ml-auto">No. players</span>
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Card>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button href={paths.multiplayer.lobby.createRoom.root}>
-          Create room
-        </Button>
-      </CardFooter>
-    </Card>
+              </TableHeader>
+
+              <TableBody>
+                {lobbyRooms.map((room) => (
+                  <TableRow
+                    key={room.id}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleJoinRoom(room.id);
+                    }}
+                  >
+                    <TableCell className="font-medium">{room.name}</TableCell>
+                    <TableCell
+                      className={cn(
+                        "text-xs",
+                        room.room_status === "waiting-for-players" &&
+                          "text-emerald-500",
+                        room.room_status === "in-game" && "text-yellow-600",
+                        room.room_status === "full" && "text-rose-400"
+                      )}
+                    >
+                      {getRoomStatus(room.room_status)}
+                    </TableCell>
+                    <TableCell className=" text-right">
+                      {room.playerCount}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Card>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button href={paths.multiplayer.lobby.createRoom.root}>
+            Create room
+          </Button>
+        </CardFooter>
+      </Card>
+    </>
   );
 }

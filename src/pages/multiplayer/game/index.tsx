@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 import SocketGuard from "@/services/socket/SocketGuard";
+import Head from "next/head";
+
 // Paths
 import { paths } from "@/routes/paths";
 // Auth guard
@@ -30,9 +32,25 @@ export default function Game() {
     }
   }, [currentRoom]);
 
+  const pageTitle = (
+    <Head>{`${currentRoom?.room_name ?? ""} | ${
+      currentRoom?.game_status === "in-game" ? "" : "Waiting for players | "
+    }Set Multiplayer`}</Head>
+  );
+
   if (currentRoom?.game_status === "waiting-for-players") {
-    return <WaitingForPlayers />;
+    return (
+      <>
+        {pageTitle}
+        <WaitingForPlayers />
+      </>
+    );
   }
 
-  return <GameRoom />;
+  return (
+    <>
+      {pageTitle}
+      <GameRoom />
+    </>
+  );
 }

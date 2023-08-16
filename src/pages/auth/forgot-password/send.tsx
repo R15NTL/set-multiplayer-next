@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from "react";
 // Next
-import Link from "next/link";
-// Routes
-import { paths } from "@/routes/paths";
+import Head from "next/head";
 // Icons
 import { Icon } from "@iconify/react";
 // Form
@@ -78,20 +76,30 @@ export default function ForgotPasswordSend() {
 
   if (isSent)
     return (
-      <div className=" w-full max-w-lg text-center align-middle items-center m-auto flex flex-col gap-5">
-        <Icon
-          icon="streamline:mail-send-email-send-email-paper-airplane"
-          className="text-muted h-24 w-24"
-        />
-        <div className="flex flex-col gap-3">
-          <h1 className="font-medium">Email sent!</h1>
-          <p className="text-sm">We've sent a password reset link to {email}</p>
+      <>
+        <Head>
+          <title>Email sent | Set Multiplayer</title>
+        </Head>
+        <div className=" w-full max-w-lg text-center align-middle items-center m-auto flex flex-col gap-5">
+          <Icon
+            icon="streamline:mail-send-email-send-email-paper-airplane"
+            className="text-muted h-24 w-24"
+          />
+          <div className="flex flex-col gap-3">
+            <h1 className="font-medium">Email sent!</h1>
+            <p className="text-sm">
+              We've sent a password reset link to {email}
+            </p>
+          </div>
         </div>
-      </div>
+      </>
     );
 
   return (
     <>
+      <Head>
+        <title>Forgot password | Set Multiplayer</title>
+      </Head>
       <div className=" w-full max-w-lg text-center align-middle items-center m-auto flex flex-col gap-5">
         <Icon icon="tabler:lock-question" className="text-muted h-24 w-24" />
         <div className="flex flex-col gap-3">

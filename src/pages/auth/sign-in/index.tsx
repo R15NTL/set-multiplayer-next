@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Auth
@@ -12,5 +13,12 @@ SignInPage.getLayout = (page: React.ReactNode) => (
 );
 
 export default function SignInPage() {
-  return <SignIn />;
+  return (
+    <>
+      <Head>
+        <title>Sign in | Set Multiplayer</title>
+      </Head>
+      <SignIn />
+    </>
+  );
 }

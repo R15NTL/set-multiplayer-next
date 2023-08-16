@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+// Next
+import Head from "next/head";
 import { useRouter } from "next/router";
+// Components
 import { Button } from "@/components/ui/button";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters, CreateRoomParams } from "@/services/socket/emitters";
@@ -81,63 +84,70 @@ export default function CreateRoom() {
   };
 
   return (
-    <Card className="m-auto w-full max-w-lg">
-      <CardHeader>
-        <CardTitle>Create room</CardTitle>
-        <CardDescription>Invite your friends to play with you.</CardDescription>
-      </CardHeader>
-      <CardContent className=" grid gap-5">
-        <div className="grid gap-2">
-          <Label htmlFor="room-name">Room name</Label>
-          <Input
-            id="room-name"
-            type="text"
-            value={roomName}
-            onChange={(e) => setRoomName(e.target.value)}
-          />
-        </div>
+    <>
+      <Head>
+        <title>Create room | Set Multiplayer</title>
+      </Head>
+      <Card className="m-auto w-full max-w-lg">
+        <CardHeader>
+          <CardTitle>Create room</CardTitle>
+          <CardDescription>
+            Invite your friends to play with you.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className=" grid gap-5">
+          <div className="grid gap-2">
+            <Label htmlFor="room-name">Room name</Label>
+            <Input
+              id="room-name"
+              type="text"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+            />
+          </div>
 
-        <div className="grid gap-3">
-          <Label htmlFor="game-type">Game mode</Label>
-          <RadioGroup
-            className="grid  pb-2 gap-3 "
-            id="game-type"
-            value={gameType}
-            onValueChange={(value: CreateRoomParams["game_type"]) =>
-              setGameType(value)
-            }
-          >
-            <div className="grid gap-2">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem id="competitive" value="competitive" />
-                <Label className="font-normal" htmlFor="competitive">
-                  Competitive
-                </Label>
-              </div>
-              <p className="text-xs text-muted">
-                Winner is the player with the most points
-              </p>
-            </div>
-
-            <div className="grid gap-2">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem id="knockout" value="knockout" />
-                <Label className="font-normal" htmlFor="knockout">
-                  Knockout
-                </Label>
+          <div className="grid gap-3">
+            <Label htmlFor="game-type">Game mode</Label>
+            <RadioGroup
+              className="grid  pb-2 gap-3 "
+              id="game-type"
+              value={gameType}
+              onValueChange={(value: CreateRoomParams["game_type"]) =>
+                setGameType(value)
+              }
+            >
+              <div className="grid gap-2">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem id="competitive" value="competitive" />
+                  <Label className="font-normal" htmlFor="competitive">
+                    Competitive
+                  </Label>
+                </div>
+                <p className="text-xs text-muted">
+                  Winner is the player with the most points
+                </p>
               </div>
 
-              <p className="text-xs text-muted">
-                Player with the fewest points is eliminated each round, Last
-                player standing wins
-              </p>
-            </div>
-          </RadioGroup>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button onClick={handleCreateRoom}>Create</Button>
-      </CardFooter>
-    </Card>
+              <div className="grid gap-2">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem id="knockout" value="knockout" />
+                  <Label className="font-normal" htmlFor="knockout">
+                    Knockout
+                  </Label>
+                </div>
+
+                <p className="text-xs text-muted">
+                  Player with the fewest points is eliminated each round, Last
+                  player standing wins
+                </p>
+              </div>
+            </RadioGroup>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button onClick={handleCreateRoom}>Create</Button>
+        </CardFooter>
+      </Card>
+    </>
   );
 }

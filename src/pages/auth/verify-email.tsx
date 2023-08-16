@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // Next
 import { useRouter } from "next/router";
+import Head from "next/head";
 // Icons
 import { Icon } from "@iconify/react";
 // Components
@@ -80,25 +81,30 @@ export default function VerifyEmail() {
     );
 
   return (
-    <div className="flex flex-col gap-5 w-full max-w-lg m-auto text-center items-center">
-      <Icon icon="tabler:mail-check" className="h-28 w-28 text-muted" />
+    <>
+      <Head>
+        <title>Verify Email | Set Multiplayer </title>
+      </Head>
+      <div className="flex flex-col gap-5 w-full max-w-lg m-auto text-center items-center">
+        <Icon icon="tabler:mail-check" className="h-28 w-28 text-muted" />
 
-      <h1 className="font-medium">Email verification</h1>
+        <h1 className="font-medium">Email verification</h1>
 
-      <Button
-        onClick={handleVerifyEmail}
-        className="mt-3"
-        loading={isVerifying}
-      >
-        Verify {email}
-      </Button>
-      {error && (
-        <div>
-          <Alert variant="destructive">
-            <AlertDescription>Error: {error}</AlertDescription>
-          </Alert>
-        </div>
-      )}
-    </div>
+        <Button
+          onClick={handleVerifyEmail}
+          className="mt-3"
+          loading={isVerifying}
+        >
+          Verify {email}
+        </Button>
+        {error && (
+          <div>
+            <Alert variant="destructive">
+              <AlertDescription>Error: {error}</AlertDescription>
+            </Alert>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

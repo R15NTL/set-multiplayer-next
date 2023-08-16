@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+// Next
+import Head from "next/head";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Components
@@ -20,8 +22,13 @@ export default function CreateAccount() {
   if (createdWithEmail) return <AccountCreated email={createdWithEmail} />;
 
   return (
-    <Card className=" m-auto w-full max-w-md flex flex-col gap-3">
-      <CreateAccountForm handleCreated={handleCreated} />
-    </Card>
+    <>
+      <Head>
+        <title>Create account | Set Multiplayer</title>
+      </Head>
+      <Card className=" m-auto w-full max-w-md flex flex-col gap-3">
+        <CreateAccountForm handleCreated={handleCreated} />
+      </Card>
+    </>
   );
 }

@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from "react";
 // Next
 import { useRouter } from "next/router";
+import Head from "next/head";
 import dynamic from "next/dynamic";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Auth guard
 import AuthGuard from "@/features/auth/AuthGuard";
 // Routes
-import { paths, apiRoutes } from "@/routes/paths";
+import { apiRoutes } from "@/routes/paths";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -57,5 +58,12 @@ export default function JoinRoom() {
     }
   }, [room_id, isConnected]);
 
-  return <LoadingScreen />;
+  return (
+    <>
+      <Head>
+        <title>Join Room | Set Multiplayer</title>
+      </Head>
+      <LoadingScreen />
+    </>
+  );
 }
