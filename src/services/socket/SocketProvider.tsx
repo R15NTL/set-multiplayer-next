@@ -57,7 +57,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     setCurrentRoom(null);
     setIsConnected(false);
 
-    if (pathname.startsWith(paths.multiplayer.root)) replace(paths.menu);
+    // Wait for any redirects to finish before executing
+    setTimeout(() => {
+      if (pathname.startsWith(paths.multiplayer.root)) replace(paths.menu);
+    }, 100);
   };
   const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => {
     setLobbyRooms(rooms);
@@ -108,7 +111,6 @@ export default function SocketProvider({ children }: SocketProviderProps) {
       isConnected &&
       !pathname.startsWith(paths.multiplayer.game.root)
     ) {
-      setJoinRequest(false);
       replace(paths.multiplayer.game.root);
     } else if (
       !currentRoom &&
@@ -119,15 +121,17 @@ export default function SocketProvider({ children }: SocketProviderProps) {
         replace(paths.multiplayer.lobby.root);
       }
     }
-
-    if (currentRoom && !pathname.startsWith(paths.multiplayer.game.root)) {
-      setJoinRequest(false);
-      replace(paths.multiplayer.game.root);
-    }
   }, [currentRoom === null]);
 
   // Join requests
   useEffect(() => {
+    // Clear join request when user joins the game room
+    if (joinRequest && pathname.startsWith(paths.multiplayer.game.root)) {
+      setJoinRequest(false);
+      return;
+    }
+
+    // Disconnect if user has a join request and leaves the join request page
     if (
       joinRequest &&
       !pathname.startsWith(paths.multiplayer.lobby.joinRequest)
