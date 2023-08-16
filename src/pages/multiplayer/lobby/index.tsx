@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSocket } from "@/hooks/useSocket";
 import { emitters } from "@/services/socket/emitters";
@@ -14,7 +13,6 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -29,6 +27,10 @@ import { paths } from "@/routes/paths";
 import AuthGuard from "@/features/auth/AuthGuard";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
+// Utils
+import { cn } from "@/lib/utils";
+// Types
+import { ReceiveRoomsItem } from "@/services/socket/types";
 
 Lobby.getLayout = (page: React.ReactNode) => (
   <MainLayout>
@@ -81,6 +83,19 @@ const MOCK_ROOMS = [
   },
 ];
 
+const getRoomStatus = (status: ReceiveRoomsItem["room_status"]) => {
+  switch (status) {
+    case "waiting-for-players":
+      return "Waiting for players";
+    case "in-game":
+      return "In game";
+    case "full":
+      return "Full";
+    default:
+      return "Error";
+  }
+};
+
 export default function Lobby() {
   const { lobbyRooms, isConnected, socket } = useSocket();
   const { replace } = useRouter();
@@ -112,7 +127,9 @@ export default function Lobby() {
               <TableRow className="hover:bg-transparent">
                 <TableHead className="w-[150px]">Room name</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>No. players</TableHead>
+                <TableHead className="flex items-center">
+                  <span className="ml-auto">No. players</span>
+                </TableHead>
               </TableRow>
             </TableHeader>
 
@@ -126,8 +143,20 @@ export default function Lobby() {
                   }}
                 >
                   <TableCell className="font-medium">{room.name}</TableCell>
-                  <TableCell>TODO</TableCell>
-                  <TableCell>{room.playerCount}</TableCell>
+                  <TableCell
+                    className={cn(
+                      "text-xs",
+                      room.room_status === "waiting-for-players" &&
+                        "text-emerald-500",
+                      room.room_status === "in-game" && "text-yellow-600",
+                      room.room_status === "full" && "text-rose-400"
+                    )}
+                  >
+                    {getRoomStatus(room.room_status)}
+                  </TableCell>
+                  <TableCell className=" text-right">
+                    {room.playerCount}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
