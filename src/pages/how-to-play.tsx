@@ -20,7 +20,7 @@ export default function HowToPlay() {
         <title>How to Play Set - The Complete Guide</title>
         <meta
           name="description"
-          content="A comprehensive guide on how to play the Set card game, including rules, visuals, and strategies. Master the game of Set in minutes!"
+          content="A comprehensive guide on how to play the Set card game, including rules, and visuals. Master the game of Set in minutes!"
         />
         <meta
           name="keywords"
@@ -32,7 +32,7 @@ export default function HowToPlay() {
         />
         <meta
           property="og:description"
-          content="A comprehensive guide on how to play the Set card game, including rules, visuals, and strategies. Master the game of Set in minutes!"
+          content="A comprehensive guide on how to play the Set card game, including rules, and visuals. Master the game of Set in minutes!"
         />
       </Head>
       <Card className=" p-5 my-2  mx-auto w-full max-w-2xl bg-slate-900 border-none">
