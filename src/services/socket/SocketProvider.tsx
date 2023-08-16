@@ -60,7 +60,7 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     // Wait for any redirects to finish before executing
     setTimeout(() => {
       if (pathname.startsWith(paths.multiplayer.root)) replace(paths.menu);
-    }, 100);
+    }, 800);
   };
   const onReceiveRooms = (rooms: ReceiveRoomsItem[]) => {
     setLobbyRooms(rooms);
