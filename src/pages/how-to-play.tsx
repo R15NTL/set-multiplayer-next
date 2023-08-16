@@ -134,7 +134,7 @@ export default function HowToPlay() {
                       shape: "oval",
                       quantity: 3,
                       shade: "solid",
-                      arrId: 1,
+                      arrId: 3,
                     },
                   ]}
                 />
@@ -172,7 +172,7 @@ export default function HowToPlay() {
                       shape: "oval",
                       quantity: 3,
                       shade: "shaded",
-                      arrId: 1,
+                      arrId: 3,
                     },
                   ]}
                 />
