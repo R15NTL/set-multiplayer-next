@@ -109,7 +109,9 @@ export default function HowToPlay() {
             <h2 className="text-muted font-medium text-lg">Visual Examples:</h2>
 
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium">Valid Set:</h4>
+              <h4 className="text-sm font-medium text-emerald-500">
+                Valid Set:
+              </h4>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -137,7 +139,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm pl-3 border-l-2">
+              <p className="text-sm pl-3 my-1 border-l-2">
                 Explanation: All cards are Red, all are Solid, and all have
                 Ovals. The quantity is also different for each, which adheres to
                 the "Variety" rule for the number attribute.
@@ -145,7 +147,9 @@ export default function HowToPlay() {
             </div>
 
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium">Invalid Set:</h4>
+              <h4 className="text-sm font-medium text-rose-400">
+                Invalid Set:
+              </h4>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -173,7 +177,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm pl-3 border-l-2">
+              <p className="text-sm my-1 pl-3 border-l-2">
                 Explanation: Here, the color attribute neither adheres to
                 Uniformity (all same) nor Variety (all different). Similarly,
                 shading is mixed between Solid and Striped, making this
@@ -182,7 +186,9 @@ export default function HowToPlay() {
             </div>
 
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium">Valid Set:</h4>
+              <h4 className="text-sm font-medium text-emerald-500">
+                Valid Set:
+              </h4>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -210,7 +216,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm pl-3 border-l-2">
+              <p className="text-sm my-1 pl-3 border-l-2">
                 Explanation: The colors are all different, but they all have
                 Striped Diamonds. The numbers also differ, making this a valid
                 set.
@@ -219,7 +225,9 @@ export default function HowToPlay() {
 
             {/* Invalid Set Example 2 */}
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium">Invalid Set:</h4>
+              <h4 className="text-sm font-medium text-rose-400">
+                Invalid Set:
+              </h4>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -247,7 +255,7 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm pl-3 border-l-2">
+              <p className="text-sm my-1 pl-3 border-l-2">
                 Explanation: Here, the cards have mixed attributes with neither
                 all same nor all different characteristics for shape, making
                 this set invalid.
