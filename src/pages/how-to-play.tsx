@@ -139,10 +139,10 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm pl-3 my-1 border-l-2">
-                Explanation: All cards are Red, all are Solid, and all have
-                Ovals. The quantity is also different for each, which adheres to
-                the "Variety" rule for the number attribute.
+              <p className="text-sm pl-3 my-1 border-l-2 border-border rounded-r-md bg-background p-2">
+                All cards are Red, all are Solid, and all have Ovals. The
+                quantity is also different for each, which adheres to the
+                "Variety" rule for the number attribute.
               </p>
             </div>
 
@@ -177,11 +177,10 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm my-1 pl-3 border-l-2">
-                Explanation: Here, the color attribute neither adheres to
-                Uniformity (all same) nor Variety (all different). Similarly,
-                shading is mixed between Solid and Striped, making this
-                collection invalid.
+              <p className="text-sm my-1 pl-3 border-l-2 border-border rounded-r-md bg-background p-2">
+                Here, the color attribute neither adheres to Uniformity (all
+                same) nor Variety (all different). Similarly, shading is mixed
+                between Solid and Striped, making this collection invalid.
               </p>
             </div>
 
@@ -216,10 +215,9 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm my-1 pl-3 border-l-2">
-                Explanation: The colors are all different, but they all have
-                Striped Diamonds. The numbers also differ, making this a valid
-                set.
+              <p className="text-sm my-1 pl-3 border-l-2 border-border rounded-r-md bg-background p-2">
+                The colors are all different, but they all have Striped
+                Diamonds. The numbers also differ, making this a valid set.
               </p>
             </div>
 
@@ -255,10 +253,10 @@ export default function HowToPlay() {
                   ]}
                 />
               </Card>
-              <p className="text-sm my-1 pl-3 border-l-2">
-                Explanation: Here, the cards have mixed attributes with neither
-                all same nor all different characteristics for shape, making
-                this set invalid.
+              <p className="text-sm my-1 pl-3 border-l-2 border-border rounded-r-md bg-background p-2">
+                Here, the cards have mixed attributes with neither all same nor
+                all different characteristics for shape, making this set
+                invalid.
               </p>
             </div>
           </section>
