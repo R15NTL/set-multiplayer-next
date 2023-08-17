@@ -1,4 +1,5 @@
 import React from "react";
+// Components
 import {
   Card,
   CardTitle,
@@ -7,8 +8,6 @@ import {
   CardFooter,
   CardDescription,
 } from "@/components/ui/card";
-// Icons
-import { Icon } from "@iconify/react";
 // Features
 import EndOfGamePlayerCard from "./EndOfGamePlayerCard";
 import StartNewRound from "./StartNewRound";
@@ -16,9 +15,6 @@ import FunctionBar from "../common/FunctionBar";
 import NewGameInNSeconds from "./NewGameInNSeconds";
 // Socket
 import { useSocket } from "@/hooks/useSocket";
-import { emitters } from "@/services/socket/emitters";
-// Utils
-import { getPlayerStatus } from "@/utils";
 // Services
 import { useGetAccount } from "@/services/queries/account";
 
