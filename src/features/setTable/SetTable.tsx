@@ -3,9 +3,11 @@ import React, { useState, useEffect, useMemo } from "react";
 import SetCard from "./SetCard";
 import { Color, Shape, Shading, Quantity } from "../gameLogic/types";
 import GameLogic from "../gameLogic/gameLogic";
+import type { Hint } from "../singlePlayer/SinglePlayerGameProvider";
 
 export interface SetTableProps {
   onFindSet?: (indexes: number[]) => void;
+  hint?: Hint;
   data:
     | null
     | undefined
@@ -18,7 +20,7 @@ export interface SetTableProps {
       }[];
 }
 
-function SetTable({ data, onFindSet }: SetTableProps) {
+function SetTable({ data, onFindSet, hint }: SetTableProps) {
   // State
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [prevData, setPrevData] = useState("");
@@ -70,6 +72,7 @@ function SetTable({ data, onFindSet }: SetTableProps) {
   const setCards = data?.map((card, index) => {
     return (
       <SetCard
+        hint={hint}
         cardHighlightColor={cardHighlightColor}
         selectedCards={selectedCards}
         setSelectedCards={setSelectedCards}

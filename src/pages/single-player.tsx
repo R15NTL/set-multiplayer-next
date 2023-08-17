@@ -6,6 +6,7 @@ import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Features
 import SinglePlayerStatusBar from "@/features/singlePlayer/SinglePlayerStatusBar";
 import SinglePlayerTable from "@/features/singlePlayer/SinglePlayerTable";
+import Hint from "@/features/singlePlayer/Hint";
 // Game provider
 import SinglePlayerGameProvider from "@/features/singlePlayer/SinglePlayerGameProvider";
 
@@ -25,6 +26,7 @@ export default function SinglePlayer() {
         <SinglePlayerTable />
         {DEV_BUTTON_VISIBLE && <DevButton />}
       </div>
+      <Hint />
     </SinglePlayerGameProvider>
   );
 }

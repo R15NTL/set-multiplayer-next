@@ -3,6 +3,7 @@ import CardImg, { CardImgProps } from "./CardImg";
 import { Quantity } from "../gameLogic/types";
 import { cn } from "@/lib/utils";
 import { isSafari } from "react-device-detect";
+import type { Hint } from "../singlePlayer/SinglePlayerGameProvider";
 
 export interface SetCardProps extends CardImgProps {
   index: number;
@@ -10,6 +11,7 @@ export interface SetCardProps extends CardImgProps {
   selectedCards: number[];
   setSelectedCards: React.Dispatch<React.SetStateAction<number[]>>;
   cardHighlightColor?: "default" | "green" | "red";
+  hint?: Hint;
 }
 
 function SetCard({
@@ -21,7 +23,10 @@ function SetCard({
   selectedCards,
   setSelectedCards,
   cardHighlightColor = "default",
+  hint = null,
 }: SetCardProps) {
+  const isHinted = hint && hint.includes(index);
+
   const cardImgs = [];
 
   for (let i = 1; i <= quantity; i++) {
@@ -50,6 +55,7 @@ function SetCard({
         }
       flex ${isSafari ? "gap-[2%]" : "gap-[3%]"} border-transparent border-4`,
         selected && "opacity-90",
+        isHinted && "border-yellow-600",
         selected && cardHighlightColor === "default" && "border-blue-500",
         selected && cardHighlightColor === "green" && "border-emerald-500",
         selected && cardHighlightColor === "red" && "border-rose-500"

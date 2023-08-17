@@ -14,11 +14,16 @@ interface SinglePlayerGameProviderProps {
   children: React.ReactNode;
 }
 
+export type Hint = number[] | null;
+
 interface SinglePlayerGameContextValue {
   startGame: () => void;
   findSet: (indexes: number[]) => void;
+  setGameStartTime: React.Dispatch<React.SetStateAction<number | null>>;
   gameState: GameSnapshot | null;
   gameTimer: number | null;
+  hint: Hint;
+  setHint: React.Dispatch<React.SetStateAction<Hint>>;
 }
 
 export const SinglePlayerGameContext = createContext<
@@ -32,6 +37,7 @@ export default function SinglePlayerGameProvider({
   const [gameState, setGameState] = useState<GameSnapshot | null>(null);
   const [gameStartTime, setGameStartTime] = useState<number | null>(null);
   const [gameTimer, setGameTimer] = useState<number>(0);
+  const [hint, setHint] = useState<Hint>(null);
 
   // Start game on mount and when on game ID change
   useEffect(() => {
@@ -79,12 +85,15 @@ export default function SinglePlayerGameProvider({
 
   const value: SinglePlayerGameContextValue = useMemo(
     () => ({
+      setGameStartTime,
       startGame,
       findSet,
       gameState,
       gameTimer,
+      hint,
+      setHint,
     }),
-    [gameState, gameTimer, startGame, findSet]
+    [gameState, gameTimer, startGame, findSet, hint, setHint, setGameStartTime]
   );
 
   return (

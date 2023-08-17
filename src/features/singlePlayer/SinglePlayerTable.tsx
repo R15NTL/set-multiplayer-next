@@ -6,9 +6,11 @@ import EndOfGame from "./EndOfGame";
 import { useSinglePlayer } from "./SinglePlayerGameProvider";
 
 export default function SinglePlayerTable() {
-  const { gameState, findSet } = useSinglePlayer();
+  const { gameState, findSet, hint } = useSinglePlayer();
 
   if (gameState?.endOfGame) return <EndOfGame />;
 
-  return <SetTable onFindSet={findSet} data={gameState?.setTable} />;
+  return (
+    <SetTable onFindSet={findSet} data={gameState?.setTable} hint={hint} />
+  );
 }
