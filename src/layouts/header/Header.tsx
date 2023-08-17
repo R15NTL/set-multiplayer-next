@@ -1,9 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { paths } from "@/routes/paths";
-import { useSession, signOut } from "next-auth/react";
 import AccountPopover from "./AccountPopover";
-import Logo from "@/components/logo/Logo";
 
 export default function Header() {
   return (

@@ -5,7 +5,6 @@ export default function Document() {
     <Html lang="en" className="bg-slate-800 text-slate-50">
       <Head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"
           content="Experience the thrilling game of set like never before! Dive into our single-player mode or challenge your friends in real-time multiplayer battles. Engage with players in room chat and get started quickly with our comprehensive how-to-play guide. Join the fun now!"
