@@ -48,7 +48,7 @@ export default function ShareRoom({
   const open = openProp ?? openState;
   const setOpen = onOpenChange ?? setOpenState;
 
-  const shareUrl = `${window.location.origin}${paths.multiplayer.lobby.joinRoom.root}?roomId=${currentRoom?.room_id}`;
+  const shareUrl = `${window.location.origin}${paths.multiplayer.lobby.joinRoom.root}?room_id=${currentRoom?.room_id}`;
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -87,7 +87,7 @@ export default function ShareRoom({
           variant={button?.variant ?? "outline"}
           size={button?.size}
           onClick={handleShare}
-          className={cn("", className)}
+          className={cn("pl-3", className)}
         >
           {children ?? (
             <>
