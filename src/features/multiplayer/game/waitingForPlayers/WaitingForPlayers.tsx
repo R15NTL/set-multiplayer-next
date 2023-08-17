@@ -12,6 +12,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
+import ShareRoom from "../../components/ShareRoom";
 // Local
 import PlayerCard from "./PlayerCard";
 import LeaveRoomDialog from "../../components/LeaveRoomDialog";
@@ -33,8 +34,6 @@ export default function WaitingForPlayers() {
     }
   }, [currentRoom]);
 
-  const hostId = currentRoom?.host.user_id;
-
   const sortedPlayers =
     currentRoom?.room_players?.sort((a, b) => {
       if (a.user.user_id === account?.user_id) {
@@ -55,8 +54,16 @@ export default function WaitingForPlayers() {
   return (
     <Card className="m-auto w-full max-w-lg">
       <CardHeader>
-        <CardTitle>Waiting for players</CardTitle>
+        <div className="flex justify-between">
+          <CardTitle>Waiting for players</CardTitle>
+        </div>
         <CardDescription>Room: {currentRoom?.room_name}</CardDescription>
+        <ShareRoom
+          className="sm:hidden"
+          button={{
+            size: "sm",
+          }}
+        />
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -79,6 +86,12 @@ export default function WaitingForPlayers() {
         </div>
       </CardContent>
       <CardFooter className="justify-end gap-3">
+        <ShareRoom
+          className="hidden sm:block mr-auto"
+          button={{
+            variant: "ghost",
+          }}
+        />
         <LeaveRoomDialog
           trigger={<Button variant="outline">Leave room</Button>}
         />

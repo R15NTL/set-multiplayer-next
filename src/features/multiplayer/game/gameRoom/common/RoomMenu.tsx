@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // Components
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import ShareRoom from "@/features/multiplayer/components/ShareRoom";
 // Icons
 import { Icon } from "@iconify/react";
 // Socket
@@ -30,11 +31,20 @@ import { emitters } from "@/services/socket/emitters";
 export default function RoomMenu() {
   const { socket } = useSocket();
 
+  const [shareRoomOpen, setShareRoomOpen] = useState(false);
+
   const handleLeaveRoom = () =>
     emitters.common.leaveRoom((...args) => socket.emit(...args));
 
   return (
     <>
+      <ShareRoom
+        open={shareRoomOpen}
+        onOpenChange={setShareRoomOpen}
+        button={{
+          hide: true,
+        }}
+      />
       <AlertDialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -46,10 +56,14 @@ export default function RoomMenu() {
             <DropdownMenuLabel>Room options</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => setShareRoomOpen(true)}>
+                <Icon icon="tabler:share" className="mr-2" />
+                <span>Share room</span>
+              </DropdownMenuItem>
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem>
                   <Icon icon="tabler:door-exit" className="mr-2" />
-                  <span>Leave room</span>
+                  <span>Leave</span>
                 </DropdownMenuItem>
               </AlertDialogTrigger>
             </DropdownMenuGroup>

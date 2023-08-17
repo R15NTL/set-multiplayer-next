@@ -1,6 +1,7 @@
 import React from "react";
 // Next
 import dynamic from "next/dynamic";
+import Head from "next/head";
 // Layout
 import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Features
@@ -20,13 +21,18 @@ SinglePlayer.getLayout = (page: React.ReactNode) => (
 
 export default function SinglePlayer() {
   return (
-    <SinglePlayerGameProvider>
-      <div className="mx-auto w-full max-w-sm flex flex-col gap-3">
-        <SinglePlayerStatusBar />
-        <SinglePlayerTable />
-        {DEV_BUTTON_VISIBLE && <DevButton />}
-      </div>
-      <Hint />
-    </SinglePlayerGameProvider>
+    <>
+      <Head>
+        <title>Single Player | Set Multiplayer</title>
+      </Head>
+      <SinglePlayerGameProvider>
+        <div className="mx-auto w-full max-w-sm flex flex-col gap-3">
+          <SinglePlayerStatusBar />
+          <SinglePlayerTable />
+          {DEV_BUTTON_VISIBLE && <DevButton />}
+        </div>
+        <Hint />
+      </SinglePlayerGameProvider>
+    </>
   );
 }
