@@ -7,7 +7,7 @@ export default function Document() {
         <meta charSet="utf-8" />
         <meta
           name="description"
-          content="Experience the thrilling game of set like never before! Dive into our single-player mode or challenge your friends in real-time multiplayer battles. Engage with players in room chat and get started quickly with our comprehensive how-to-play guide. Join the fun now!"
+          content="Experience the thrilling game of set like never before! Dive into our single-player mode or challenge your friends in real-time multiplayer battles. Get started quickly with our comprehensive how-to-play guide. Join the fun now!"
         />
 
         {/* Open Graph */}
@@ -31,6 +31,11 @@ export default function Document() {
         <meta name="author" content="Jacob Rosenthal" />
         <meta name="robots" content="index, follow" />
         <meta name="mobile-web-app-capable" content="yes" />
+        {/* Icons */}
+        <link rel="icon" href="/favicon/favicon32x32.png" sizes="32x32" />
+        <link rel="icon" href="/favicon/favicon128x128.png" sizes="128x128" />
+        <link rel="icon" href="/favicon/favicon256x256.png" sizes="256x256" />
+        <link rel="icon" href="/favicon/favicon512x512.png" sizes="512x512" />
       </Head>
       <body>
         <Main />
