@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Components
 import {
   Dialog,
@@ -29,16 +29,16 @@ interface ShareRoomProps {
     size?: ButtonProps["size"];
     hide?: boolean;
   };
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  openShare?: boolean;
+  onOpenShareChange?: (open: boolean) => void;
 }
 
 export default function ShareRoom({
   className,
   children,
   button,
-  open: openProp,
-  onOpenChange,
+  openShare: openProp,
+  onOpenShareChange: onOpenChangeProp,
 }: ShareRoomProps) {
   const { currentRoom } = useSocket();
   const { toast } = useToast();
@@ -46,7 +46,7 @@ export default function ShareRoom({
   const [openState, setOpenState] = useState(false);
 
   const open = openProp ?? openState;
-  const setOpen = onOpenChange ?? setOpenState;
+  const setOpen = onOpenChangeProp ?? setOpenState;
 
   const shareUrl = `${window.location.origin}${paths.multiplayer.lobby.joinRoom.root}?room_id=${currentRoom?.room_id}`;
 
@@ -57,6 +57,7 @@ export default function ShareRoom({
           title: `Join this room for a game of Set using the link below:`,
           url: shareUrl,
         });
+        setOpen(false);
       } catch (err) {
         setOpen(true);
       }
@@ -64,6 +65,12 @@ export default function ShareRoom({
       setOpen(true);
     }
   };
+
+  useEffect(() => {
+    if (openProp) {
+      handleShare();
+    }
+  }, [openProp]);
 
   const handleCopy = async () => {
     try {

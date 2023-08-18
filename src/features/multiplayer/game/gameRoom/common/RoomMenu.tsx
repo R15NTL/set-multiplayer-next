@@ -39,8 +39,8 @@ export default function RoomMenu() {
   return (
     <>
       <ShareRoom
-        open={shareRoomOpen}
-        onOpenChange={setShareRoomOpen}
+        openShare={shareRoomOpen}
+        onOpenShareChange={setShareRoomOpen}
         button={{
           hide: true,
         }}
