@@ -4,10 +4,12 @@ import Credentials from "next-auth/providers/credentials";
 import { getEnv } from "@/utils";
 import { adminAuth } from "@/server/auth/firebase/firebaseInstance";
 import manageUsers from "@/server/auth/users/manageUsers";
+import { paths } from "@/routes/paths";
 
 export const authOptions = {
   pages: {
-    signIn: "/auth/sign-in",
+    signIn: paths.auth.signIn.root,
+    error: paths.auth.signIn.root,
   },
   providers: [
     GoogleProvider({
