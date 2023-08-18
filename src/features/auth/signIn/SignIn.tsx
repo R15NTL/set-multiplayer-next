@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 // Next
 import Link from "next/link";
+import { useRouter } from "next/router";
 // Routes
 import { paths } from "@/routes/paths";
 // Icons
@@ -45,6 +46,15 @@ export default function SignIn() {
   // State
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // NextAuth error
+  const { query } = useRouter();
+  const signInError = query.error ? String(query.error) : null;
+  useEffect(() => {
+    if (signInError) {
+      setError(signInError);
+    }
+  }, [signInError]);
 
   // Handlers
   const handleSignInWithGoogle = () => signIn("google-sign-in");

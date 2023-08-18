@@ -89,7 +89,7 @@ export default function AccountPopover() {
                 <DialogTrigger className="w-full">
                   <DropdownMenuItem>
                     <Icon icon="tabler:logout" className="mr-2" />
-                    Log out
+                    Sign out
                   </DropdownMenuItem>
                 </DialogTrigger>
               </DropdownMenuGroup>
@@ -97,9 +97,9 @@ export default function AccountPopover() {
           </DropdownMenu>
           <DialogContent className=" max-w-sm">
             <DialogHeader>
-              <DialogTitle>Log out?</DialogTitle>
+              <DialogTitle>Sign out?</DialogTitle>
             </DialogHeader>
-            <DialogDescription>Are you ready to log out?</DialogDescription>
+            <DialogDescription>Are you ready to sign out?</DialogDescription>
             <DialogFooter>
               <Button
                 onClick={() => setLogoutDialogOpen(false)}
@@ -107,7 +107,7 @@ export default function AccountPopover() {
               >
                 <span>Cancel</span>
               </Button>
-              <Button onClick={() => signOut()}>Log out</Button>
+              <Button onClick={() => signOut()}>Sign out</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
