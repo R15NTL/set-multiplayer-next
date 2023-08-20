@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en" className="bg-slate-800 text-slate-50">
       <Head>
         <meta charSet="utf-8" />
+        <link rel="manifest" href="/manifest.json" />
         <meta
           name="description"
           content="Experience the thrilling game of set like never before! Dive into our single-player mode or challenge your friends in real-time multiplayer battles. Get started quickly with our comprehensive how-to-play guide. Join the fun now!"
