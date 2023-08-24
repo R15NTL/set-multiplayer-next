@@ -3,7 +3,11 @@ import { authorizeUser } from "../users/authorize";
 import { createMocks } from "node-mocks-http";
 import manageUsers from "../users/manageUsers";
 
-jest.mock("../users/authorize");
+jest.mock("../users/authorize", () => ({
+  __esModule: true,
+  authorizeUser: jest.fn(),
+}));
+
 jest.mock("@/server/auth/users/manageUsers", () => ({
   __esModule: true,
   default: {
