@@ -1,5 +1,5 @@
 import { createMocks } from "node-mocks-http";
-import sendEmailVerificationLinkMethods from "./sendEmailVerificationLink";
+import sendEmailVerificationLinkMethods from "../../../../src/server/handlers/users/sendEmailVerificationLink";
 import { transporter } from "@/server/auth/services/nodeMailer";
 import manageUsers from "@/server/auth/users/manageUsers";
 

@@ -1,9 +1,9 @@
-import { requestHandler } from "./handleRequest";
-import { authorizeUser } from "../users/authorize";
+import { requestHandler } from "../../../../src/server/auth/services/handleRequest";
+import { authorizeUser } from "../../../../src/server/auth/users/authorize";
 import { createMocks } from "node-mocks-http";
-import manageUsers from "../users/manageUsers";
+import manageUsers from "../../../../src/server/auth/users/manageUsers";
 
-jest.mock("../users/authorize", () => ({
+jest.mock("../../../../src/server/auth/users/authorize", () => ({
   __esModule: true,
   authorizeUser: jest.fn(),
 }));

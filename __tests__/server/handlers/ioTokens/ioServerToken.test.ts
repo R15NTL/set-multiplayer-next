@@ -1,5 +1,5 @@
 import { createMocks } from "node-mocks-http";
-import ioServerTokenMethods from "./ioServerToken";
+import ioServerTokenMethods from "../../../../src/server/handlers/ioTokens/ioServerToken";
 import jwt from "jsonwebtoken";
 
 jest.mock("jsonwebtoken");

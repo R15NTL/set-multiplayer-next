@@ -1,5 +1,5 @@
 import { createMocks } from "node-mocks-http";
-import sendPasswordResetLinkMethods from "./sendPasswordResetLink";
+import sendPasswordResetLinkMethods from "../../../../src/server/handlers/users/sendPasswordResetLink";
 import { transporter } from "@/server/auth/services/nodeMailer";
 import manageUsers from "@/server/auth/users/manageUsers";
 
