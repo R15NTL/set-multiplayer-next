@@ -18,6 +18,9 @@ Dive into the enhanced multiplayer version of the classic Set card game! Built w
 * **Styling:** Tailwind CSS
 * **Authentication:** Firebase & NextAuth
 
+## Live Demo
+Check out the live site: https://setmultiplayer.com/
+
 ## Installation & Running
 1. **Setup**:
     - Clone the repository: 
