@@ -14,6 +14,7 @@ interface RoomChatContextValue {
 
 interface RoomChatProviderProps {
   children: React.ReactNode;
+  handleReceiveChatMessage?: (message: ChatItem) => void;
 }
 
 export const RoomChatContext = createContext<RoomChatContextValue | undefined>(
@@ -57,6 +58,7 @@ export default function RoomChatProvider({ children }: RoomChatProviderProps) {
   const value = useMemo(
     () => ({
       messages,
+      handleReceiveChatMessage,
     }),
     [messages]
   );
