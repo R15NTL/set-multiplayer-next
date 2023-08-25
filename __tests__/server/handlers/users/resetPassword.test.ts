@@ -1,7 +1,7 @@
 import { createMocks } from "node-mocks-http";
 import jwt from "jsonwebtoken";
 import manageUsers from "@/server/auth/users/manageUsers";
-import resetPasswordMethods from "./resetPassword";
+import resetPasswordMethods from "../../../../src/server/handlers/users/resetPassword";
 
 jest.mock("jsonwebtoken");
 jest.mock("@/server/auth/users/manageUsers", () => ({

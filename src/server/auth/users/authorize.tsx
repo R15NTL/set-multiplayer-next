@@ -24,8 +24,3 @@ export const authorizeUser = async (
 
   return session;
 };
-
-interface AuthorizeUserSignInProps {
-  email: string;
-  password: string;
-}

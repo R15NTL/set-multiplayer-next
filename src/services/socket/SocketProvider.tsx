@@ -15,12 +15,12 @@ interface SocketProviderProps {
   children: React.ReactNode;
 }
 
-interface SocketContextProviderValue {
+export interface SocketContextProviderValue {
   isHost: boolean;
   isConnected: boolean;
   lobbyRooms: ReceiveRoomsItem[];
   currentRoom: Room | null;
-  errors: string[];
+  joinRequest: boolean;
   socket: Socket;
   connect: () => void;
   disconnect: () => void;
@@ -48,7 +48,6 @@ export default function SocketProvider({ children }: SocketProviderProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [lobbyRooms, setLobbyRooms] = useState<ReceiveRoomsItem[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room | null>(null);
-  const [errors, setErrors] = useState<string[]>([]);
   const [joinRequest, setJoinRequest] = useState(false);
 
   // Handlers
@@ -182,10 +181,10 @@ export default function SocketProvider({ children }: SocketProviderProps) {
 
   const value = {
     isHost,
+    joinRequest,
     isConnected,
     lobbyRooms,
     currentRoom,
-    errors,
     socket,
     connect,
     disconnect,
