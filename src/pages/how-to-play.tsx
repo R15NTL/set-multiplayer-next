@@ -109,9 +109,9 @@ export default function HowToPlay() {
             <h2 className="text-muted font-medium text-lg">Visual Examples:</h2>
 
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium text-emerald-500">
+              <h3 className="text-sm font-medium text-emerald-500">
                 Valid Set:
-              </h4>
+              </h3>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -147,9 +147,9 @@ export default function HowToPlay() {
             </div>
 
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium text-rose-400">
+              <h3 className="text-sm font-medium text-rose-400">
                 Invalid Set:
-              </h4>
+              </h3>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -185,9 +185,9 @@ export default function HowToPlay() {
             </div>
 
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium text-emerald-500">
+              <h3 className="text-sm font-medium text-emerald-500">
                 Valid Set:
-              </h4>
+              </h3>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
@@ -223,9 +223,9 @@ export default function HowToPlay() {
 
             {/* Invalid Set Example 2 */}
             <div className="grid gap-2">
-              <h4 className="text-sm font-medium text-rose-400">
+              <h3 className="text-sm font-medium text-rose-400">
                 Invalid Set:
-              </h4>
+              </h3>
               <Card className="max-w-sm p-3">
                 <SetTable
                   data={[
