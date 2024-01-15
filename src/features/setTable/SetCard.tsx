@@ -47,7 +47,7 @@ function SetCard({
   };
 
   return (
-    <button
+    <div
       onMouseDown={handleClick}
       className={cn(
         `bg-foreground text-black py-2 rounded-sm shadow-md  border-4 cursor-pointer ${
@@ -64,7 +64,7 @@ function SetCard({
       <div className="flex-1"></div>
       {cardImgs}
       <div className="flex-1"></div>
-    </button>
+    </div>
   );
 }
 
