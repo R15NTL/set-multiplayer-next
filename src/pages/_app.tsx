@@ -25,8 +25,8 @@ const queryClient = new QueryClient();
 
 // ----------------Fonts----------------
 const poppins = Poppins({
-  subsets: ["latin-ext"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 // ----------------Types----------------
