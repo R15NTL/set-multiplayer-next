@@ -37,9 +37,7 @@ const containerVariants = {
 };
 
 Index.getLayout = (page: React.ReactNode) => (
-  <MainLayout className="px-page-x-padding">
-    <EmailVerifiedGuard>{page}</EmailVerifiedGuard>
-  </MainLayout>
+  <MainLayout className="px-page-x-padding">{page}</MainLayout>
 );
 
 export default function Index() {
