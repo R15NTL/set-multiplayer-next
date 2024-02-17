@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "@/hooks/useAxios";
 import { useToast } from "@/components/ui/use-toast";
+import { signOut } from "next-auth/react";
 
 interface CreateAccountParams {
   name: string;
@@ -116,6 +117,49 @@ export const useUpdateAccount = () => {
 
         toast({
           title: "Error updating account",
+          variant: "destructive",
+        });
+      },
+    }
+  );
+};
+
+export const useDeleteAccount = () => {
+  const { axiosInstance } = useAxios();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation(
+    async () => {
+      const response = await axiosInstance.delete("api/user/delete-account");
+
+      return response.data;
+    },
+    {
+      onSuccess: async () => {
+        queryClient.removeQueries(["get-account"]);
+
+        toast({
+          title: "Account deleted",
+        });
+
+        await signOut();
+      },
+      onError: (error) => {
+        const message =
+          error instanceof Error &&
+          (error as any).response?.data?.data?.message;
+
+        if (typeof message === "string") {
+          toast({
+            title: message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Error deleting account",
           variant: "destructive",
         });
       },
