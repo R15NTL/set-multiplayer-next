@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-// Layout
-import MainLayout from "@/layouts/mainLayout/MainLayout";
-// Auth
-import AuthGuard from "@/features/auth/AuthGuard";
 // Components
 import { Button } from "@/components/ui/button";
 import {
@@ -18,11 +14,14 @@ import { Label } from "@/components/ui/label";
 // Services
 import { useGetAccount } from "@/services/queries/account";
 import { useUpdateAccount } from "@/services/mutations/account";
+import { useDeleteAccount } from "@/services/mutations/account";
 
 export default function ManageAccount() {
   const { data: account } = useGetAccount();
   const { mutate: updateAccount, isLoading: isUpdatingAccount } =
     useUpdateAccount();
+  const { mutate: deleteAccount, isLoading: isDeletingAccount } =
+    useDeleteAccount();
 
   const dataUsername = account?.username;
 
@@ -65,7 +64,15 @@ export default function ManageAccount() {
           <Input disabled id="email" value={account?.email ?? ""} />
         </div>
       </CardContent>
-      <CardFooter className=" flex justify-end">
+      <CardFooter className=" flex justify-between">
+        <Button
+          loading={isDeletingAccount}
+          variant="link"
+          className="px-0"
+          onClick={() => deleteAccount()}
+        >
+          Delete account
+        </Button>
         <Button
           disabled={saveChangesDisabled}
           loading={isUpdatingAccount}
