@@ -5,8 +5,8 @@
     "author": "Jacob Rosenthal",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#a955f7",
+    "background_color": "#1e293b",
+    "theme_color": "#cc3333",
     "orientation": "portrait-primary",
     "icons": [
       {
