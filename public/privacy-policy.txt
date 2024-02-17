@@ -1,0 +1,42 @@
+Privacy Policy for Set Multiplayer
+
+Effective Date: 17 Feb 2024
+
+This application has been developed as a hobby project with no commercial intent. Our aim is to provide a fun and engaging platform for users without pursuing monetary benefits. This Privacy Policy outlines the types of information we collect, why we collect it, and how it is used.
+
+1. Information Collection
+
+When you create an account with Set Multiplayer, you are required to provide certain personal information, including:
+
+Username
+Email Address
+Password
+Please note that your password is encrypted and stored securely using the Firebase platform. We do not have access to your password.
+
+2. Use of Information
+
+The information we collect is used for the following purposes:
+
+To enable account creation and management
+To improve and personalize your experience on the app
+To understand how our app is used, aiding in making improvements and enhancements
+
+3. Analytics
+
+We use Vercel Analytics to gather insights into app usage. This helps us understand how users interact with our app and identify areas for improvement. For detailed information on the data collected by Vercel Analytics, please visit their privacy policy: https://vercel.com/docs/analytics/privacy-policy
+
+4. Data Sharing
+
+We do not sell, trade, or otherwise transfer to outside parties your personally identifiable information.
+
+5. Your Consent
+
+By using our app, you consent to our privacy policy.
+
+6. Changes to Our Privacy Policy
+
+Any changes to our privacy policy will be posted on this page. The privacy policy's effective date will be updated accordingly.
+
+Contact Us
+
+If you have any questions regarding this privacy policy, you can contact us at: setmultiplayer@gmail.com
