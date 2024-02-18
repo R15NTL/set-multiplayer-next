@@ -10,17 +10,18 @@ export const useReloadConfirmationLock = ({
   const confirmationMessage =
     "Are you sure you want to leave? Your game progress will be lost.";
 
-  function handleBeforeUnload(event: BeforeUnloadEvent) {
-    event.preventDefault();
-    event.returnValue = confirmationMessage;
-  }
-
   useEffect(() => {
-    console.log("useReloadConfirmationLock effect", { gameInProgress });
-    if (gameInProgress) {
-      return window.addEventListener("beforeunload", handleBeforeUnload);
+    function handleBeforeUnload(event: BeforeUnloadEvent) {
+      if (!gameInProgress) return;
+      event.preventDefault();
+      event.returnValue = confirmationMessage;
     }
-    window.removeEventListener("beforeunload", handleBeforeUnload);
+
+    if (gameInProgress) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    } else {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
 
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
