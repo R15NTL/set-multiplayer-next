@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DeleteAccount } from "./DeleteAccount";
 // Services
 import { useGetAccount } from "@/services/queries/account";
 import { useUpdateAccount } from "@/services/mutations/account";
@@ -65,14 +66,7 @@ export default function ManageAccount() {
         </div>
       </CardContent>
       <CardFooter className=" flex justify-between">
-        <Button
-          loading={isDeletingAccount}
-          variant="link"
-          className="px-0"
-          onClick={() => deleteAccount()}
-        >
-          Delete account
-        </Button>
+        <DeleteAccount />
         <Button
           disabled={saveChangesDisabled}
           loading={isUpdatingAccount}
