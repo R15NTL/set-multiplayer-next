@@ -28,7 +28,7 @@ export default function Game() {
   const { currentRoom } = useSocket();
 
   // Prevent accidental reloads
-  useReloadConfirmationLock({ gameInProgress: true });
+  useReloadConfirmationLock({ gameInProgress: !!currentRoom });
 
   useEffect(() => {
     if (!currentRoom) {
