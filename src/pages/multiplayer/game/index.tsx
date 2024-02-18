@@ -13,6 +13,7 @@ import MainLayout from "@/layouts/mainLayout/MainLayout";
 // Features
 import WaitingForPlayers from "@/features/multiplayer/game/waitingForPlayers/WaitingForPlayers";
 import GameRoom from "@/features/multiplayer/game/gameRoom/GameRoom";
+import { useReloadConfirmationLock } from "@/features/useReloadConfirmationLock";
 
 Game.getLayout = (page: React.ReactNode) => (
   <MainLayout>
@@ -25,6 +26,9 @@ Game.getLayout = (page: React.ReactNode) => (
 export default function Game() {
   const { replace } = useRouter();
   const { currentRoom } = useSocket();
+
+  // Prevent accidental reloads
+  useReloadConfirmationLock({ gameInProgress: true });
 
   useEffect(() => {
     if (!currentRoom) {
