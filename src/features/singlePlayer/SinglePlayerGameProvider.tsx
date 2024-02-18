@@ -5,10 +5,9 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-// Components
-import { Button } from "@/components/ui/button";
 // Game logic
 import GameLogic, { GameSnapshot } from "../gameLogic/gameLogic";
+import { useReloadConfirmationLock } from "../useReloadConfirmationLock";
 
 interface SinglePlayerGameProviderProps {
   children: React.ReactNode;
@@ -38,6 +37,11 @@ export default function SinglePlayerGameProvider({
   const [gameStartTime, setGameStartTime] = useState<number | null>(null);
   const [gameTimer, setGameTimer] = useState<number>(0);
   const [hint, setHint] = useState<Hint>(null);
+
+  // Prevent accidental reload
+  useReloadConfirmationLock({
+    gameInProgress: !!gameState && !gameState.endOfGame,
+  });
 
   // Start game on mount and when on game ID change
   useEffect(() => {
