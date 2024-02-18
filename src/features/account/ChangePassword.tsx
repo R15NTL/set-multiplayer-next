@@ -22,7 +22,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 // React query
 import { useGetAccount } from "@/services/queries/account";
 import { useChangePassword } from "@/services/mutations/account";
@@ -45,12 +44,8 @@ const changePasswordSchema = yup.object().shape({
 export default function ChangePassword({
   handleTabChange,
 }: ChangePasswordProps) {
-  const { data: account } = useGetAccount();
   const { mutate: changePassword, isLoading: isUpdatingPassword } =
     useChangePassword();
-
-  // State
-  const [isLoading, setIsLoading] = useState(false);
 
   // Form
   const form = useForm<yup.InferType<typeof changePasswordSchema>>({
@@ -79,11 +74,17 @@ export default function ChangePassword({
   };
 
   return (
-    <Card>
+    <Card className="min-h-[22rem] grid">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSavePassword)}>
+        <form
+          className="flex flex-col h-full"
+          onSubmit={form.handleSubmit(handleSavePassword)}
+        >
           <CardHeader>
             <CardTitle>Change password</CardTitle>
+            <CardDescription>
+              Password must be at least 8 characters
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <FormField
@@ -114,7 +115,7 @@ export default function ChangePassword({
               )}
             />
           </CardContent>
-          <CardFooter className="justify-end">
+          <CardFooter className="justify-end mt-auto">
             <Button type="submit" loading={isUpdatingPassword}>
               Save password
             </Button>

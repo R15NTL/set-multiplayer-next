@@ -46,7 +46,7 @@ export default function ManageAccount() {
   };
 
   return (
-    <Card>
+    <Card className="min-h-[22rem] flex flex-col">
       <CardHeader>
         <CardTitle>Account</CardTitle>
         <CardDescription>Make changes to your account</CardDescription>
@@ -65,7 +65,7 @@ export default function ManageAccount() {
           <Input disabled id="email" value={account?.email ?? ""} />
         </div>
       </CardContent>
-      <CardFooter className=" flex justify-between">
+      <CardFooter className=" flex justify-between mt-auto">
         <DeleteAccount />
         <Button
           disabled={saveChangesDisabled}
