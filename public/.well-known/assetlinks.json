@@ -1,0 +1,14 @@
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.setmultiplayer.twa",
+        "sha256_cert_fingerprints": [
+          "40:F3:B4:C8:AD:ED:94:7C:CB:3D:D6:43:4E:3E:B4:7A:69:6C:90:3B:7D:3B:EF:9B:F0:AB:BA:7A:98:FE:9D:F4"
+        ]
+      }
+    }
+  ]
